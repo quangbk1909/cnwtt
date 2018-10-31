@@ -1,4 +1,4 @@
-@extends('layout.index')
+@extends('admin.layout.index')
 
 @section('css')
     <link rel="stylesheet" href="assets/css/categoryshow.css" type="text/css" >

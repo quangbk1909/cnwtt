@@ -30,12 +30,12 @@
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        @include('layout.sidebar')
+        @include('admin.layout.sidebar')
 
         <!-- Page Content  -->
         <div id="content">
             <!-- header -->
-            @include('layout.header')
+            @include('admin.layout.header')
             <hr>
             @yield('content')
            
@@ -71,7 +71,7 @@
         //keep sidebar item  active when choose 
         $(document).ready(function () {
             var path = window.location.pathname;
-            var route = path.slice(17);
+            var route = path.slice(1);
             var subItemActive = $('#sidebar a[href = "'+ route +'"]');
             if (subItemActive.length) {
                 subItemActive.closest('a[data-toggle]').removeClass('collapsed');

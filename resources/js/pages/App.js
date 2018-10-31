@@ -1,13 +1,13 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
 import {
     BrowserRouter as Router,
     Route,
     Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 
-import Example from '../components/Example'
+import Example from '../components/Example';
 import NavigationBar from "../components/NavigationBar";
 import HomePage from "./HomePage";
 
@@ -27,6 +27,5 @@ export default class App extends Component {
         );
     }
 }
-
 
 ReactDOM.render(<App/>, document.getElementById('example'));

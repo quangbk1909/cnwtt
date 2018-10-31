@@ -14,3 +14,5 @@ require('./bootstrap');
  */
 
 require('./pages/App');
+//require('./components/Example');
+

@@ -21,9 +21,10 @@
         "popper.js": "^1.12",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
-        "react-router-dom": "^4.1.1"
+        "react-router-dom": "^4.3.1"
     },
     "dependencies": {
+        "latest-version": "^4.0.0",
         "react-bootstrap": "^0.32.4"
     }
 }

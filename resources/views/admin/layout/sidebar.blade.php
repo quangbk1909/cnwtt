@@ -18,11 +18,11 @@
             </a>
             <ul class="collapse list-unstyled" id="userSubmenu">
                 <li>
-                    <a href="user/myprofile">My profile</a>
+                    <a href="admin/user/myprofile">My profile</a>
                 </li>
                 @can('user.view')
                     <li>
-                        <a href="user/show">Show</a>
+                        <a href="admin/user/show">Show</a>
                     </li>
                 @endcan
                 @can('user.create')
@@ -40,10 +40,10 @@
             </a>
             <ul class="collapse list-unstyled" id="postSubmenu">
                 <li>
-                    <a href="post/show" class="active">Show</a>
+                    <a href="admin/post/show" class="active">Show</a>
                 </li>
                 <li>
-                    <a href="post/create">Create</a>
+                    <a href="admin/post/create">Create</a>
                 </li>
             </ul>
         </li>
@@ -54,10 +54,10 @@
             </a>
             <ul class="collapse list-unstyled" id="categorySubmenu">
                 <li>
-                    <a href="category/show" class="active">Show</a>
+                    <a href="admin/category/show" class="active">Show</a>
                 </li>
                 <li>
-                    <a href="category/create">Create</a>
+                    <a href="admin/category/create">Create</a>
                 </li>
             </ul>
         </li>
