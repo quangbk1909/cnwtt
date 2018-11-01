@@ -65,3 +65,13 @@ Route::group(['prefix' => 'admin'], function() {
 
     
 });
+
+//
+//Route::get('post/1', function() {
+//    return view('welcome');
+//});
+
+
+Route::view('{path?}', 'welcome')
+     ->where('path', '.*')
+     ->name('react');

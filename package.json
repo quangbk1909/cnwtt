@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "latest-version": "^4.0.0",
+        "moment": "^2.22.2",
         "react-bootstrap": "^0.32.4"
     }
 }
