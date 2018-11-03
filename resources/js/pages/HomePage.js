@@ -6,6 +6,11 @@ import '../CSS/bootstrap.min.css'
 import Images from "../Themes/Images";
 import StoryItem from "../components/StoryItem";
 
+import {
+    Link
+} from 'react-router-dom'
+import CategoryItem from "../components/CategoryItem";
+
 const featuredItems = [
     {
         imageSource: Images.demopic.img7,
@@ -59,10 +64,61 @@ const featuredItems = [
     }
 ];
 
+const categories = [
+    {
+        title: 'Tech',
+        link: '/topic/tech'
+    },
+    {
+        title: 'Startup',
+        link: '/topic/start-ups'
+    },
+    {
+        title: 'Design',
+        link: '/topic/design'
+    },
+    {
+        title: 'Culture',
+        link: '/topic/culture'
+    },
+    {
+        title: 'Health',
+        link: '/topic/health'
+    },
+    {
+        title: 'Popular',
+        link: '/topic/popular'
+    },
+    {
+        title: 'Self',
+        link: '/topic/self'
+    },
+    {
+        title: 'Collections',
+        link: '/topic/collections'
+    },
+    {
+        title: 'Programming',
+        link: '/topic/programming'
+    }
+];
+
 export default class HomePage extends Component {
     render() {
         return (
             <div style={styles.container}>
+
+                <nav style={styles.categories}>
+                    {
+                        categories.map((item, index) => {
+                            return (
+                                <CategoryItem data={item} key={index}/>
+                            )
+                        })
+                    }
+                </nav>
+
+                <div style={{height: 30}}/>
 
                 <div style={{width: '80%', alignSelf: 'center'}}>
                     <div style={styles.top}>
@@ -122,9 +178,8 @@ const styles = {
         flexDirection: 'column',
         height: '100%',
         width: '100%',
-        backgroundColor: 'white',
-        paddingTop: 20,
-        marginTop: 20
+        paddingTop: 0,
+        marginTop: 0,
     },
     extremeHeroContainer: {
         width: '30%',
@@ -144,5 +199,27 @@ const styles = {
         fontWeight: '700',
         fontSize: 24
     },
-    sectionTitleContainer: {}
+    sectionTitleContainer: {},
+    categories: {
+        display: 'flex',
+        flexDirection: 'row',
+        position: 'fixed',
+        zIndex:100,
+        marginTop: -22,
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginBottom: 50,
+        width: '80%',
+        alignItems: 'center',
+        alignSelf: 'center',
+        backgroundColor: 'white',
+        paddingLeft: 20,
+        paddingRight: 20,
+        justifyContent: 'space-between'
+    },
+    category: {
+        textDecorationColor: 'transparent',
+        color: 'rgba(0,0,0,.54)',
+        fontFamily: 'Lucida Grande'
+    }
 };
