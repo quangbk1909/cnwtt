@@ -145,7 +145,7 @@ export default class TopicPage extends Component {
                         {
                             [1, 2, 3, 5].map((item, index) => {
                                 return (
-                                    <Link to={'/post/1'} style={{color: 'black', textDecorationColor: 'transparent'}}>
+                                    <Link to={'/post/1'} style={{color: 'black', textDecorationColor: 'transparent'}} key={index}>
                                         <div style={{marginBottom: 10, display: 'flex', flexDirection: 'row'}}>
                                             <div style={{display: 'flex', flexDirection: 'column', flex: 4}}>
                                                 <span style={{fontWeight: '600'}}>Relax, Ladies. Don’t Be So Uptight. You Know You Want It</span>

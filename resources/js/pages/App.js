@@ -13,6 +13,7 @@ import HomePage from "./HomePage";
 import PostPage from "./PostPage";
 import AuthorPage from "./AuthorPage";
 import TopicPage from "./TopicPage";
+import ResultPage from "./ResultPage";
 
 export default class App extends Component {
     render() {
@@ -28,6 +29,7 @@ export default class App extends Component {
                         <Route exact path="/author/:authorId" component={AuthorPage}/>
                         <Route exact path="/author" component={AuthorPage}/>
                         <Route exact path="/topic/:topicId" component={TopicPage}/>
+                        <Route exact path="/search" component={ResultPage}/>
                     </div>
                 </div>
             </Router>
