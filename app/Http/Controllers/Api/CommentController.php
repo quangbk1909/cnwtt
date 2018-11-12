@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App/Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Comments:all();
+
+        return response() -> json($comments);
     }
 
     /**
