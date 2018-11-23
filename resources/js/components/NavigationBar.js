@@ -119,7 +119,7 @@ export default class NavigationBar extends Component {
                                                onChange={event => this.updateInputValue(event)}/>
 
                                         {
-                                            this.state.keyword.trim().length > 0 ?
+                                            this.state.keyword.trim().length > 0 || true ?
                                                 (
                                                     <Link to={'/search'}>
                                                         <span className="search-icon">

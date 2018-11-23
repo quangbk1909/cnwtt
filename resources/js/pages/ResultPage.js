@@ -3,6 +3,9 @@ import {Link} from "react-router-dom";
 
 import '../CSS/mediumish.css'
 import '../CSS/bootstrap.min.css'
+import PostItemLarge from "../components/PostItemLarge";
+import PostItemSmall from "../components/PostItemSmall";
+import AuthorItem from "../components/AuthorItem";
 
 export default class ResultPage extends Component {
     render() {
@@ -18,49 +21,21 @@ export default class ResultPage extends Component {
                     </div>
 
                     <div style={{display: 'flex', width: '100%'}}>
-                        <section style={{display: 'flex', flex: 2, flexDirection: 'column'}}>
-                            <span>STORIES</span>
+                        <section style={{display: 'flex', flex: 3, flexDirection: 'column'}}>
+                            <span style={styles.title}>STORIES</span>
                             {
                                 [1, 2, 3].map((item, index) => {
-                                    return (
-                                        <div key={index}>
-                                            <div style={{display: 'flex', alignItems: 'center'}}>
-                                    <span className="meta-footer-thumb">
-                                        <Link to={'/author/1'}>
-								            <a>
-                                                <img className="author-thumb"
-                                                     src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
-                                                     alt="Sal"/>
-                                            </a>
-                                        </Link>
-								    </span>
-                                                <div style={{
-                                                    display: 'flex',
-                                                    flexDirection: 'column',
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center'
-                                                }}>
-                                        <span style={{display: 'flex', flexDirection: 'column'}}>
-								            <span className="post-name">
-                                                <Link to={'/Author/1'}>
-                                                    <h6 style={{marginBottom: 0}}>Than Thai</h6>
-                                                </Link>
-                                            </span>
-                                            <div>
-                                                <span style={{marginTop: 0}}>20/10</span>
-                                                <span className="dot"/>
-                                                <span>6 min read</span>
-                                            </div>
-								        </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )
+                                    return index === 0 ? <PostItemLarge key={index}/> : <PostItemSmall key={index}/>
                                 })
                             }
                         </section>
-                        <section style={{display: 'flex', flex: 1}}>
-
+                        <section style={{display: 'flex', flex: 1, marginLeft: 30, flexDirection: 'column'}}>
+                            <span style={styles.title}>AUTHOR</span>
+                            {
+                                [1,2,3].map((item, index) => {
+                                    return <AuthorItem key={index}/>
+                                })
+                            }
                         </section>
                     </div>
                 </div>
@@ -104,5 +79,8 @@ const styles = {
         fontWeight: '300',
         fontStyle: 'normal',
         fontSize: 52
+    },
+    title: {
+        marginBottom: 10
     }
 };
