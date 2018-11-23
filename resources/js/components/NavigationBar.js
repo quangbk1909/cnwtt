@@ -2,19 +2,21 @@ import React, {Component} from 'react';
 
 
 import {
-    Link
+    Link,
+    NavLink,
 } from 'react-router-dom'
 
-import logo from '../../Assets/logo.png'
+import {} from 'react-router'
 
-// import '../App.css'
+import logo from '../Assets/logo.png'
+
+import '../CSS/bootstrap.min.css'
+
+import '../App.css'
 
 import {
-    Navbar,
     Nav,
-    NavItem,
-    NavDropdown,
-    MenuItem
+    NavItem
 } from 'react-bootstrap'
 
 const categories = [
@@ -60,18 +62,37 @@ const categories = [
     }
 ];
 
+const dIconSearch = 'M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z';
+
 export default class NavigationBar extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            keyword: ''
+        }
+    }
+
+    updateInputValue(evt) {
+        console.log('evt', evt.target.value);
+        this.setState({keyword: evt.target.value});
+    }
+
+    navigateSearchScreen() {
+        console.log(this);
+        this.props.history.push('/post')
+    }
+
     render() {
         return (
             <div style={styles.container}>
-                <Navbar fixedTop={true}>
-                    <Nav pullLeft={true}>
-                        <Link to={'/'}>
-                            <a className="navbar-brand">
-                                <img src={logo} alt="logo"/>
-                            </a>
-                        </Link>
-                    </Nav>
+                <nav className="navbar navbar-toggleable-md navbar-light bg-white fixed-top mediumnavigation"
+                     style={{paddingLeft: 100, alignSelf: 'center', marginBottom: 0}}>
+                    <Link to={'/'}>
+                        <a className="navbar-brand">
+                            <img src={logo} alt="logo"/>
+                        </a>
+                    </Link>
                     <Nav pullRight navbar={true}>
                         <NavItem>
                             <div style={{
@@ -82,29 +103,46 @@ export default class NavigationBar extends Component {
                                 marginRight: 50,
                                 alignSelf: 'center'
                             }}>
-                                <Link to={'/'} style={{textDecoration: 'none'}}>
-                                    <a style={{marginRight: 20}} className="nav-link">Stories</a>
+                                <NavLink to={'/'} style={{textDecorationColor: 'transparent'}}>
+                                    <span style={{marginRight: 20}}>Stories</span>
+                                </NavLink>
+                                <Link to={'/Post'} style={{marginRight: 20, textDecorationColor: 'transparent'}}>
+                                    <span>Post</span>
                                 </Link>
-                                <Link to={'/'} style={{marginRight: 20, textDecoration: 'none'}}>
-                                    <text>Post</text>
+                                <Link to={'/Author'} style={{textDecorationColor: 'transparent', marginRight: 20}}>
+                                    <span>Author</span>
                                 </Link>
-                                <Link to={'/'} style={{textDecoration: 'none', marginRight: 20}}>
-                                    <text>Author</text>
-                                </Link>
-                                <div style={{
-                                    marginLeft: 15,
-                                    display: 'flex',
-                                    borderCollapse: 'collapsed',
-                                    flexDirection: 'row',
-                                    flex: 1,
-                                    width: 200
-                                }}>
-                                    <input type="text" placeholder="Search" style={styles.searchInput}/>
+                                <div style={styles.searchContainer}>
+                                    <form className="form-inline my-2 my-lg-0">
+                                        <input className="form-control mr-sm-2" type="text" value={this.state.keyword}
+                                               placeholder="Search"
+                                               onChange={event => this.updateInputValue(event)}/>
+
+                                        {
+                                            this.state.keyword.trim().length > 0 || true ?
+                                                (
+                                                    <Link to={'/search'}>
+                                                        <span className="search-icon">
+                                                            <svg className="svgIcon-use" width="25" height="25" viewBox="0 0 25 25">
+                                                                <path d={dIconSearch}/>
+                                                            </svg>
+                                                        </span>
+                                                    </Link>
+                                                ) :
+                                                (
+                                                    <span className="search-icon" onClick={() => alert('Empty keyword')}>
+                                                        <svg className="svgIcon-use" width="25" height="25" viewBox="0 0 25 25">
+                                                            <path d={dIconSearch}/>
+                                                        </svg>
+                                                    </span>
+                                                )
+                                        }
+                                    </form>
                                 </div>
                             </div>
                         </NavItem>
                     </Nav>
-                </Navbar>
+                </nav>
             </div>
         );
     }
@@ -114,9 +152,9 @@ const styles = {
     container: {
         display: 'flex',
         flexDirection: 'column',
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'space-between'
+        position: 'fixed',
+        zIndex: 1030,
+        backgroundColor: 'red'
     },
     logo: {
         fontFamily: 'Lato',
@@ -137,5 +175,13 @@ const styles = {
     },
     searchIcon: {
         backgroundColor: 'red'
+    },
+    searchContainer: {
+        marginLeft: 15,
+        display: 'flex',
+        borderCollapse: 'collapsed',
+        flexDirection: 'row',
+        flex: 1,
+        width: 200
     }
 };

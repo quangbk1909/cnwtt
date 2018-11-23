@@ -23,6 +23,6 @@ Route::get('/', function(){
 
 Route::group(['prefix' => 'blog'], function(){
     Route::group(['prefix' => 'post'], function(){
-        Route::get('allPost', 'PostController@getAllPost');
+        Route::get('allPost', 'Api\PostController@getAllPost');
     });
 });
