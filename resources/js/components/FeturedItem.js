@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 
 import moment from 'moment'
 import {Link} from "react-router-dom";
+import Images from "../Themes/Images";
 
 export default class FeturedItem extends Component {
     render() {
@@ -14,13 +15,19 @@ export default class FeturedItem extends Component {
         const createDate = data.createdDate;
         let dateStr = moment(createDate).format('DD MMM YYYY');
 
+
+        let content = data.content;
+        if (content.length > 150) {
+            content = content.substr(0, 147) + '...';
+        }
+
         return (
             <div className="card">
                 <div className="row" style={{flexWrap: 'wrap'}}>
                     <div className="col-md-5 wrapthumbnail">
                         <Link to={{pathname: '/post/1'}}>
                             <a>
-                                <img className="thumbnail" src={data.imageSource} style={{width: 200, height: '100%'}}/>
+                                <img className="thumbnail" src={Images.demopic.img10} style={{width: 200, height: '100%'}}/>
                             </a>
                         </Link>
                     </div>
@@ -32,7 +39,7 @@ export default class FeturedItem extends Component {
                                     <span>{data.title}</span>
                                 </Link>
                             </h2>
-                            <h4 className="card-text">{data.shortDescription}</h4>
+                            <h4 className="card-text">{content}</h4>
                             <div className="metafooter">
                                 <div className="wrapfooter">
 								<span className="meta-footer-thumb">
@@ -47,7 +54,7 @@ export default class FeturedItem extends Component {
                                     <span className="author-meta">
 								        <span className="post-name">
                                             <Link to={'/Author/1'}>
-                                                <a>{data.author.name}</a>
+                                                <a>{'Than Thai'}</a>
                                             </Link>
                                         </span>
                                         <br/>

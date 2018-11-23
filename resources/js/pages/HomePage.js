@@ -11,6 +11,8 @@ import {
 } from 'react-router-dom'
 import CategoryItem from "../components/CategoryItem";
 
+import api from '../Services/API'
+
 const featuredItems = [
     {
         imageSource: Images.demopic.img7,
@@ -64,6 +66,22 @@ const featuredItems = [
     }
 ];
 
+const sampleData = [
+    {
+        "id": 10,
+        "title": "title3",
+        "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "status": 1,
+        "vote_numbers": 0,
+        "visibility": 0,
+        "image_path": "assets/img/img_post/",
+        "image_name": "img_3",
+        "user_id": 31,
+        "created_at": "2018-07-18 17:05:28",
+        "updated_at": "2018-07-18 17:06:02"
+    }
+];
+
 const categories = [
     {
         title: 'Tech',
@@ -104,6 +122,24 @@ const categories = [
 ];
 
 export default class HomePage extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            featuredItems: []
+        }
+    }
+
+
+    componentDidMount() {
+        api.getAllPosts((result) => {
+            this.setState({featuredItems: result})
+            // console.log('result', result)
+        }, (error) => {
+
+        })
+    }
+
     render() {
         return (
             <div style={styles.container}>
@@ -136,7 +172,7 @@ export default class HomePage extends Component {
 
                         <div className="card-columns listfeaturedtag">
                             {
-                                featuredItems.map((item, index) => {
+                                this.state.featuredItems.map((item, index) => {
                                     return <FeturedItem data={item} key={index}/>
                                 })
                             }
@@ -152,7 +188,7 @@ export default class HomePage extends Component {
 
                         <div className="card-columns listrecent">
                         {
-                                featuredItems.map((item, index) => {
+                                this.state.featuredItems.map((item, index) => {
                                     return <StoryItem data={item} key={index}/>
                                 })
                             }
