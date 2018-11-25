@@ -1,6 +1,8 @@
 <?php
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +27,12 @@ Route::group(['prefix' => 'blog'], function(){
     Route::group(['prefix' => 'post'], function(){
         Route::get('allPost', 'Api\PostController@getAllPost');
     });
+    Route::group(['prefix' => 'category'], function(){
+        Route::get('allCate','Api\CategoryController@getMainCategory');
+    });
+    Route::group(['prefix' => 'author'], function(){
+        Auth::login(User::find(31));
+        Route::get('getAuthor','Api\AuthorController@getAuthorInfo');
+    });
 });
+
