@@ -7,12 +7,28 @@ use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 class AuthorController extends Controller
 {
-    public function getAuthorInfo(){
+    public function getCurrentAuthor(){
         $user = Auth::user();
         $allPostOfUser = Post::where('user_id',$user->id)->get();
+
+        $userWithAllPost = array();
+        $userWithAllPost["user_id"] = $user->id;
+        $userWithAllPost["author_name"] = $user->name;
+        $userWithAllPost["avatar"] = $user->image_link;
+        $userWithAllPost["description"] = $user->description;
+        $userWithAllPost["posts"] = $allPostOfUser;
+
+        return response() -> json($userWithAllPost);
+    }
+
+    public function getAuthorByID(Request $request){
+        $userID = Input::get('id');
+        $allPostOfUser = Post::where('user_id',$userID)->get();
+        $user = User::where('id',$userID)->first();
 
         $userWithAllPost = array();
         $userWithAllPost["user_id"] = $user->id;
