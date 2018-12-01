@@ -31,4 +31,10 @@ class PostController extends Controller
         // json_encode($responseArray);
         return response() -> json($responseArray);
     }
+
+    public function search(){
+        $textSearch = Input::get('textSearch');
+        $posts = Post::search($textSearch)->get();
+        return response() -> json($posts);
+    }
 }

@@ -113,8 +113,8 @@ export default class NavigationBar extends Component {
                                     <span>Author</span>
                                 </Link>
                                 <div style={styles.searchContainer}>
-                                    <form className="form-inline my-2 my-lg-0">
-                                        <input className="form-control mr-sm-2" type="text" value={this.state.keyword}
+                                    <form className="form-inline my-2 my-lg-0" method="GET" action="api/searchList">
+                                        <input className="form-control mr-sm-2" name="textSearch" type="text" value={this.state.keyword}
                                                placeholder="Search"
                                                onChange={event => this.updateInputValue(event)}/>
 

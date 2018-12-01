@@ -8,10 +8,18 @@ export default class CategoryItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hover: false
+            hover: false,
+            categoryPost:[]
         };
 
         this.toggleHover = this.toggleHover.bind(this);
+    }
+
+    componentDidMount(){
+        axios.get('http:127.0.0.1:8000/api/blog/author/getAuthorByID?id=13')
+        .then(response=>{
+            this.setState({categoryPost:response.data});
+        });
     }
 
     toggleHover() {
@@ -35,6 +43,19 @@ export default class CategoryItem extends Component {
                         onMouseDown={this.toggleActive}
                         onFocus={this.toggleFocus}>{item.title.toUpperCase()}</span>
                 </Link>
+                <table>
+                    {
+                        this.sate.categoryPost.map(post=>{
+                            return (
+                                <tr>
+                                    <td>{post.user_id}</td>
+                                    <td>{post.name}</td>
+                                </tr>
+                            )
+                        })
+                    }
+                </table>
+
             </div>
         );
     }

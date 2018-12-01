@@ -29,10 +29,14 @@ Route::group(['prefix' => 'blog'], function(){
     });
     Route::group(['prefix' => 'category'], function(){
         Route::get('allCate','Api\CategoryController@getMainCategory');
+        Route::get('categoryPost','Api\CategoryController@getCategoryPost');
     });
     Route::group(['prefix' => 'author'], function(){
         Auth::login(User::find(31));
-        Route::get('getAuthor','Api\AuthorController@getAuthorInfo');
+        Route::get('getCurrentAuthor','Api\AuthorController@getCurrentAuthor');
+        Route::get('getAuthorByID','Api\AuthorController@getAuthorByID');
     });
+    Route::get('searchList','Api\PostController@search');
 });
+
 
