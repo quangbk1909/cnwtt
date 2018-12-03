@@ -13,6 +13,9 @@ import CategoryItem from "../components/CategoryItem";
 
 import api from '../Services/API'
 
+import ProgressBar from 'react-progress-bar-plus'
+import 'react-progress-bar-plus/lib/progress-bar.css'
+
 const featuredItems = [
     {
         imageSource: Images.demopic.img7,
@@ -126,15 +129,24 @@ export default class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            featuredItems: []
+            featuredItems: [],
+            categories: [],
+            percent: 0
         }
     }
 
 
     componentDidMount() {
         api.getAllPosts((result) => {
-            this.setState({featuredItems: result})
-            // console.log('result', result)
+            this.setState({featuredItems: result});
+            console.log('post', result);
+        }, (error) => {
+
+        });
+
+        api.getAllCategories((result) => {
+            console.log('cate', result);
+            this.setState({categories: result, percent: 100})
         }, (error) => {
 
         })
@@ -143,10 +155,14 @@ export default class HomePage extends Component {
     render() {
         return (
             <div style={styles.container}>
-
+                <ProgressBar
+                    percent={this.state.percent}
+                    autoIncrement
+                    spinner="right"
+                />
                 <nav style={styles.categories}>
                     {
-                        categories.map((item, index) => {
+                        this.state.categories.map((item, index) => {
                             return (
                                 <CategoryItem data={item} key={index}/>
                             )

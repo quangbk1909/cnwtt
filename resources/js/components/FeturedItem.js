@@ -13,7 +13,7 @@ export default class FeturedItem extends Component {
 
         const data = this.props.data;
         const createDate = data.createdDate;
-        let dateStr = moment(createDate).format('DD MMM YYYY');
+        let dateStr = moment(data.date_created.date).format('DD MMM YYYY');
 
 
         let content = data.content;
@@ -25,7 +25,7 @@ export default class FeturedItem extends Component {
             <div className="card">
                 <div className="row" style={{flexWrap: 'wrap'}}>
                     <div className="col-md-5 wrapthumbnail">
-                        <Link to={{pathname: '/post/1'}}>
+                        <Link to={{pathname: '/post/' + data.post_id}}>
                             <a>
                                 <img className="thumbnail" src={Images.demopic.img10} style={{width: 200, height: '100%'}}/>
                             </a>
@@ -34,7 +34,7 @@ export default class FeturedItem extends Component {
                     <div className="col-md-7">
                         <div className="card-block">
                             <h2 className="card-title">
-                                <Link to={{pathname: '/post/1'}}
+                                <Link to={{pathname: '/post/' + data.post_id}}
                                       style={{marginRight: 20, textDecorationColor: 'transparent'}}>
                                     <span>{data.title}</span>
                                 </Link>
@@ -43,7 +43,7 @@ export default class FeturedItem extends Component {
                             <div className="metafooter">
                                 <div className="wrapfooter">
 								<span className="meta-footer-thumb">
-                                    <Link to={'/Author/1'}>
+                                    <Link to={'/Author/' + data.author_id}>
 								        <a>
                                             <img className="author-thumb"
                                                  src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
@@ -53,17 +53,17 @@ export default class FeturedItem extends Component {
 								</span>
                                     <span className="author-meta">
 								        <span className="post-name">
-                                            <Link to={'/Author/1'}>
-                                                <a>{'Than Thai'}</a>
+                                            <Link to={'/Author/' + data.author_id}>
+                                                <span>{data.author_name}</span>
                                             </Link>
                                         </span>
                                         <br/>
-								<span className="post-date">{dateStr}</span>
-                                        <span className="dot"/>
-                                        <span className="post-read">6 min read</span>
-								</span>
+								        <span className="post-date">{dateStr}</span>
+                                        {/*<span className="dot"/>*/}
+                                        {/*<span className="post-read">6 min read</span>*/}
+								    </span>
                                     <span className="post-read-more">
-                                        <Link to={'/post/1'}>
+                                        <Link to={'/post/' + data.author_id}>
                                         <a title="Read Story">
                                             <svg className="svgIcon-use" width="25" height="25" viewBox="0 0 25 25">
                                                 <path

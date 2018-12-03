@@ -34,14 +34,14 @@ export default class CategoryItem extends Component {
         }
         return (
             <div>
-                <Link to={item.link} style={styles.category}>
+                <Link to={'topic/' + item.id} style={styles.category}>
                     <span
                         style={linkStyle}
                         onMouseOver={this.toggleHover}
                         onMouseOut={this.toggleHover}
                         onMouseUp={this.toggleActive}
                         onMouseDown={this.toggleActive}
-                        onFocus={this.toggleFocus}>{item.title.toUpperCase()}</span>
+                        onFocus={this.toggleFocus}>{item.name.toUpperCase()}</span>
                 </Link>
                 <table>
                     {

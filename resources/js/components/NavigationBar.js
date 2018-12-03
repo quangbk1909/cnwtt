@@ -73,6 +73,10 @@ export default class NavigationBar extends Component {
         }
     }
 
+    componentDidMount() {
+
+    }
+
     updateInputValue(evt) {
         console.log('evt', evt.target.value);
         this.setState({keyword: evt.target.value});
@@ -89,12 +93,12 @@ export default class NavigationBar extends Component {
                 <nav className="navbar navbar-toggleable-md navbar-light bg-white fixed-top mediumnavigation"
                      style={{paddingLeft: 100, alignSelf: 'center', marginBottom: 0}}>
                     <Link to={'/'}>
-                        <a className="navbar-brand">
+                        <div className="navbar-brand">
                             <img src={logo} alt="logo"/>
-                        </a>
+                        </div>
                     </Link>
                     <Nav pullRight navbar={true}>
-                        <NavItem>
+                        <NavItem componentClass={'span'}>
                             <div style={{
                                 display: 'flex',
                                 flexDirection: 'row',
@@ -106,12 +110,12 @@ export default class NavigationBar extends Component {
                                 <NavLink to={'/'} style={{textDecorationColor: 'transparent'}}>
                                     <span style={{marginRight: 20}}>Stories</span>
                                 </NavLink>
-                                <Link to={'/Post'} style={{marginRight: 20, textDecorationColor: 'transparent'}}>
+                                <NavLink to={'/Post'} style={{marginRight: 20, textDecorationColor: 'transparent'}}>
                                     <span>Post</span>
-                                </Link>
-                                <Link to={'/Author'} style={{textDecorationColor: 'transparent', marginRight: 20}}>
+                                </NavLink>
+                                <NavLink to={'/Author'} style={{textDecorationColor: 'transparent', marginRight: 20}}>
                                     <span>Author</span>
-                                </Link>
+                                </NavLink>
                                 <div style={styles.searchContainer}>
                                     <form className="form-inline my-2 my-lg-0" method="GET" action="api/searchList">
                                         <input className="form-control mr-sm-2" name="textSearch" type="text" value={this.state.keyword}
