@@ -25,7 +25,10 @@ Route::get('/', function(){
 
 Route::group(['prefix' => 'blog'], function(){
     Route::group(['prefix' => 'post'], function(){
+        Auth::login(User::find(31));
         Route::get('allPost', 'Api\PostController@getAllPost');
+        Route::get('postComment', 'Api\PostController@getCommentByPostID');
+        Route::get('saveComment', 'Api\PostController@saveComment');
     });
     Route::group(['prefix' => 'category'], function(){
         Route::get('allCate','Api\CategoryController@getMainCategory');

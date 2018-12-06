@@ -4,6 +4,9 @@ namespace App\Http\Controllers\api;
 
 use App\Post;
 use App\User;
+use App\Comment;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -36,5 +39,26 @@ class PostController extends Controller
         $textSearch = Input::get('textSearch');
         $posts = Post::search($textSearch)->get();
         return response() -> json($posts);
+    }
+
+    public function getCommentByPostID(){
+        $postID = Input::get('post_id');
+        $allComment = Comment::where('post_id',$postID)->get();
+        return response() -> json($allComment);
+    }
+
+    public function saveComment(){
+        $postID = Input::get('post_id');
+        $parentID = Input::get('parent_id');
+        $userID = Auth::id();
+        $content = Input::get('content');
+        
+        $comment = new Comment;
+        $comment->timestamps = false;
+        $comment->user_id = $userID;
+        $comment->content = $content;
+        $comment->post_id = $postID;
+        $comment->parent_id= $parentID;
+        $comment->save();
     }
 }
