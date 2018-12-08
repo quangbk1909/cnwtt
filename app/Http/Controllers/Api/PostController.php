@@ -41,14 +41,12 @@ class PostController extends Controller
         return response() -> json($posts);
     }
 
-    public function getCommentByPostID(){
-        $postID = Input::get('post_id');
+    public function getCommentByPostID($postID){
         $allComment = Comment::where('post_id',$postID)->get();
         return response() -> json($allComment);
     }
 
-    public function saveComment(){
-        $postID = Input::get('post_id');
+    public function saveComment($postID){
         $parentID = Input::get('parent_id');
         $userID = Auth::id();
         $content = Input::get('content');
@@ -60,5 +58,12 @@ class PostController extends Controller
         $comment->post_id = $postID;
         $comment->parent_id= $parentID;
         $comment->save();
+    }
+
+    public function getSinglePost($postID){
+        $post = Post::find($postID);
+        $post->view = $post->view + 1;
+        $post->save();
+        return response() -> json($post);
     }
 }
