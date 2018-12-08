@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Input;
 class AuthorController extends Controller
 {
     public function getCurrentAuthor(){
+        if (Auth::check()){
         $user = Auth::user();
         $allPostOfUser = Post::where('user_id',$user->id)->get();
 
@@ -23,10 +24,12 @@ class AuthorController extends Controller
         $userWithAllPost["posts"] = $allPostOfUser;
 
         return response() -> json($userWithAllPost);
+        } else {
+            dd("hello");
+        }
     }
 
-    public function getAuthorByID(Request $request){
-        $userID = Input::get('id');
+    public function getAuthorByID($userID){
         $allPostOfUser = Post::where('user_id',$userID)->get();
         $user = User::where('id',$userID)->first();
 

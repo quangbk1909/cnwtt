@@ -27,8 +27,9 @@ Route::group(['prefix' => 'blog'], function(){
     Route::group(['prefix' => 'post'], function(){
         Auth::login(User::find(31));
         Route::get('allPost', 'Api\PostController@getAllPost');
-        Route::get('postComment', 'Api\PostController@getCommentByPostID');
-        Route::get('saveComment', 'Api\PostController@saveComment');
+        Route::get('postComment/{post_id}', 'Api\PostController@getCommentByPostID');
+        Route::get('saveComment/{post_id}', 'Api\PostController@saveComment');
+        Route::get('getSinglePost/{post_id}', 'Api\PostController@getSinglePost');
     });
     Route::group(['prefix' => 'category'], function(){
         Route::get('allCate','Api\CategoryController@getMainCategory');
@@ -37,7 +38,7 @@ Route::group(['prefix' => 'blog'], function(){
     Route::group(['prefix' => 'author'], function(){
         Auth::login(User::find(31));
         Route::get('getCurrentAuthor','Api\AuthorController@getCurrentAuthor');
-        Route::get('getAuthorByID','Api\AuthorController@getAuthorByID');
+        Route::get('getAuthorByID/{user_id}','Api\AuthorController@getAuthorByID');
     });
     Route::get('searchList','Api\PostController@search');
 });
