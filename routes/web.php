@@ -97,3 +97,7 @@ Route::group(['prefix' => 'admin'], function() {
 
 
 
+Route::view('{path?}', 'welcome')
+     ->where('path', '.*')
+     ->name('react');
+

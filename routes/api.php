@@ -1,6 +1,8 @@
 <?php
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,29 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/', function(){
+    return view("Welcome");
+});
+
+Route::group(['prefix' => 'blog'], function(){
+    Route::group(['prefix' => 'post'], function(){
+        Auth::login(User::find(31));
+        Route::get('allPost', 'Api\PostController@getAllPost');
+        Route::get('postComment/{post_id}', 'Api\PostController@getCommentByPostID');
+        Route::get('saveComment/{post_id}', 'Api\PostController@saveComment');
+        Route::get('getSinglePost/{post_id}', 'Api\PostController@getSinglePost');
+    });
+    Route::group(['prefix' => 'category'], function(){
+        Route::get('allCate','Api\CategoryController@getMainCategory');
+        Route::get('categoryPost','Api\CategoryController@getCategoryPost');
+    });
+    Route::group(['prefix' => 'author'], function(){
+        Auth::login(User::find(31));
+        Route::get('getCurrentAuthor','Api\AuthorController@getCurrentAuthor');
+        Route::get('getAuthorByID/{user_id}','Api\AuthorController@getAuthorByID');
+    });
+    Route::get('searchList','Api\PostController@search');
+});
+
+

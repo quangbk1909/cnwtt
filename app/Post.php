@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    // use this for full text search
+    use FullTextSearchTrait;
+    protected $searchable = [
+        'title',
+    ];
+
+    // define for relationship
     protected $table = "posts";
 
     public function categories(){
