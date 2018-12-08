@@ -1,7 +1,7 @@
 @extends('admin.layout.index')
 
 @section('css')
-    <link rel="stylesheet" href="assets/css/categoryshow.css" type="text/css" >
+    <link rel="stylesheet" href="css/categoryadmin.css" type="text/css" >
 @endsection
 
 @section('content')
@@ -15,7 +15,7 @@
             </h1>
         </div>
         <div class="col-md-2 d-flex align-content-center justify-content-center p-2">
-            <a href="category/show" class="btn btn-primary">Back to show</a>  
+            <a href="admin/category/show" class="btn btn-primary">Back to show</a>  
         </div>
     </div>
     <hr>
@@ -50,13 +50,13 @@
              <div class="tree well">
                 <ul>
                     @foreach ($categoryRoots as $category)
-                        @include('category.treeview', $category)
+                        @include('admin.category.treeview', $category)
                     @endforeach
                 </ul>
             </div>
         </div>
         <div class="col-md-6">
-            <form action="category/create" method="POST">
+            <form action="admin/category/create" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="name">Name</label>

@@ -1,7 +1,7 @@
 @extends('admin.layout.index')
 
 @section('css')
-    <link rel="stylesheet" href="assets/css/categoryshow.css" type="text/css" >
+    <link rel="stylesheet" href="css/categoryadmin.css" type="text/css" >
 @endsection
 @section('content')
 
@@ -14,7 +14,7 @@
             </h1>
         </div>
         <div class="col-md-2 d-flex align-content-center justify-content-center p-2">
-            <a href="category/create" class="btn btn-primary">Create new category</a>  
+            <a href="admin/category/create" class="btn btn-primary">Create new category</a>  
         </div>
     </div>
     <hr>
@@ -42,7 +42,7 @@
             <div class="tree well">
                 <ul>
                     @foreach ($categoryRoots as $category)
-                        @include('category.treeview', $category)
+                        @include('admin.category.treeview', $category)
                     @endforeach
                 </ul>
             </div>
@@ -71,7 +71,7 @@
                             </td>
                             <td>{{$tCategory->created_at}}</td>
                             <td>{{$tCategory->updated_at}}</td>
-                            <td><a href="category/edit/{{$tCategory->id}}"><i class="fas fa-pencil-alt"></i> Edit</a> | <a href="category/delete/{{$tCategory->id}}"  onclick="return confirm('Are you sure to delete category {{$tCategory->name}}?');"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                            <td><a href="admin/category/edit/{{$tCategory->id}}"><i class="fas fa-pencil-alt"></i> Edit</a> | <a href="admin/category/delete/{{$tCategory->id}}"  onclick="return confirm('Are you sure to delete category {{$tCategory->name}}?');"><i class="fas fa-trash-alt"></i> Delete</a></td>
                         </tr>
                     @endforeach
                 </tbody>

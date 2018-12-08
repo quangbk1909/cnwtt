@@ -1,8 +1,5 @@
 @extends('admin.layout.index')
 
-@section('css')
-    <link rel="stylesheet" href="css/categoryadmin.css" type="text/css" >
-@endsection
 
 @section('content')
 
@@ -10,9 +7,12 @@
 <div class="bg-white p-3">
     <div class="row">
         <div class=" offset-md-1 col-md-9 mr-auto">
-            <h1><strong>Category</strong>
+            <h1><strong>Role</strong>
                 <small>Create</small>
             </h1>
+        </div>
+        <div class="col-md-2 d-flex align-content-center justify-content-center p-2">
+            <a href="admin/role/show" class="btn btn-primary">Back to list</a>  
         </div>
     </div>
     <hr>
@@ -43,40 +43,30 @@
     @endif
 
     <div class="row ">
-        <div class="col-md-5">
-             <div class="tree well">
-                <ul>
-                    @foreach ($categoryRoots as $category)
-                        @include('admin.category.treeview', $category)
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-
-
-        <div class="col-md-6">
-            <form action="admin/category/edit/{{$cCategory->id}}" method="POST">
+        <div class="offset-md-3 col-md-6">
+            <form action="admin/category/create" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required="" placeholder="Enter category name" value="{{$cCategory->name}}">
-                </div>    
-                <div class="form-group">
-                    <label for="category_parent">Category parent</label>
-                    <select class="form-control" name="category_parent" id="category_parent">
-                        <option value="0">New branch</option>
-                        @foreach ($categories as $category)
-                            <option value="{{$category->id}}" 
-                            	@if (($parentCategory != null)&&($parentCategory->id == $category->id))
-                            		selected="" 
-                            	@endif
-                            >{{$category->name}}</option>
-                        @endforeach
-                    </select>
+                    <input type="text" class="form-control" id="name" name="name" required="" placeholder="Enter role name">
                 </div>
-                
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a href="admin/category/show" class="btn btn-light m-2">Back</a>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" name="description" required="" placeholder="Enter role description">
+                </div>
+                <div class="form-group">
+                    <label for="permission">Permission of role</label>
+                    <div id="permission">
+                        <div class="form-control" style=" height: 200px; overflow-y: scroll;">
+                        @foreach ($permissions as $permission)
+                            <input type="checkbox" name="permission[]" value="{{$permission->id}}" > {{$permission->action}} <br>
+                        @endforeach
+                        </div>        
+                    </div>
+                </div>    
+                                
+                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="reset" class="btn btn-light m-2">Reset</button>
 
             </form>    
         </div>

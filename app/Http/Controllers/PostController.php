@@ -21,14 +21,14 @@ class PostController extends Controller
         } else {
              $posts = Post::where('user_id','=',$user->id)->orderBy('created_at','desc')->get();
         }
-    	return view('posts.show',compact('posts'));
+    	return view('admin.posts.show',compact('posts'));
     }
 
 
     // get create post view
     public function getCreate(){
     	$categories =  Category::all();
-    	return view('posts.create',compact('categories'));
+    	return view('admin.posts.create',compact('categories'));
     }
 
     // create new post
@@ -76,13 +76,13 @@ class PostController extends Controller
     	$categories = Category::all();
     	
     	if (!isset($post)) {
-    		return redirect('post/show')->with('warning', 'User has no this post!');
+    		return redirect('admin/post/show')->with('warning', 'User has no this post!');
     	} else if ($user->inRole('admin')) {
-            return view('posts.edit', compact('post','categories'));
+            return view('admin.posts.edit', compact('post','categories'));
         }else if ($post->user_id != $user->id ) {
-    		return redirect('post/show')->with('warning', 'User has no this post!');
+    		return redirect('admin/post/show')->with('warning', 'User has no this post!');
     	}else {
-	    	return view('posts.edit', compact('post','categories'));	
+	    	return view('admin.posts.edit', compact('post','categories'));	
     	}	
     }
 
@@ -151,12 +151,12 @@ class PostController extends Controller
         $post = Post::find($id);
         
         if (!isset($post)) {
-            return redirect('post/show')->with('warning', 'User has no this post!');
+            return redirect('admin/post/show')->with('warning', 'User has no this post!');
         } else if ($user->inRole('admin')) {
             $post->delete();
             return redirect()->back()->with('success' ,'Delete post successfully!');
         }else if ($post->user_id != $user->id ) {
-            return redirect('post/show')->with('warning', 'User has no this post!');
+            return redirect('admin/post/show')->with('warning', 'User has no this post!');
         }else {
             $post->delete();
             return redirect()->back()->with('success' ,'Delete post successfully!');   

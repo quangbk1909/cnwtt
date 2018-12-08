@@ -5,6 +5,12 @@
         #example td a{
             color: #697F85;
         }
+
+        #example td p{
+            color: #3F3F3F;
+            font-size : 1rem;
+        }
+
          #example td a:hover{
             color: #000;
         }
@@ -21,7 +27,7 @@
             </h1>
         </div>
         <div class="col-md-2 d-flex align-content-center justify-content-center p-2">
-            <a href="post/create" class="btn btn-primary">Create new post</a>  
+            <a href="admin/post/create" class="btn btn-primary">Create new post</a>  
         </div>
     </div>
     <hr>
@@ -44,7 +50,7 @@
     @endif
 
     <!-- Table data -->
-    <form action="post/delete/all" method="POST" enctype="multipart/form-data">
+    <form action="admin/post/delete/all" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row my-2">
             <div class="col-md-12">
@@ -72,7 +78,7 @@
                     <tr>
                         <td><input type="checkbox" name="bulked[]" class="sub-chk" value="{{$post->id}}"></td>
                         <td>{{$post->title}}</td>
-                        <td>{{substr($post->content,0,50)}} ...</td>
+                        <td>{!!substr($post->content,0,100)!!} ...</td>
                         <td>
                             @if ($post->status == 0)
                                 Draft
@@ -93,10 +99,10 @@
                                     @break
                             @endswitch   
                         </td>
-                        <td>{{$post->image_name}}</td>
+                        <td><img height="100" width="100" src="{{$post->image_path.$post->image_name}}" alt=""></td>
                         <td>{{$post->created_at}}</td>
                         <td>{{$post->updated_at}}</td>
-                        <td><a href="post/edit/{{$post->id}}"><i class="fas fa-pencil-alt"></i> Edit</a> | <a href="post/delete/{{$post->id}}"  onclick="return confirm('Are you sure to delete this post?');"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                        <td width="130"><a href="admin/post/edit/{{$post->id}}"><i class="fas fa-pencil-alt"></i> Edit</a> | <a href="admin/post/delete/{{$post->id}}"  onclick="return confirm('Are you sure to delete this post?');"><i class="fas fa-trash-alt"></i> Delete</a></td>
                     </tr>
                 @endforeach
             </tbody>

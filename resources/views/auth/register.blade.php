@@ -10,7 +10,7 @@
 
 	<base href="{{asset('')}}">
 	<!-- Bootstrap core CSS -->
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	<!-- Fonts -->
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
@@ -52,6 +52,11 @@
 	                    @endif
 							<form action="" method="POST">
 								<input type="hidden" name="_token" value="{{csrf_token()}}">
+
+							  	<div class="form-group">
+							    	<label for="username"><strong>Username</strong></label>
+							    	<input type="text" class="form-control" id="username" aria-describedby="username" name="username" placeholder="Enter username" required=""> 	
+							  	</div>
 							  	<div class="form-group">
 							    	<label for="email"><strong>Email</strong></label>
 							    	<input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" placeholder="Enter email" required=""> 	
@@ -74,7 +79,7 @@
 		</div>
 	</div>
 	
-	<script src="assets/js/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 	<script src="assets/js/bootstrap.min.js"></script>
 	<script>

@@ -41,7 +41,7 @@
 
     <div class="row ">
         <div class="col-md-6 offset-md-2">
-            <form action="user/permission/{{$user->id}}" method="POST">
+            <form action="admin/user/permission/{{$user->id}}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="role"><strong>Role</strong></label>
@@ -73,7 +73,7 @@
                 </div>
                 
                 <button type="submit" class="btn btn-primary">Update</button>
-                <a href="user/show" class="btn btn-light m-2">Back</a>
+                <a href="admin/user/show" class="btn btn-light m-2">Back</a>
 
             </form>    
         </div>
@@ -93,7 +93,7 @@
 
             $('select').change(function(event) {
                 idRole = $('select').val();
-                $.get('user/ajax/changerole',{idUser : {{$user->id}} , idRole : idRole }, function(data) {
+                $.get('admin/user/ajax/changerole',{idUser : {{$user->id}} , idRole : idRole }, function(data) {
                     $('#permission').html(data);
                 });
             });

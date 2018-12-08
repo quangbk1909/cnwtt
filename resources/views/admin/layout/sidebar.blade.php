@@ -1,12 +1,12 @@
 <nav id="sidebar" class="border">
-    <div class="sidebar-header border-bottom">
-        <h3>CMS VCcorp</h3>
+    <div class="sidebar-header text-center border-bottom">
+        <h3>HustBlog</h3>
         <strong>VC</strong>
     </div>
 
     <ul class="list-unstyled components ">
         <li>
-            <a href="dashboard">
+            <a href="admin">
                 <i class="fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
@@ -20,17 +20,9 @@
                 <li>
                     <a href="admin/user/myprofile">My profile</a>
                 </li>
-                @can('user.view')
-                    <li>
-                        <a href="admin/user/show">Show</a>
-                    </li>
-                @endcan
-                @can('user.create')
-                    <li>
-                        <a href="#">Create</a>
-                    </li>
-                @endcan
-                
+                <li>
+                    <a href="admin/user/show">List</a>
+                </li>
             </ul>
         </li>
         <li >
@@ -62,28 +54,21 @@
             </ul>
         </li>
         <li>
-            <a href="#">
-                <i class="fas fa-puzzle-piece"></i>
-                <span>Modul</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fas fa-walking"></i>
-                <span>Actions</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fas fa-book"></i>
+            <a href="#authorizationSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <i class="fas fa-key"></i>
                 <span>Role</span>
             </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fas fa-key"></i>
-                <span>Authorization</span>
-            </a>
+            <ul class="collapse list-unstyled" id="authorizationSubmenu">
+                <li>
+                    <a href="admin/role/show" class="active">List</a>
+                </li>
+                <li>
+                    <a href="admin/role/create">Create</a>
+                </li>
+                <li>
+                    <a href="admin/role/permission">Permission Edit</a>
+                </li>
+            </ul>
         </li>
     </ul>
 </nav>

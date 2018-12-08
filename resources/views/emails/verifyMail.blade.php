@@ -5,7 +5,7 @@
 </head>
  
 <body>
-<h2>Welcome to the CMS-VCcorp</h2>
+<h2>Welcome to the HustBlog</h2>
 <br/>
 Your registered email-id is {{$user['email']}} , Please click on the below link to verify your email account
 <br/>

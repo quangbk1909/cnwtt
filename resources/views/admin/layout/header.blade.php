@@ -18,8 +18,8 @@
                 </a>
 
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="user/show"><i class="fas fa-cog"></i> Setting</a>
-                <a class="dropdown-item" href="user/show"><i class="fas fa-user"></i> Profile</a>
+                <a class="dropdown-item" href="admin/user/show"><i class="fas fa-cog"></i> Setting</a>
+                <a class="dropdown-item" href="admin/user/myprofile"><i class="fas fa-user"></i> Profile</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="logout"><i class="fas fa-sign-out-alt"></i> Log out</a>
               </div>

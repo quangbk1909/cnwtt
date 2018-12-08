@@ -20,9 +20,7 @@
                 <small>List</small>
             </h1>
         </div>
-        <div class="col-md-2 d-flex align-content-center justify-content-center p-2">
-            <a href="" class="btn btn-primary">Create new user</a>  
-        </div>
+        
     </div>
     <hr>
     @if (session('success'))
@@ -35,7 +33,7 @@
     @endif
 
     @if (session('warning'))
-        <div class=" col-md-11 alert alert-danger alert-dismissible fade show" role="alert">
+        <div class=" col-md-11 alert alert-warning alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
          </button>
@@ -44,12 +42,12 @@
     @endif
 
     <!-- Table data -->
-    <form action="post/delete/all" method="POST" enctype="multipart/form-data">
+    <form action="admin/user/delete/all" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row my-2">
             <div class="col-md-12">
                 <button class="btn btn-light" type="button" ><input type="checkbox" id="bulk-all" > <label class="m-0" for="bulk-all">Bulk all</label></button>
-                <button type="submit" onclick="return confirm('Are you sure to delete all post bulked?');" class="btn btn-light"><i class="fas fa-trash-alt"></i></button> 
+                <button type="submit" onclick="return confirm('Are you sure to delete all user bulked?');" class="btn btn-light"><i class="fas fa-trash-alt"></i></button> 
             </div>  
         </div>
         
@@ -59,6 +57,7 @@
                     <th>Bulk</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Description</th>
                     <th>Status</th>
                     <th>Role</th>
                     <th>Created</th>
@@ -79,10 +78,11 @@
                                 Verified
                             @endif
                         </td>
+                        <td>{{$user->description}}</td>
                         <td>{{$user->role->name}}</td>
                         <td>{{$user->created_at}}</td>
                         <td>{{$user->updated_at}}</td>
-                        <td><a href="user/permission/{{$user->id}}"><i class="fas fa-pencil-alt"></i> Authorize</a> | <a href="post/delete/{{$user->id}}"  onclick="return confirm('Are you sure to delete this post?');"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                        <td width="150"><a href="admin/user/permission/{{$user->id}}"><i class="fas fa-exclamation-triangle"></i> Authorize</a> | <a href="admin/user/update/{{$user->id}}"><i class="fas fa-pencil-alt"></i> Update</a> | <a href="admin/user/delete/{{$user->id}}" onclick="return confirm('Are you sure to delete user?');"><i class="fas fa-trash-alt"></i> Delete</a></td>
                     </tr>
                 @endforeach
             </tbody>

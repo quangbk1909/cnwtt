@@ -73,7 +73,7 @@
 			<h2 class="m-3">Public Profile</h2>		
 		</div>
 		<div class="m-3">
-			<form action="user/update-info" method="POST" enctype="multipart/form-data" >
+			<form action="admin/user/update-info" method="POST" enctype="multipart/form-data" >
 				@csrf
 				<div class="row">
 					<div class="col-md-6">
@@ -83,7 +83,11 @@
 						</div>
 						<div class="form-group">
 							<label for="email">Email</label>
-							<input type="email" class="form-control" name="email" id="email" value="{{Auth::user()->email}}" disabled="">
+							<input type="email" class="form-control" name="email" id="email" value="{{Auth::user()->email}}">
+						</div>
+						<div class="form-group">
+							<label for="description">Description</label>
+							<input type="text" class="form-control" name="description" id="description" placeholder="Descript about you" value="{{Auth::user()->description}}" >
 						</div>
 					</div>
 					<div class="col-md-6 d-flex justify-content-center">
@@ -112,7 +116,7 @@
 			<h2 class="m-3">Change Password</h2>		
 		</div>
 		<div class="m-3">
-			<form action="user/update-password" method="POST" >
+			<form action="admin/user/update-password" method="POST" >
 				@csrf
 				<div class="row d-flex justify-content-center">
 					<div class="col-md-6">

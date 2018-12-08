@@ -21,6 +21,10 @@ class UserController extends Controller
     	if(isset($request->name)){
     		$user->name = $request->name;
     	}
+
+        $user->description = $request->description;
+
+        $user->email = $request->email;
     	if($file = $request->file('image')){
     		$name = $user->id.'.'.$file->getClientOriginalExtension();
     		$user->image_link = 'assets/img/'.$name;
@@ -68,11 +72,40 @@ class UserController extends Controller
         return view('admin.user.show', compact('users'));
     }
 
+    public function getUpdate($id){
+        $user  = User::find($id);
+        return view('admin.user.update', compact('user'));
+    }
+
+    public function postUpdate(Request $request,$id){
+
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->new_password) {
+            $request->validate([
+                'new_password' => 'required|min:6|confirmed',
+                'new_password_confirmation' => 'required|min:6'
+            ],
+            [
+                'min' => ':attribute can not be less than :min characters',
+            ],
+            [
+                'new_password' => 'New password'
+            ]);
+            $user->password = Hash::make($request->new_password);
+
+        }
+        $user->save();
+        return redirect()->back()->with('success','Update user successfully');
+    }
+
     public function getPermission($id){
         $user = User::find($id);
         $roles = Role::all();
         $permissionNotInRole = Permission::all()->diff($user->role->permission);
-        return view('user.permission',compact('user','roles','permissionNotInRole'));
+        return view('admin.user.permission',compact('user','roles','permissionNotInRole'));
     }
 
     public function postPermission(Request $request, $id){
@@ -118,6 +151,24 @@ class UserController extends Controller
 
 
         return $data;
+    }
+
+    public function getDelete($id){
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->back()->with('success', 'Delete user successfully!');
+    }
+
+    public function postDeleteAllBulked(Request $request){
+        if ($request->bulked) {
+            foreach ($request->bulked as $idUser) {
+                $user = User::find($idUser);
+                $user->delete();
+            }
+            return redirect()->back()->with('success' ,'Delete all user selected sucessfully!');
+        } else {
+            return redirect()->back()->with('warning', 'Select user before click delete');
+        }
     }
 
 }

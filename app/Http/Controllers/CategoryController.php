@@ -11,12 +11,12 @@ class CategoryController extends Controller
    	public function getShow(){
    		$categories = Category::all();
    		$categoryRoots = Category::where('level','=',0)->orderBy('lft','asc')->get();
-   		return view('category.show', compact('categories','categoryRoots'));   	}
+   		return view('admin.category.show', compact('categories','categoryRoots'));   	}
 
    	public function getCreate(){
    		$categoryRoots = Category::where('level','=',0)->orderBy('lft','asc')->get();
    		$categories = Category::all();
-   		return view('category.create',compact('categories','categoryRoots'));
+   		return view('admin.category.create',compact('categories','categoryRoots'));
    	}
 
    	public function getEdit($id){
@@ -24,7 +24,7 @@ class CategoryController extends Controller
    		$categories = Category::all();
    		$cCategory = Category::find($id);
    		$parentCategory = $cCategory->currentParent();
-   		return view('category.edit',compact('categoryRoots','categories','cCategory','parentCategory'));
+   		return view('admin.category.edit',compact('categoryRoots','categories','cCategory','parentCategory'));
    	}
 
       public function postCreate(Request $request){

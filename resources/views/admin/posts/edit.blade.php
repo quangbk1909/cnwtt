@@ -11,7 +11,7 @@
             </h1>
         </div>
         <div class=" offset-md-7 col-md-2 d-flex align-content-center justify-content-center p-2">
-            <a href="post/show" class="btn btn-primary">Back to show</a>  
+            <a href="admin/post/show" class="btn btn-primary">Back to show</a>  
         </div>
     </div>
     @if (session('success'))
@@ -42,7 +42,7 @@
 	@endif
 
 
-    <form action="post/edit/{{$post->id}}" method="POST" enctype="multipart/form-data" >
+    <form action="admin/post/edit/{{$post->id}}" method="POST" enctype="multipart/form-data" >
 		@csrf
     <!-- Create post content -->
 	<div class="row">
