@@ -39,7 +39,7 @@ export default class StoryItem extends Component {
                     <div className="metafooter">
                         <div className="wrapfooter">
 						<span className="meta-footer-thumb">
-                            <Link to={'/Author/' + data.author_id}>
+                            <Link to={'author/' + data.author_id}>
                                 <a>
                                     <img className="author-thumb"
                                          src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"

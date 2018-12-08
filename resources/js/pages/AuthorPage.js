@@ -23,7 +23,8 @@ export default class AuthorPage extends Component {
     }
 
     componentDidMount() {
-        API.getCurrentAuthor((result) => {
+        console.log('user_id', this.props.match.params.authorId);
+        API.getAuthorById(this.props.match.params.authorId, (result) => {
             this.setState({currentAuthor: result, percent: 100});
             console.log('author', result)
         }, (error) => {

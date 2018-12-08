@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Link} from "react-router-dom";
 
 import PropTypes from 'prop-types'
+import {AxiosInstance as axios} from "axios";
 
 export default class CategoryItem extends Component {
 
@@ -16,10 +17,10 @@ export default class CategoryItem extends Component {
     }
 
     componentDidMount(){
-        axios.get('http:127.0.0.1:8000/api/blog/author/getAuthorByID?id=13')
-        .then(response=>{
-            this.setState({categoryPost:response.data});
-        });
+        // axios.get('http:127.0.0.1:8000/api/blog/author/getAuthorByID?id=13')
+        // .then(response=>{
+        //     this.setState({categoryPost:response.data});
+        // });
     }
 
     toggleHover() {
@@ -38,16 +39,13 @@ export default class CategoryItem extends Component {
                     <span
                         style={linkStyle}
                         onMouseOver={this.toggleHover}
-                        onMouseOut={this.toggleHover}
-                        onMouseUp={this.toggleActive}
-                        onMouseDown={this.toggleActive}
-                        onFocus={this.toggleFocus}>{item.name.toUpperCase()}</span>
+                        onMouseOut={this.toggleHover}>{item.name.toUpperCase()}</span>
                 </Link>
                 <table>
                     {
-                        this.sate.categoryPost.map(post=>{
+                        this.state.categoryPost.map(post=>{
                             return (
-                                <tr>
+                                <tr>t
                                     <td>{post.user_id}</td>
                                     <td>{post.name}</td>
                                 </tr>

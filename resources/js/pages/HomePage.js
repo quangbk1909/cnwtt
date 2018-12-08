@@ -85,45 +85,6 @@ const sampleData = [
     }
 ];
 
-const categories = [
-    {
-        title: 'Tech',
-        link: '/topic/tech'
-    },
-    {
-        title: 'Startup',
-        link: '/topic/start-ups'
-    },
-    {
-        title: 'Design',
-        link: '/topic/design'
-    },
-    {
-        title: 'Culture',
-        link: '/topic/culture'
-    },
-    {
-        title: 'Health',
-        link: '/topic/health'
-    },
-    {
-        title: 'Popular',
-        link: '/topic/popular'
-    },
-    {
-        title: 'Self',
-        link: '/topic/self'
-    },
-    {
-        title: 'Collections',
-        link: '/topic/collections'
-    },
-    {
-        title: 'Programming',
-        link: '/topic/programming'
-    }
-];
-
 export default class HomePage extends Component {
 
     constructor(props) {
