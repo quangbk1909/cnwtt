@@ -38,12 +38,29 @@ const getAuthorById = (id, onSuccess, onError) => {
     get('api/blog/author/getAuthorByID?id=31', {}, onSuccess, onError)
 };
 
+const getCmt = async (postId) => {
+    axios.defaults.baseURL = 'http://localhost:8000';
+    let results = await axios.get('/api/blog/post/postComment?post_id=' + postId);
+    console.log('comments', results);
+    let comments = results.data;
+    for (let i = 0; i < comments.length; i++) {
+        let comment = comments[i];
+        let userId = comment.user_id;
+        let result = await axios.get('/api/blog/author/getAuthorByID?id=' + userId);
+        let user = result.data;
+        comments[i].author_name = result.data.author_name;
+        comments[i].avatar = result.data.avatar;
+    }
+    return comments;
+};
+
 const api = {
     getAllPosts,
     getAllCategories,
     getCurrentAuthor,
     getPostByCategory,
-    getAuthorById
+    getAuthorById,
+    getCmt
 };
 
 export default api
