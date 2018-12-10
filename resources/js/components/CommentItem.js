@@ -5,8 +5,36 @@ import PropTypes from 'prop-types'
 
 import '../CSS/bootstrap.min.css'
 import '../CSS/mediumish.css'
+import '../App.css'
 
 export default class CommentItem extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            inputComment: ''
+        }
+    }
+
+    updateInputValue(evt) {
+        this.setState({inputComment: evt.target.value});
+    }
+
+    saveComment() {
+        this.props.saveComment({
+            parent_id: this.props.data.id,
+            content: this.state.inputComment
+        });
+        this.setState({inputComment: ''})
+    }
+
+    onKeyPress(evt) {
+        if (evt.key === 'Enter') {
+            this.saveComment()
+        }
+    }
+
+
     render() {
         return (
             <div style={styles.container}>
@@ -54,6 +82,28 @@ export default class CommentItem extends Component {
                         )
                     })
                 }
+                <div style={{paddingLeft: 40, paddingTop: 5, paddingBottom: 5, display: 'flex'}}>
+                    <div style={styles.searchContainer}>
+                        <div className="comment-box-small" style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                            <input className="comment" name="textSearch" type="text"
+                                   placeholder={`Reply ${this.props.data.author_name}`}
+                                   style={{fontSize: 13, flex: 1, paddingTop: 2, paddingBottom: 2}}
+                                   value={this.state.inputComment}
+                                   onKeyPress={(evt) => this.onKeyPress(evt)}
+                                   onChange={event => this.updateInputValue(event)}/>
+                            <span className="search-icon" onClick={() => this.saveComment()}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke={this.state.inputComment !== '' ? '#444' : '#ced4da'}
+                                     strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                                     className="feather feather-send">
+                                    <line x1="22" y1="2" x2="11" y2="13"/>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -72,7 +122,15 @@ const styles = {
         marginTop: "3px"
     },
     commentAdd: {},
-    commentContent: {}
+    commentContent: {},
+    searchContainer: {
+        marginLeft: 15,
+        // display: 'flex',
+        borderCollapse: 'collapsed',
+        flexDirection: 'row',
+        flex: 1,
+        width: 200
+    }
 
 
 };
@@ -80,5 +138,6 @@ const styles = {
 CommentItem.propTypes = {
     data: PropTypes.object,
     reply: PropTypes.array,
-    isParent: PropTypes.bool
+    isParent: PropTypes.bool,
+    saveComment: PropTypes.func
 };

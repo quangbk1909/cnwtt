@@ -17,6 +17,12 @@ Route::get('/', function () {
 });
 
 
+Route::get('/post/{post_id}', function () {
+    return view('welcome');
+});
+
+
+
 Route::get('test', 'Controller@test');
 
 Route::get('register', 'Auth\RegisterController@getRegistration');
@@ -88,7 +94,7 @@ Route::group(['prefix' => 'admin'], function() {
 		Route::get('edit/{id}', 'RoleController@getEdit');
 		Route::post('edit/{id}', 'RoleController@postEdit');
 		Route::get('delete/{id}', 'RoleController@getDelete');
-		Route::
+
 
 	});
 

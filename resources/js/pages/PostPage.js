@@ -53,10 +53,25 @@ export default class PostPage extends Component {
     }
 
     componentDidMount() {
+        this.fetchComment()
+    }
+
+    fetchComment() {
         API.getCmt(20).then((comments) => {
             // console.log('post', comments)
             this.setState({comments})
         })
+    }
+
+    saveComment(comment) {
+        if (comment.content && comment.content !== '') {
+            API.saveComment(20, comment, (result) => {
+                this.fetchComment();
+                console.log('save success', result)
+            }, (error) => {
+                console.log('save error', error)
+            })
+        }
     }
 
     renderRecommendedItem() {
@@ -249,7 +264,7 @@ export default class PostPage extends Component {
                     </div>
                 </div>
 
-                <CommentView comments={this.state.comments}/>
+                <CommentView comments={this.state.comments} saveComment={(comment) => this.saveComment(comment)}/>
 
                 <div className="hideshare"/>
                 <div className="graybg">

@@ -446,3 +446,28 @@ ul.tags li a:hover {
 	border-radius:50%;
 	font-size:12px;
 }
+
+.comment-box {
+    border: 1px solid #ced4da;
+    border-radius: 100px;
+    padding: 10px 5px 10px 5px;
+}
+
+.comment-box-small {
+    border: 1px solid #ced4da;
+    border-radius: 100px;
+    padding: 1px 10px 1px 5px;
+}
+
+.comment-box .comment {
+    border: 0;
+    outline: none;
+    padding-left: 5px;
+}
+
+.comment-box-small .comment {
+    border: 0;
+    outline: none;
+    padding-left: 5px;
+    background-color: transparent;
+}
