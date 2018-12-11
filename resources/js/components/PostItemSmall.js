@@ -3,14 +3,18 @@ import React, {Component} from 'react'
 import {
     Link
 } from 'react-router-dom'
+import PropTypes from "prop-types";
+import PostItemLarge from "./PostItemLarge";
 
-export default class PostItemSmall extends Component{
+export default class PostItemSmall extends Component {
     constructor(props) {
         super(props);
 
     }
 
     render() {
+        let {data} = this.props;
+        let content = data.content.length < 100 ? data.content : (data.content.substr(0, 100) + '...');
         return (
             <div style={{display: 'flex', width: '100%', justifyContent: 'space-between'}}>
                 <div style={{
@@ -21,27 +25,18 @@ export default class PostItemSmall extends Component{
                 }}>
                     <Link to={'/post/1'}
                           style={{color: 'black', textDecorationColor: 'transparent'}}>
-                        <h6 style={{marginBottom: 0}}>Letter of Recommendation:
-                            Nail-Biting</h6>
+                        <h6 style={{marginBottom: 0}}>{data.title}</h6>
                     </Link>
-                    <p style={{color: 'rgba(0,0,0,0.54)', marginBottom: 0}}>It’s meditative,
-                        deeply
-                        human and far less gross than commonly imagined</p>
+                    <p style={{color: 'rgba(0,0,0,0.54)', marginBottom: 0}}>{content}</p>
                     <div style={{display: 'flex', alignItems: 'center'}}>
                         <Link to={'/author/1'}
                               style={{color: 'black', textDecorationColor: 'transparent'}}>
-                                                        <span style={{
-                                                            color: 'rgba(0,0,0,0.54)',
-                                                            fontSize: 12,
-                                                            marginTop: 0
-                                                        }}>New York Times Magazine   </span>
-                        </Link>
-                        <span className="dot"/>
-                        <span
-                            style={{
+                            <span style={{
                                 color: 'rgba(0,0,0,0.54)',
-                                fontSize: 12
-                            }}>4 min read</span>
+                                fontSize: 12,
+                                marginTop: 0
+                            }}>New York Times Magazine</span>
+                        </Link>
                     </div>
                 </div>
                 <div style={{flex: 1}}>
@@ -55,5 +50,8 @@ export default class PostItemSmall extends Component{
             </div>
         );
     }
-
 }
+
+PostItemSmall.propTypes = {
+    data: PropTypes.object
+};

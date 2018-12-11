@@ -61,9 +61,20 @@ const saveComment = (postId, comment, onSuccess, onError) => {
     get(url, {}, onSuccess, onError)
 };
 
-const search = (keyword, onSuccess, onError) => {
+const search = async (keyword) => {
     let url = '/api/blog/searchList?textSearch=' + keyword;
-    get(url, {}, onSuccess, onError)
+    axios.defaults.baseURL = 'http://localhost:8000';
+    let results = await axios.get(url);
+    let posts = results.data;
+    for (let i = 0; i < posts.length; i++) {
+        let post = posts[i];
+        let userId = post.user_id;
+        let result = await axios.get('/api/blog/author/getAuthorByID/' + userId)
+        let user = result.data;
+        posts[i].author_name = user.author_name;
+        posts[i].avatar = user.avatar;
+    }
+    return posts;
 };
 
 const api = {

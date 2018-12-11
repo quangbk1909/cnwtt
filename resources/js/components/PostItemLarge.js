@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Images from "../Themes/Images";
-
+import PropTypes from 'prop-types';
 import {
     Link
 } from 'react-router-dom'
@@ -14,6 +14,7 @@ export default class PostItemLarge extends Component {
     }
 
     render() {
+        let {data} = this.props;
         return (
             <div className="authorpostbox" style={styles.authorPostBox}>
                 <div className="card">
@@ -23,24 +24,24 @@ export default class PostItemLarge extends Component {
                     <div className="card-block">
                         <h4 className="card-title">
                             <Link to={'/post/1'} style={styles.cardTitle}>
-                                <span>Life is worth living forever and ever</span>
+                                <span>{data.title}</span>
                             </Link>
                         </h4>
-                        <h6 className="card-text">This is a longer card with supporting text below as a
-                            natural lead-in to additional content. This content is a little bit
-                            longer.</h6>
+                        <h6 className="card-text">{data.content}</h6>
                         <div className="metafooter">
                             <div className="wrapfooter">
                                 <span className="meta-footer-thumb">
-                                    <a>
+                                    <span>
                                         <img className="author-thumb"
                                              src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
                                              alt="Sal"/>
-                                    </a>
+                                    </span>
                                 </span>
                                 <span className="author-meta">
                                     <span className="post-name">
-                                        <Link to={'/author/1'}><span>Sal</span></Link>
+                                        <Link to={'/author/1'}>
+                                            <span>Sal</span>
+                                        </Link>
                                     </span>
                                     <br/>
                                     <span className="post-date">22 July 2017</span>
@@ -80,4 +81,8 @@ const styles = {
         color: 'rgba(0,0,0,0.8)',
         textDecorationColor: 'transparent'
     }
+};
+
+PostItemLarge.propTypes = {
+    data: PropTypes.object
 };
