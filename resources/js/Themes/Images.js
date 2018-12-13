@@ -16,6 +16,11 @@ const Images = {
         return require(`../assets/img_post/${name}`)
         // return require('../assets/img_post/5841bf6aa33713a80c91162a5468aaef948f64f7.jpg')
         // return this.demopic.img7
+    },
+    avatar: (link) => {
+        console.log('link', '../' + link);
+        return require('../' + link)
+        // return require('../assets/img/31')
     }
 };
 

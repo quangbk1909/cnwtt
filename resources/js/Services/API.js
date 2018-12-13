@@ -97,7 +97,7 @@ const getNewestPost = (id, onSuccess, onError) => {
     get('/api/blog/category/categoryPostFromNewest/' + id, {}, onSuccess, onError)
 };
 
-const getVote = (postId, onSuccess, onError) => {
+const vote = (postId, onSuccess, onError) => {
 
 };
 

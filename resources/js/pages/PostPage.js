@@ -50,7 +50,8 @@ export default class PostPage extends Component {
             id: props.location.search.substring(4, props.location.search.length),
             comments: [],
             post: {},
-            author: {}
+            author: {},
+            recommendedItems: []
         };
         console.log('props', props);
     }
@@ -70,6 +71,12 @@ export default class PostPage extends Component {
         API.getCmt(20).then((comments) => {
             // console.log('post', comments)
             this.setState({comments})
+        });
+
+        API.getRecommendItems((result) => {
+            this.setState({recommendedItems: result})
+        }, (error) => {
+
         })
     }
 
@@ -85,7 +92,7 @@ export default class PostPage extends Component {
     }
 
     renderRecommendedItem() {
-        return recomendedItems.map((item, index) => {
+        return this.state.recommendedItems.map((item, index) => {
 
             const createDate = item.createdDate;
             let dateStr = moment(createDate).format('DD MMM YYYY');
@@ -95,33 +102,31 @@ export default class PostPage extends Component {
                 <div className="col-md-4" key={index}>
                     <div className="card">
                         <a href={'/post?id=' + this.state.post.id}>
-                            <img className="img-fluid img-thumb" src={item.imageSource} alt=""/>
+                            <img className="img-fluid img-thumb" src={Images.imagePost(item.image_post)} alt="" style={{height: 180, width: '100%'}}/>
                         </a>
                         <div className="card-block">
                             <h2 className="card-title">
                                 <a href={'/post?id=' + this.state.post.id} style={{textDecorationColor: 'transparent'}}>
-                                    <span>{item.title}</span>
+                                    <span className="topic-post-title-popular">{item.title}</span>
                                 </a>
                             </h2>
                             <div className="metafooter">
                                 <div className="wrapfooter">
                                     <span className="meta-footer-thumb">
-                                        <Link to={'/author?id=' + this.state.author.user_id}>
+                                        <a href={'/author?id=' + item.author_id}>
                                             <img className="author-thumb"
                                                  src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
                                                  alt="Sal"/>
-                                        </Link>
+                                        </a>
                                     </span>
                                     <span className="author-meta">
                                         <span className="post-name">
-                                            <Link to={'/Author/1'}>
-                                                <span>{item.author.name}</span>
-                                            </Link>
+                                            <a href={'/author?id=' + item.author_id}>
+                                                <span>{item.author_name}</span>
+                                            </a>
                                         </span>
                                         <br/>
                                         <span className="post-date">{dateStr}</span>
-                                        <span className="dot"/>
-                                        <span className="post-read">6 min read</span>
                                     </span>
                                     <span className="post-read-more">
                                         <a href={'/post?id=' + 2}>
@@ -180,12 +185,23 @@ export default class PostPage extends Component {
                                 <ul>
                                     <li>
                                         <a>
-                                            42
+                                            {this.state.post.vote_numbers ? this.state.post.vote_numbers : 0}
                                             <br/>
-                                            <svg className="svgIcon-use" width="29" height="29" viewBox="0 0 29 29">
-                                                <path
-                                                    d="M21.27 20.058c1.89-1.826 2.754-4.17 2.754-6.674C24.024 8.21 19.67 4 14.1 4 8.53 4 4 8.21 4 13.384c0 5.175 4.53 9.385 10.1 9.385 1.007 0 2-.14 2.95-.41.285.25.592.49.918.7 1.306.87 2.716 1.31 4.19 1.31.276-.01.494-.14.6-.36a.625.625 0 0 0-.052-.65c-.61-.84-1.042-1.71-1.282-2.58a5.417 5.417 0 0 1-.154-.75zm-3.85 1.324l-.083-.28-.388.12a9.72 9.72 0 0 1-2.85.424c-4.96 0-8.99-3.706-8.99-8.262 0-4.556 4.03-8.263 8.99-8.263 4.95 0 8.77 3.71 8.77 8.27 0 2.25-.75 4.35-2.5 5.92l-.24.21v.32c0 .07 0 .19.02.37.03.29.1.6.19.92.19.7.49 1.4.89 2.08-.93-.14-1.83-.49-2.67-1.06-.34-.22-.88-.48-1.16-.74z"/>
-                                            </svg>
+                                            <div onClick={() => {
+
+                                            }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                     strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                                                     className="feather feather-thumbs-up">
+                                                    <path
+                                                        d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+                                                </svg>
+                                                {/*<svg className="svgIcon-use" width="29" height="29" viewBox="0 0 29 29">*/}
+                                                    {/*<path*/}
+                                                        {/*d="M21.27 20.058c1.89-1.826 2.754-4.17 2.754-6.674C24.024 8.21 19.67 4 14.1 4 8.53 4 4 8.21 4 13.384c0 5.175 4.53 9.385 10.1 9.385 1.007 0 2-.14 2.95-.41.285.25.592.49.918.7 1.306.87 2.716 1.31 4.19 1.31.276-.01.494-.14.6-.36a.625.625 0 0 0-.052-.65c-.61-.84-1.042-1.71-1.282-2.58a5.417 5.417 0 0 1-.154-.75zm-3.85 1.324l-.083-.28-.388.12a9.72 9.72 0 0 1-2.85.424c-4.96 0-8.99-3.706-8.99-8.262 0-4.556 4.03-8.263 8.99-8.263 4.95 0 8.77 3.71 8.77 8.27 0 2.25-.75 4.35-2.5 5.92l-.24.21v.32c0 .07 0 .19.02.37.03.29.1.6.19.92.19.7.49 1.4.89 2.08-.93-.14-1.83-.49-2.67-1.06-.34-.22-.88-.48-1.16-.74z"/>*/}
+                                                {/*</svg>*/}
+                                            </div>
                                         </a>
                                     </li>
                                 </ul>
@@ -200,7 +216,7 @@ export default class PostPage extends Component {
                                         <Link to={'/Author/1'}>
                                             <a>
                                                 <img className="author-thumb"
-                                                     src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
+                                                     src={this.state.author.image_link ? Images.avatar(this.state.author.image_link) : "https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"}
                                                      alt="Sal"/>
                                             </a>
                                         </Link>
@@ -210,8 +226,9 @@ export default class PostPage extends Component {
                                             <span className="link-dark">{this.state.author.name}</span>
                                         </a>
                                         <a className="btn follow">Follow</a>
-                                        <span
-                                            className="author-description">Founder of WowThemes.net and creator of <b>"Mediumish"</b> theme that you're currently previewing. Developing professional premium themes, templates, plugins, scripts since 2012.</span>
+                                        <br/>
+                                        <span className="author-description">{this.state.author.description || ''}</span>
+                                        <br/>
                                         <span className="post-date">{moment(this.state.post.created_at).format('MMM, DD YYYY')}</span>
                                     </div>
                                 </div>
@@ -220,7 +237,7 @@ export default class PostPage extends Component {
 
                             </div>
 
-                            <img className="featured-image img-fluid" src={Images.demopic.img10} alt=""/>
+                            <img className="featured-image img-fluid" src={this.state.post.image_name ? Images.imagePost(this.state.post.image_name) : Images.demopic.img10} alt=""/>
 
                             {/*<div className="article-post">*/}
                                 {/*<p>*/}
@@ -252,9 +269,8 @@ export default class PostPage extends Component {
                                 {/*</p>*/}
                             {/*</div>*/}
 
-                            {
-                                this.state.post.content
-                            }
+                            <div dangerouslySetInnerHTML={{__html: `<span>${this.state.post.content || ''}</span>`}}/>
+
 
                             {/*<div className="after-post-tags">*/}
                                 {/*<ul className="tags">*/}
