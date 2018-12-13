@@ -18,6 +18,14 @@ const getAllPosts = (onSuccess, onError) => {
     })
 };
 
+const getAllPostByVote = (onSuccess, onError) => {
+    get('/api/blog/post/allPostByVote', {}, onSuccess, onError)
+};
+
+const getAllPostsRandom = (onSuccess, onError) => {
+    get('/api/blog/post/allPostByRandom', {}, onSuccess, onError)
+}
+
 const getAllCategories = (onSuccess, onError) => {
     get('/api/blog/category/allCate', {}, onSuccess, onError)
 };
@@ -40,7 +48,7 @@ const getAuthorById = (id, onSuccess, onError) => {
 
 const getCmt = async (postId) => {
     axios.defaults.baseURL = 'http://localhost:8000';
-    let results = await axios.get('/api/blog/post/postComment/' + postId);
+    let results = await axios.get('api/blog/post/getComment/' + postId);
     console.log('comments', results);
     let comments = results.data;
     for (let i = 0; i < comments.length; i++) {
@@ -77,6 +85,22 @@ const search = async (keyword) => {
     return posts;
 };
 
+const getRecommendItems = (onSuccess, onError) => {
+    get('/api/blog/post/recommendItem', {}, onSuccess, onError);
+};
+
+const getPopularPost = (id, onSuccess, onError) => {
+    get('/api/blog/category/categoryPostPopular/' + id, {}, onSuccess, onError)
+};
+
+const getNewestPost = (id, onSuccess, onError) => {
+    get('/api/blog/category/categoryPostFromNewest/' + id, {}, onSuccess, onError)
+};
+
+const vote = (postId, onSuccess, onError) => {
+
+};
+
 const api = {
     getAllPosts,
     getAllCategories,
@@ -85,7 +109,13 @@ const api = {
     getAuthorById,
     getCmt,
     saveComment,
-    search
+    search,
+    getAllPostByVote,
+    getAllPostsRandom,
+    getRecommendItems,
+    getPopularPost,
+    getNewestPost,
+    get
 };
 
 export default api

@@ -6,34 +6,48 @@ import '../CSS/bootstrap.min.css'
 import ProgressBar from "react-progress-bar-plus";
 import API from "../Services/API";
 import moment from "moment";
+import Images from "../Themes/Images";
 
 export default class TopicPage extends Component {
 
     constructor(props) {
         super(props);
+        this.id = props.location.search.substring(4, props.location.search.length);
         this.state = {
             data: null,
             percent: 0,
             relatedCategories: [],
-            popularTopics: []
-        }
+            popularTopics: [],
+            description: null
+        };
+        console.log('id', props.location.search.substring(4, props.location.search.length));
+
     }
 
     componentDidMount() {
-        API.getPostByCategory('', (result) => {
+        API.getNewestPost(this.id, (result) => {
             this.setState({data: result, percent: 100});
         }, (error) => {
 
         });
 
-        API.getAllPosts((result) => {
+        API.getPopularPost(this.id, (result) => {
             this.setState({popularTopics: result});
+            console.log('res', result)
+
         }, (error) => {
 
         });
 
         API.getAllCategories((result) => {
             this.setState({relatedCategories: result.length < 6 ? result : result.slice(0, 6), percent: 100})
+        }, (error) => {
+
+        });
+
+        API.get('/api/blog/category/description/' + this.id, {}, (result) => {
+            console.log('res des', result);
+            this.setState({description: result})
         }, (error) => {
 
         })
@@ -63,11 +77,24 @@ export default class TopicPage extends Component {
     }
 
     renderPage() {
+        console.log('posts', this.state.data);
         return this.state.data.length === 0 ? this.renderEmptyPage() : this.renderContent()
     }
 
     renderContent() {
-        let firstItem = this.state.data[0];
+        let firstItem = this.state.data[0] || {
+            id: 11,
+            title: 'title4',
+            content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+            status: 1,
+            vote_numbers: 0,
+            visibility: 0,
+            image_path: 'assets/img/img_post/',
+            image_name: 'img_4',
+            user_id: 31,
+            created_at: '2018-07-18 17:05:28',
+            updated_at: '2018-07-18 17:06:02'
+        };
         let firstItemContent = firstItem.content.length > 200 ? firstItem.content.substr(0, 250) + '...' : firstItem.content;
         return (
             <div style={styles.contentWrapper}>
@@ -75,30 +102,28 @@ export default class TopicPage extends Component {
                     <p style={{color: 'black', fontWeight: '600'}}>FEATURED</p>
                     <div>
                         <div style={{display: 'flex', flexDirection: 'column'}}>
-                            <Link to={'/post/' + firstItem.post_id}>
-                                <a>
-                                    <img src={'https://miro.medium.com/max/1360/1*lwA85Zar22pq4lHmjgS9iw.jpeg'}
-                                         style={{width: '100%', height: 400}}/>
-                                </a>
-                            </Link>
+                            <a href={'/post?id=' + firstItem.id}>
+                                <img src={Images.imagePost(firstItem.image_post)}
+                                     style={{width: '100%', height: 400}}/>
+                            </a>
 
 
                             <h2>
-                                <Link to={'/post/' + firstItem.post_id} style={{color: 'black', textDecorationColor: 'transparent'}}>
+                                <a href={'/post?id=' + firstItem.id}
+                                   style={{color: 'black', textDecorationColor: 'transparent'}}>
                                     <span>{firstItem.title}</span>
-                                </Link>
+                                </a>
                             </h2>
-                            <p>{firstItemContent}</p>
+                            {/*<p>{firstItemContent}</p>*/}
+                            <div className="topic-post-content" dangerouslySetInnerHTML={{__html: `<span>${firstItem.content}</span>`}}/>
                             <div style={{display: 'flex', alignItems: 'center'}}>
-                                    <span className="meta-footer-thumb">
-                                        <Link to={'/author/' + firstItem.user_id}>
-								            <a>
-                                                <img className="author-thumb"
-                                                     src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
-                                                     alt="Sal"/>
-                                            </a>
-                                        </Link>
-								    </span>
+                                <span className="meta-footer-thumb">
+                                    <a href={'/author?id=' + firstItem.user_id}>
+                                        <img className="author-thumb"
+                                             src={Images.imagePost(firstItem.image_post)}
+                                             alt="Sal"/>
+                                    </a>
+                                </span>
                                 <div style={{
                                     display: 'flex',
                                     flexDirection: 'column',
@@ -107,14 +132,13 @@ export default class TopicPage extends Component {
                                 }}>
                                         <span style={{display: 'flex', flexDirection: 'column'}}>
 								            <span className="post-name">
-                                                <Link to={'/Author/' + firstItem.user_id}>
-                                                    <h6 style={{marginBottom: 0}}>Than Thai</h6>
-                                                </Link>
+                                                <a href={'/author?id=' + firstItem.user_id}>
+                                                    <h6 style={{marginBottom: 0}}>{firstItem.author_name}</h6>
+                                                </a>
                                             </span>
                                             <div>
-                                                <span style={{marginTop: 0}}>{moment(firstItem.created_at).format('DD MMM YYYY')}</span>
-                                                {/*<span className="dot"/>*/}
-                                                {/*<span>6 min read</span>*/}
+                                                <span
+                                                    style={{marginTop: 0}}>{moment(firstItem.created_at).format('DD MMM YYYY')}</span>
                                             </div>
 								        </span>
                                 </div>
@@ -138,35 +162,35 @@ export default class TopicPage extends Component {
                                             flex: 3,
                                             marginBottom: 20
                                         }} key={index}>
-                                            <Link to={'/post/' + item.post_id}
-                                                  style={{color: 'black', textDecorationColor: 'transparent'}}>
+                                            <a href={'/post?id=' + item.id}
+                                               style={{color: 'black', textDecorationColor: 'transparent'}}>
                                                 <h6 style={{marginBottom: 0}}>{item.title}</h6>
-                                            </Link>
-                                            <p style={{color: 'rgba(0,0,0,0.54)', marginBottom: 0}}>{itemContent}</p>
+                                            </a>
+                                            <div className="topic-post-content-small" dangerouslySetInnerHTML={{__html: `<span>${firstItem.content}</span>`}}/>
                                             <div style={{display: 'flex', alignItems: 'center'}}>
-                                                <Link to={'/author/' + item.user_id}
-                                                      style={{color: 'black', textDecorationColor: 'transparent'}}>
+                                                <a href={'/author?id=' + item.user_id}
+                                                   style={{color: 'black', textDecorationColor: 'transparent'}}>
                                                         <span style={{
                                                             color: 'rgba(0,0,0,0.54)',
                                                             fontSize: 12,
                                                             marginTop: 0
-                                                        }}>New York Times Magazine</span>
-                                                </Link>
+                                                        }}>{item.author_name}</span>
+                                                </a>
                                                 {/*<span className="dot"/>*/}
                                                 {/*<span*/}
-                                                    {/*style={{*/}
-                                                        {/*color: 'rgba(0,0,0,0.54)',*/}
-                                                        {/*fontSize: 12*/}
-                                                    {/*}}>4 min read</span>*/}
+                                                {/*style={{*/}
+                                                {/*color: 'rgba(0,0,0,0.54)',*/}
+                                                {/*fontSize: 12*/}
+                                                {/*}}>4 min read</span>*/}
                                             </div>
                                         </div>
                                         <div style={{flex: 1}}>
-                                            <Link to={'/post/' + item.post_id}
-                                                  style={{color: 'black', textDecorationColor: 'transparent'}}>
+                                            <a href={'/post?id=' + item.id}
+                                               style={{color: 'black', textDecorationColor: 'transparent'}}>
                                                 <img
-                                                    src={'https://miro.medium.com/max/320/1*R_148RUf_824I3KD58sZDw.jpeg'}
+                                                    src={Images.imagePost(item.image_post)}
                                                     style={{width: '100%', height: 100}}/>
-                                            </Link>
+                                            </a>
                                         </div>
                                     </div>
                                 )
@@ -174,9 +198,13 @@ export default class TopicPage extends Component {
                         }
                     </div>
                 </section>
-                <section style={styles.rightContent}>
-                    <h3>Culture</h3>
-                    High, low, and sideways.
+                <
+                    section
+                    style={styles.rightContent
+                    }>
+                    <h3> {this.state.description ? this.state.description.name : ''}</h3>
+                    High, low, and
+                    sideways.
                     <div className="section-title" style={{marginTop: 50}}>
                         <h6>
                             <span>RELATED TOPICS</span>
@@ -185,12 +213,12 @@ export default class TopicPage extends Component {
                     {
                         this.state.relatedCategories.map((item, index) => {
                             return (
-                                <Link to={'/'} style={{
+                                <a href={'/topic?id=' + item.id} style={{
                                     textDecorationColor: 'transparent',
                                     color: 'rgba(0,0,0,0.54)',
                                     fontSize: 14,
                                     marginBottom: 5
-                                }}><span key={index}>{item.name.toUpperCase()}</span></Link>
+                                }}><span key={index}>{item.name.toUpperCase()}</span></a>
                             )
                         })
                     }
@@ -204,20 +232,22 @@ export default class TopicPage extends Component {
                     {
                         this.state.popularTopics.map((item, index) => {
                             return (
-                                <Link to={'/post/' + item.post_id} style={{color: 'black', textDecorationColor: 'transparent'}} key={index}>
+                                <Link to={'/post/' + item.post_id}
+                                      style={{color: 'black', textDecorationColor: 'transparent'}} key={index}>
                                     <div style={{marginBottom: 10, display: 'flex', flexDirection: 'row'}}>
                                         <div style={{display: 'flex', flexDirection: 'column', flex: 4}}>
-                                            <span style={{fontWeight: '600'}}>{item.title}</span>
-                                            <span
-                                                style={{
-                                                    fontSize: 13,
-                                                    color: 'rgba(0,0,0,0.84)'
-                                                }}>{item.content.length < 30 ? item.content : item.content.slice(0, 30) + '...'}</span>
+                                            <span className="topic-post-title-popular" style={{fontWeight: '600'}}>{item.title}</span>
+                                            {/*<span*/}
+                                                {/*style={{*/}
+                                                    {/*fontSize: 13,*/}
+                                                    {/*color: 'rgba(0,0,0,0.84)'*/}
+                                                {/*}}>{item.content.length < 30 ? item.content : item.content.slice(0, 30) + '...'}</span>*/}
+                                            <div className="topic-post-content-popular" dangerouslySetInnerHTML={{__html: `<span>${firstItem.content}</span>`}}/>
                                         </div>
                                         <div style={{flex: 1}}>
                                             <a>
                                                 <img
-                                                    src={'https://miro.medium.com/max/110/1*QjBLlFPJ4vZAlWfa0G_eng.jpeg'}
+                                                    src={Images.imagePost(item.image_post)}
                                                     style={{width: 50, height: 50}}/>
                                             </a>
                                         </div>

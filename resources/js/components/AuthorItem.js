@@ -1,10 +1,7 @@
 import React, {Component} from 'react'
 import Images from "../Themes/Images";
 import Colors from "../Themes/Colors";
-
-import {
-    Link
-} from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 
 export default class AuthorItem extends Component{
@@ -19,9 +16,9 @@ export default class AuthorItem extends Component{
             <div style={styles.container}>
                 <img style={styles.avatar} src={Images.demopic.img10} alt=""/>
                 <div>
-                    <Link to={'/author/1'} style={styles.authorNameWrapper}>
-                        <h3 style={styles.authorName}>Android developer</h3>
-                    </Link>
+                    <a href={'/author?id=1'} style={styles.authorNameWrapper}>
+                        <h3 style={styles.authorName}>{this.props.data.name}</h3>
+                    </a>
                     <span style={styles.authorDescription}>News and announcements for developers from the Android team.</span>
                 </div>
             </div>
@@ -36,7 +33,7 @@ const styles = {
         flexDirection: 'row'
     },
     avatar: {
-        width: 50,
+        width: 75,
         height: 50,
         borderRadius: '50%',
         marginRight: 15
@@ -59,4 +56,8 @@ const styles = {
         marginTop: 10,
         color: Colors.text.black64
     }
+};
+
+AuthorItem.propTypes = {
+    data: PropTypes.object
 };

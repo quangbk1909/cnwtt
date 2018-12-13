@@ -20,41 +20,43 @@ export default class StoryItem extends Component {
 
         const data = this.props.data;
         const createDate = data.createdDate;
-        // let dateStr = moment(createDate).format('DD MMM YYYY');
+        console.log('storeis items', data);
         let dateStr = moment(data.date_created.date).format('DD MMM YYYY');
+        let content = data.content.length > 150 ? (data.content.substr(0, 147) + '...') : data.content;
 
         return (
             <div className="card">
-                <Link to={'/Post/' + data.post_id}>
-                    <img className="img-fluid" src={Images.demopic.img10} alt=""/>
-                </Link>
+                <a href={'/post?id=' + data.post_id} style={{overflow: 'hidden'}}>
+                    <img className="img-fluid" src={Images.imagePost(data.image_post)} alt="" style={{height: 150, width: '100%'}}/>
+                </a>
                 <div className="card-block">
                     <h2 className="card-title">
-                        <Link to={'/Post/' + data.post_id}>
-                            <span>{data.title}</span>
-                        </Link>
+                        <a href={'/post?id=' + data.post_id}>
+                            <span className="story-item">{data.title.length < 100 ? data.title : data.title.substr(0, 97) + '...'}</span>
+                        </a>
                     </h2>
-                    <h4 className="card-text">{data.content}</h4>
+                    {/*<h4 className="card-text">{content}</h4>*/}
+                    <div className="content-post" dangerouslySetInnerHTML={{__html: `<span>${data.content}</span>`}}/>
                     <div className="metafooter">
                         <div className="wrapfooter">
 						<span className="meta-footer-thumb">
-                            <Link to={'author/' + data.author_id}>
+                            <a href={'author?id=' + data.author_id}>
                                 <img className="author-thumb"
-                                     src={Images.demopic.img7}
+                                     src={Images.avatar(data.avatar)}
                                      alt="Sal"/>
-                            </Link>
+                            </a>
 						</span>
                             <span className="author-meta">
 						        <span className="post-name">
-                                    <Link to={'/Author/' + data.author_id}>
+                                    <a href={'/author?id=' + data.author_id}>
                                         <span>{data.author_name}</span>
-                                    </Link>
+                                    </a>
                                 </span>
                                 <br/>
 						        <span className="post-date">{dateStr}</span>
 						    </span>
                             <span className="post-read-more">
-                                <Link to={'/Post/' + data.post_id}>
+                                <a href={'/post?id=' + data.post_id}>
                                 <span title="Read Story">
                                     <svg className="svgIcon-use" width="25" height="25" viewBox="0 0 25 25">
                                         <path
@@ -63,7 +65,7 @@ export default class StoryItem extends Component {
                                         </path>
                                     </svg>
                                 </span>
-                                </Link>
+                                </a>
                             </span>
                         </div>
                     </div>
