@@ -14,10 +14,28 @@ class CategoryController extends Controller
         return response() -> json($mainCate);
     }
 
-    public function getCategoryPost(Request $request){
+    public function getCategoryPostFromNewest(){
         $nameCategory = Input::get('name');
         $category = Category::where('name',$nameCategory)->first();
-        $categoryPost = $category->posts()->get();
+        $categoryPost = $category->posts()->orderBy('created_at','DESC')->get();
         return response() -> json($categoryPost);
+    }
+
+    public function getCategoryPostPopular(){
+        $nameCategory = Input::get('name');
+        $category = Category::where('name',$nameCategory)->first();
+        $categoryPost = $category->posts()->orderBy('vote_numbers','DESC')->get();
+        return response() -> json($categoryPost);
+    }
+
+    public function getDescription($categoryID){
+        $category = Category::find($categoryID);
+        return response() -> json(
+            [
+                'id'=>$category->id,
+                'name'=>$category->name,
+                // 'description'=>$category->description
+            ]
+            );
     }
 }
