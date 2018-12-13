@@ -126,7 +126,25 @@ class PostController extends Controller
     }
 
     public function getRecommendItems(){
-        $post = Post::inRandomOrder()->take(3)->get();
-        return response() ->json($post);
+        $posts = Post::inRandomOrder()->take(3)->get();
+        $responseArray = array();
+        foreach ($posts as $post){
+            $userOfPost = User::where('id',$post->user_id)->first();
+
+            $arrayPost = array();
+            $arrayPost["post_id"] = $post->id;
+            $arrayPost["title"] = $post->title;
+            $arrayPost["content"] = $post->content;
+            $arrayPost["date_created"] = $post->created_at;
+            $arrayPost["vote"] =$post->vote_numbers;
+            $arrayPost["image_post"] = $post->image_name;
+            $arrayPost["author_id"] = $userOfPost->id;
+            $arrayPost["author_name"] = $userOfPost->name;
+            $arrayPost["avatar"] = $userOfPost->image_link;
+
+            array_push($responseArray,$arrayPost);
+        }
+        // json_encode($responseArray);
+        return response() -> json($responseArray);
     }
 }
