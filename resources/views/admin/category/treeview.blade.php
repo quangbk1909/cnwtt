@@ -1,7 +1,7 @@
 <li>
 	<span>
 		@if ($category->hasChildren())
-			<i class="fas fa-minus"></i>
+			<i class="fas fa-plus"></i>
 		@endif	
 		{{$category->name}}
 	</span>

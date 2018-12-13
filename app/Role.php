@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     protected $table = "roles";
-    public $timestamp = false;
+    public $timestamps = false;
 
     public function permission(){
     	return $this->belongsToMany('App\Permission','role_permission','role_id','permission_id');

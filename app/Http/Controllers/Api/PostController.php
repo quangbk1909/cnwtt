@@ -66,4 +66,6 @@ class PostController extends Controller
         $post->save();
         return response() -> json($post);
     }
+
+    
 }

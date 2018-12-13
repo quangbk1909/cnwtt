@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Role;
 use App\Permission;
+use App\Post;
 
 class UserController extends Controller
 {
@@ -169,6 +170,45 @@ class UserController extends Controller
         } else {
             return redirect()->back()->with('warning', 'Select user before click delete');
         }
+    }
+
+    public function getDataPoint(){
+        $users = User::all();
+        $dateCreatedUsers = array();
+        $dataPoints = array();
+        foreach ($users as $user) {
+            $dateCreatedUsers[] = substr($user->created_at, 0, 10);
+        }
+
+        foreach (array_count_values($dateCreatedUsers) as $key =>$value){
+            $data = (object) array('date' => $key, 'number' =>$value); 
+            $dataPoint[] = $data;
+        };
+
+        return json_encode($dataPoint);
+    }
+
+    public function getStatistical(){
+        $numberUser = User::all()->count();
+        $userEarliest = User::orderBy('created_at','asc')->take(1)->first();
+        $now = time();
+        $datediff = time() - strtotime($userEarliest->created_at);
+        $daydiff = ceil($datediff/(60*60*24));
+        $userPerDay = round($numberUser/$daydiff,1);
+
+        $posts = Post::all();
+        $postPerDay = round($posts->count()/$daydiff,1);
+        $vote = 0;
+        $view = 0;
+        foreach ($posts as $post) {
+            $vote += $post->vote_numbers;
+            $view += $post->views;
+        }
+
+        $votePerPost = round($vote/$posts->count(),1);
+        $viewPerPost = round($view/$posts->count(),1);
+
+        return view('admin.statistical', compact('userPerDay','postPerDay','votePerPost','viewPerPost'));
     }
 
 }

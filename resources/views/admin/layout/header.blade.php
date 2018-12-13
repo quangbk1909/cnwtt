@@ -12,8 +12,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="dropdown ml-auto">
                 <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{Auth::user()->image_link}}" class="rounded-circle" height="45" width="45" alt="">
-                    <span class="mx-2">{{Auth::user()->email}}</span>
+                    <img src= "{{Auth::user()->image_link}}"  class="rounded-circle" height="45" width="45" alt="">
+                    <span class="mx-2">{{Auth::user()->username}}</span>
                     <i class="fas fa-caret-down"></i>
                 </a>
 

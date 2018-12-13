@@ -44,7 +44,7 @@
 
     <div class="row ">
         <div class="offset-md-3 col-md-6">
-            <form action="admin/category/create" method="POST">
+            <form action="admin/role/create" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -76,30 +76,5 @@
 
     
 </div>
-
-@endsection
-
-@section('script')
-    <script>
-        $(function () {
-            $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
-            $('.tree li.parent_li > span').on('click', function (e) {
-                var children = $(this).parent('li.parent_li').find(' > ul > li');
-                if (children.is(":visible")) {
-                    children.hide('fast');
-                    $(this).attr('title', 'Expand this branch').find(' > svg').attr('data-icon', 'plus');;
-                } else {
-                    children.show('fast');
-                    $(this).attr('title', 'Collapse this branch').find(' > svg').attr('data-icon', 'minus');;
-                }
-                e.stopPropagation();
-            });
-        });
-
-        $(document).ready(function(){
-            var children = $('li.parent_li > ul > li');
-            children.hide();
-        });
-    </script>
 
 @endsection

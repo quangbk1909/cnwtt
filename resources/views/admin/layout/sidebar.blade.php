@@ -20,9 +20,11 @@
                 <li>
                     <a href="admin/user/myprofile">My profile</a>
                 </li>
+                @can('user.view')
                 <li>
                     <a href="admin/user/show">List</a>
                 </li>
+                @endcan
             </ul>
         </li>
         <li >
@@ -32,7 +34,7 @@
             </a>
             <ul class="collapse list-unstyled" id="postSubmenu">
                 <li>
-                    <a href="admin/post/show" class="active">Show</a>
+                    <a href="admin/post/show" class="active">List</a>
                 </li>
                 <li>
                     <a href="admin/post/create">Create</a>
@@ -46,11 +48,13 @@
             </a>
             <ul class="collapse list-unstyled" id="categorySubmenu">
                 <li>
-                    <a href="admin/category/show" class="active">Show</a>
+                    <a href="admin/category/show" class="active">List</a>
                 </li>
+                @can('category.create')
                 <li>
                     <a href="admin/category/create">Create</a>
                 </li>
+                @endcan
             </ul>
         </li>
         <li>
@@ -62,13 +66,18 @@
                 <li>
                     <a href="admin/role/show" class="active">List</a>
                 </li>
+                @can('role.create')
                 <li>
                     <a href="admin/role/create">Create</a>
                 </li>
-                <li>
-                    <a href="admin/role/permission">Permission Edit</a>
-                </li>
+                @endcan
             </ul>
+        </li>
+        <li>
+            <a href="admin/statistical">
+                <i class="fas fa-chart-line"></i>
+                <span>Statistical</span>
+            </a>
         </li>
     </ul>
 </nav>

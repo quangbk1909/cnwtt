@@ -71,7 +71,14 @@
                             </td>
                             <td>{{$tCategory->created_at}}</td>
                             <td>{{$tCategory->updated_at}}</td>
-                            <td><a href="admin/category/edit/{{$tCategory->id}}"><i class="fas fa-pencil-alt"></i> Edit</a> | <a href="admin/category/delete/{{$tCategory->id}}"  onclick="return confirm('Are you sure to delete category {{$tCategory->name}}?');"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                            <td>
+                                @can('category.edit')
+                                <a href="admin/category/edit/{{$tCategory->id}}"><i class="fas fa-pencil-alt"></i> Edit</a> |
+                                @endcan
+                                @can('category.delete')
+                                <a href="admin/category/delete/{{$tCategory->id}}"  onclick="return confirm('Are you sure to delete category {{$tCategory->name}}?');"><i class="fas fa-trash-alt"></i> Delete</a>
+                                @endcan
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -98,6 +105,11 @@
                 }
                 e.stopPropagation();
             });
+        });
+
+        $(document).ready(function(){
+            var children = $('li.parent_li > ul > li');
+            children.hide();
         });
     </script>
 

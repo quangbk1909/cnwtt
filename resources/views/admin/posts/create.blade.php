@@ -98,7 +98,6 @@
 								@endforeach								
 							</div>								
 						</div>
-						<a href=""> Create new category</a>	
 					</div>	
 				</div>
 			</div>

@@ -109,6 +109,7 @@ class PostController extends Controller
     			$file->move($post->image_path,$name);
     		} else {
     			$post->image_name = $name;
+                $post->image_path = 'assets/img/img_post/';
     			$file->move($post->image_path,$name);			
     		}
     	}
@@ -173,6 +174,22 @@ class PostController extends Controller
         } else {
             return redirect()->back()->with('warning', 'Select post before click delete');
         }
+    }
+
+    public function getDataPoint(){
+        $posts = Post::all();
+        $dateCreatedPosts = array();
+        $dataPoints = array();
+        foreach ($posts as $post) {
+            $dateCreatedPosts[] = substr($post->created_at, 0, 10);
+        }
+
+        foreach (array_count_values($dateCreatedPosts) as $key =>$value){
+            $data = (object) array('date' => $key, 'number' =>$value); 
+            $dataPoint[] = $data;
+        };
+
+        return json_encode($dataPoint);
     }
 
 }

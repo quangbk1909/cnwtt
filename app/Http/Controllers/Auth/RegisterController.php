@@ -84,7 +84,8 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-
+        $user->image_link = 'assets/img/avatar-default.png';
+        $user->save();
         $verifyUser = VerifyUser::create([
             'user_id' => $user->id,
             'token' => str_random(40),

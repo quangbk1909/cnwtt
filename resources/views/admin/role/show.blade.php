@@ -57,12 +57,22 @@
                     <tr>
                         <td>{{$role->name}}</td>
                         <td>{{$role->description}}</td>
-                        <td ><a href="admin/role/update/{{$role->id}}"><i class="fas fa-pencil-alt"></i> Update</a> | <a href="admin/role/delete/{{$role->id}}" onclick="return confirm('Are you sure to delete user?');"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                        @if(($role->slug == 'user') || ($role->slug == 'admin'))
+                            <td></td>
+                        @else
+                            <td >
+                                @can('role.update')    
+                                <a href="admin/role/edit/{{$role->id}}"><i class="fas fa-pencil-alt"></i> Update</a> |
+                                @endcan
+                                @can('role.delete')
+                                <a href="admin/role/delete/{{$role->id}}" onclick="return confirm('Are you sure to delete user?');"><i class="fas fa-trash-alt"></i> Delete</a>
+                                @endcan
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>
         </table>
-    </form>
     <!-- Table -->
     
 </div>

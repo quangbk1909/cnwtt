@@ -10,10 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\User;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('admin');
 });
 
 
@@ -34,8 +33,7 @@ Route::post('change-password', 'Auth\ResetPasswordController@changePassword');
 
 
 
-Route::group(['prefix' => 'admin'], function() {
-	//Auth::login(User::find(31));
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
 	Route::get('/', function(){
 		return view('admin.dashboard');
 	});
@@ -45,52 +43,58 @@ Route::group(['prefix' => 'admin'], function() {
 	    Route::get('myprofile', 'UserController@getUserSetting');	
 		Route::post('update-info', 'UserController@postUpdateInfo');
 		Route::post('update-password', 'UserController@postUpdatePassword');
-		Route::get('show', 'UserController@getShow');
-		Route::get('permission/{id}','UserController@getPermission');
+		Route::get('show', 'UserController@getShow')->middleware('can:user.view');
+		Route::get('permission/{id}','UserController@getPermission')->middleware('can:user.authorize');
 		Route::post('permission/{id}', 'UserController@postPermission');
-		Route::get('update/{id}', 'UserController@getUpdate');
+		Route::get('update/{id}', 'UserController@getUpdate')->middleware('can:user.update');
 		Route::post('update/{id}', 'UserController@postUpdate');
 
 		Route::get('ajax/changerole' , 'UserController@getChangeRole');
-		Route::get('delete/{id}', 'UserController@getDelete');
-		Route::post('delete/all','UserController@postDeleteAllBulked');
+		Route::get('delete/{id}', 'UserController@getDelete')->middleware('can:user.delete');
+		Route::post('delete/all','UserController@postDeleteAllBulked')->middleware('can:user.delete');
+
+		Route::get('data-point','UserController@getDataPoint');
+
 
 	});
 
 	Route::group(['prefix' => 'post'], function() {
 
-	    Route::get('show', 'PostController@getShow');
-	    Route::get('create','PostController@getCreate');
+	    Route::get('show', 'PostController@getShow')->middleware('can:post.view');
+	    Route::get('create','PostController@getCreate')->middleware('can:post.create');
 	    Route::post('create', 'PostController@postCreate');
-	    Route::get('edit/{id}', 'PostController@getEdit');
+	    Route::get('edit/{id}', 'PostController@getEdit')->middleware('can:post.update');
 	    Route::post('edit/{id}', 'PostController@postEdit');
-	    Route::get('delete/{id}', 'PostController@getDelete');
+	    Route::get('delete/{id}', 'PostController@getDelete')->middleware('can:post.delete');
 	    Route::post('delete/all', 'PostController@postDeleteAll');
+	    Route::get('data-point','PostController@getDataPoint')->middleware('can:post.delete');
+
 
 	});
 
 	Route::group(['prefix' => 'category'], function() {
 	    
-		Route::get('show', 'CategoryController@getShow');
-		Route::get('create', 'CategoryController@getCreate');
+		Route::get('show', 'CategoryController@getShow')->middleware('can:category.view');
+		Route::get('create', 'CategoryController@getCreate')->middleware('can:category.create');
 		Route::post('create', 'CategoryController@postCreate');
-		Route::get('edit/{id}', 'CategoryController@getEdit');
+		Route::get('edit/{id}', 'CategoryController@getEdit')->middleware('can:category.update');
 		Route::post('edit/{id}', 'CategoryController@postEdit');
-		Route::get('delete/{id}', 'CategoryController@getDelete');
+		Route::get('delete/{id}', 'CategoryController@getDelete')->middleware('can:category.delete');
 
 	});
 
 	Route::group(['prefix' => 'role'], function() {
 	    
-		Route::get('show', 'RoleController@getShow');
-		Route::get('create', 'RoleController@getCreate');
+		Route::get('show', 'RoleController@getShow')->middleware('can:role.view');
+		Route::get('create', 'RoleController@getCreate')->middleware('can:role.create');
 		Route::post('create', 'RoleController@postCreate');
-		Route::get('edit/{id}', 'RoleController@getEdit');
+		Route::get('edit/{id}', 'RoleController@getEdit')->middleware('can:role.update');
 		Route::post('edit/{id}', 'RoleController@postEdit');
-		Route::get('delete/{id}', 'RoleController@getDelete');
-		Route::
+		Route::get('delete/{id}', 'RoleController@getDelete')->middleware('can:role.delete');
 
 	});
+
+	Route::get('statistical', 'UserController@getStatistical')->middleware('can:statistical');
 
     
 });

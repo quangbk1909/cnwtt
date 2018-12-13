@@ -23,8 +23,13 @@ class CategoryController extends Controller
    		$categoryRoots = Category::where('level','=',0)->orderBy('lft','asc')->get();
    		$categories = Category::all();
    		$cCategory = Category::find($id);
-   		$parentCategory = $cCategory->currentParent();
-   		return view('admin.category.edit',compact('categoryRoots','categories','cCategory','parentCategory'));
+         if($cCategory){
+            $parentCategory = $cCategory->currentParent();
+            return view('admin.category.edit',compact('categoryRoots','categories','cCategory','parentCategory'));
+         }else{
+            return redirect('admin/category/show')->with('warning','No category has this id');
+         }
+   		
    	}
 
       public function postCreate(Request $request){
@@ -79,8 +84,13 @@ class CategoryController extends Controller
 
       public function getDelete($id){
          $category = Category::find($id);
-         $category->remove();
-         return redirect()->back()->with('success','Delete category successfully!');
+         if($category){
+            $category->remove();
+            return redirect()->back()->with('success','Delete category successfully!');
+         }else{
+            return redirect()->back()->with('warning','No such category!');
+         }
+         
       }
 
 }
