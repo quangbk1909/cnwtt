@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
 import Images from "../Themes/Images";
 
+import API from '../Services/API'
 import {
     Link
 } from 'react-router-dom'
 import moment from "moment";
+import CommentItem from "../components/CommentItem";
+import CommentView from "../components/CommentView";
 
 const recomendedItems = [
     {
@@ -43,7 +46,32 @@ export default class PostPage extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            comments: []
+        };
         console.log('props', props);
+    }
+
+    componentDidMount() {
+        this.fetchComment()
+    }
+
+    fetchComment() {
+        API.getCmt(20).then((comments) => {
+            // console.log('post', comments)
+            this.setState({comments})
+        })
+    }
+
+    saveComment(comment) {
+        if (comment.content && comment.content !== '') {
+            API.saveComment(20, comment, (result) => {
+                this.fetchComment();
+                console.log('save success', result)
+            }, (error) => {
+                console.log('save error', error)
+            })
+        }
     }
 
     renderRecommendedItem() {
@@ -235,6 +263,9 @@ export default class PostPage extends Component {
 
                     </div>
                 </div>
+
+                <CommentView comments={this.state.comments} saveComment={(comment) => this.saveComment(comment)}/>
+
                 <div className="hideshare"/>
                 <div className="graybg">
                     <div className="container">

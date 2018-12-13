@@ -8,6 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+    use FullTextSearchTrait;
+    protected $searchable = [
+        'name',
+    ];
     /**
      * The attributes that are mass assignable.
      *

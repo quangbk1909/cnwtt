@@ -16,6 +16,12 @@ Route::get('/', function () {
 });
 
 
+Route::get('/post/{post_id}', function () {
+    return view('welcome');
+});
+
+
+
 Route::get('test', 'Controller@test');
 
 Route::get('register', 'Auth\RegisterController@getRegistration');
@@ -91,6 +97,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
 		Route::get('edit/{id}', 'RoleController@getEdit')->middleware('can:role.update');
 		Route::post('edit/{id}', 'RoleController@postEdit');
 		Route::get('delete/{id}', 'RoleController@getDelete')->middleware('can:role.delete');
+
 
 	});
 

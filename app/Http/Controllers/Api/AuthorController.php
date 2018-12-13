@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Input;
 class AuthorController extends Controller
 {
     public function getCurrentAuthor(){
-        if (Auth::check()){
         $user = Auth::user();
         $allPostOfUser = Post::where('user_id',$user->id)->get();
 
@@ -24,8 +23,14 @@ class AuthorController extends Controller
         $userWithAllPost["posts"] = $allPostOfUser;
 
         return response() -> json($userWithAllPost);
-        } else {
-            dd("hello");
+    }
+    
+    public function checkUserExist(){
+        if (Auth::check()){
+            return response() -> json(['status_logged_in'=>true]);
+        }
+        else {
+            return response() -> json(['status_logged_in'=>false]);
         }
     }
 

@@ -6,7 +6,7 @@ import {
     NavLink,
 } from 'react-router-dom'
 
-import {} from 'react-router'
+import {withRouter} from 'react-router'
 
 import logo from '../Assets/logo.png'
 
@@ -64,7 +64,7 @@ const categories = [
 
 const dIconSearch = 'M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z';
 
-export default class NavigationBar extends Component {
+class NavigationBar extends Component {
 
     constructor(props) {
         super(props);
@@ -85,6 +85,16 @@ export default class NavigationBar extends Component {
     navigateSearchScreen() {
         console.log(this);
         this.props.history.push('/post')
+    }
+
+    onPressSearch(evt) {
+        if (evt.key === 'Enter') {
+            this.props.history.push({
+                pathname: '/search',
+                search: 'text=' + this.state.keyword
+            });
+            this.setState({keyword: ''})
+        }
     }
 
     render() {
@@ -117,15 +127,16 @@ export default class NavigationBar extends Component {
                                     <span>Author</span>
                                 </NavLink>
                                 <div style={styles.searchContainer}>
-                                    <form className="form-inline my-2 my-lg-0" method="GET" action="api/searchList">
+                                    <div className="form-inline my-2 my-lg-0">
                                         <input className="form-control mr-sm-2" name="textSearch" type="text" value={this.state.keyword}
                                                placeholder="Search"
+                                               onKeyPress={(evt) => this.onPressSearch(evt)}
                                                onChange={event => this.updateInputValue(event)}/>
 
                                         {
                                             this.state.keyword.trim().length > 0 || true ?
                                                 (
-                                                    <Link to={'/search'}>
+                                                    <Link to={{pathname: '/search', search: 'text=' + this.state.keyword}}>
                                                         <span className="search-icon">
                                                             <svg className="svgIcon-use" width="25" height="25" viewBox="0 0 25 25">
                                                                 <path d={dIconSearch}/>
@@ -141,7 +152,7 @@ export default class NavigationBar extends Component {
                                                     </span>
                                                 )
                                         }
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </NavItem>
@@ -151,6 +162,8 @@ export default class NavigationBar extends Component {
         );
     }
 }
+
+export default withRouter(NavigationBar)
 
 const styles = {
     container: {
