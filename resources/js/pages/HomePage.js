@@ -91,6 +91,7 @@ export default class HomePage extends Component {
         super(props);
         this.state = {
             featuredItems: [],
+            storiesItems: [],
             categories: [],
             percent: 0
         }
@@ -98,9 +99,15 @@ export default class HomePage extends Component {
 
 
     componentDidMount() {
-        api.getAllPosts((result) => {
+        api.getAllPostByVote((result) => {
             this.setState({featuredItems: result});
             console.log('post', result);
+        }, (error) => {
+
+        });
+
+        api.getAllPostsRandom((result) => {
+            this.setState({storiesItems: result})
         }, (error) => {
 
         });
@@ -135,9 +142,9 @@ export default class HomePage extends Component {
 
                 <div style={{width: '80%', alignSelf: 'center'}}>
                     <div style={styles.top}>
-                        <h1 className="sitetitle">Mediumish</h1>
-                        <p style={{fontSize: 20, fontWeight: '300', color: '#292b2c'}}>Bootstrap theme, medium style,
-                            simply perfect for bloggers</p>
+                        <h1 className="sitetitle">Welcome to HustBlog</h1>
+                        <p style={{fontSize: 20, fontWeight: '300', color: '#292b2c'}}>We’ll deliver the best stories
+                            and ideas on the topics you care about most straight to your homepage, app, or inbox.</p>
                     </div>
 
                     <section className="featured-post">
@@ -164,8 +171,8 @@ export default class HomePage extends Component {
                         </div>
 
                         <div className="card-columns listrecent">
-                        {
-                                this.state.featuredItems.map((item, index) => {
+                            {
+                                this.state.storiesItems.map((item, index) => {
                                     return <StoryItem data={item} key={index}/>
                                 })
                             }
@@ -203,7 +210,9 @@ const styles = {
         display: 'flex',
         width: '100%',
         flexDirection: 'column',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: 10,
+        marginTop: 10,
     },
     featuredPost: {},
     sectionTitle: {
@@ -217,7 +226,7 @@ const styles = {
         display: 'flex',
         flexDirection: 'row',
         position: 'fixed',
-        zIndex:100,
+        zIndex: 100,
         marginTop: -22,
         paddingTop: 10,
         paddingBottom: 10,

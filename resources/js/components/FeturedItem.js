@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import PropTypes from 'prop-types'
 
 import moment from 'moment'
-import {Link} from "react-router-dom";
 import Images from "../Themes/Images";
 
 export default class FeturedItem extends Component {
@@ -24,39 +23,39 @@ export default class FeturedItem extends Component {
             <div className="card">
                 <div className="row" style={{flexWrap: 'wrap'}}>
                     <div className="col-md-5 wrapthumbnail">
-                        <Link to={{pathname: '/post/' + data.post_id}}>
+                        <a href={'/post?id=' + data.post_id}>
                             <img className="thumbnail" src={Images.demopic.img10} style={{width: 200, height: '100%'}}/>
-                        </Link>
+                        </a>
                     </div>
                     <div className="col-md-7">
                         <div className="card-block">
                             <h2 className="card-title">
-                                <Link to={{pathname: '/post/' + data.post_id}}
-                                      style={{marginRight: 20, textDecorationColor: 'transparent'}}>
+                                <a href={'/post?id=' + data.post_id}
+                                   style={{marginRight: 20, textDecorationColor: 'transparent'}}>
                                     <span>{data.title}</span>
-                                </Link>
+                                </a>
                             </h2>
                             <h4 className="card-text">{content}</h4>
                             <div className="metafooter">
                                 <div className="wrapfooter">
 								<span className="meta-footer-thumb">
-                                    <Link to={'/Author/' + data.author_id}>
+                                    <a href={'/author?id=' + data.author_id}>
                                         <img className="author-thumb"
                                              src={Images.demopic.img7}
                                              alt="Sal"/>
-                                    </Link>
+                                    </a>
 								</span>
                                     <span className="author-meta">
 								        <span className="post-name">
-                                            <Link to={'/Author/' + data.author_id}>
+                                            <a href={'/author?id=' + data.author_id}>
                                                 <span>{data.author_name}</span>
-                                            </Link>
+                                            </a>
                                         </span>
                                         <br/>
 								        <span className="post-date">{dateStr}</span>
 								    </span>
                                     <span className="post-read-more">
-                                        <Link to={'/post/' + data.author_id}>
+                                        <a href={'/post?id=' + data.post_id}>
                                         <span title="Read Story">
                                             <svg className="svgIcon-use" width="25" height="25" viewBox="0 0 25 25">
                                                 <path
@@ -64,7 +63,7 @@ export default class FeturedItem extends Component {
                                                     fillRule="evenodd"/>
                                             </svg>
                                         </span>
-                                        </Link>
+                                        </a>
                                     </span>
                                 </div>
                             </div>

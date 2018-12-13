@@ -28,8 +28,9 @@ class ResultPage extends Component {
 
     search() {
         this.setState({loading: true});
-        API.search(this.state.keyword).then((posts) => {
-            this.setState({posts, percent: 100, loading: false});
+        API.search(this.state.keyword).then((results) => {
+            this.setState({posts: results.posts, authors: results.authors, percent: 100, loading: false});
+            console.log('search', results)
         })
     }
 
@@ -89,7 +90,7 @@ class ResultPage extends Component {
                                 <span style={styles.title}>AUTHOR</span>
                                 {
                                     this.state.authors.map((item, index) => {
-                                        return <AuthorItem key={index}/>
+                                        return <AuthorItem key={index} data={item}/>
                                     })
                                 }
                                 {

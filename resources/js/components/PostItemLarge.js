@@ -1,9 +1,6 @@
 import React, {Component} from 'react'
 import Images from "../Themes/Images";
 import PropTypes from 'prop-types';
-import {
-    Link
-} from 'react-router-dom'
 
 import '../CSS/mediumish.css'
 import '../CSS/bootstrap.min.css'
@@ -18,14 +15,14 @@ export default class PostItemLarge extends Component {
         return (
             <div className="authorpostbox" style={styles.authorPostBox}>
                 <div className="card">
-                    <Link to={'/post/1'}>
+                    <a href={'/post?id=' + data.id}>
                         <img className="img-fluid img-thumb" src={Images.demopic.img8} alt=""/>
-                    </Link>
+                    </a>
                     <div className="card-block">
                         <h4 className="card-title">
-                            <Link to={'/post/1'} style={styles.cardTitle}>
+                            <a href={'/post?id=' + data.id} style={styles.cardTitle}>
                                 <span>{data.title}</span>
-                            </Link>
+                            </a>
                         </h4>
                         <h6 className="card-text">{data.content}</h6>
                         <div className="metafooter">
@@ -39,9 +36,9 @@ export default class PostItemLarge extends Component {
                                 </span>
                                 <span className="author-meta">
                                     <span className="post-name">
-                                        <Link to={'/author/1'}>
+                                        <a href={'/author?id=' + data.user_id}>
                                             <span>Sal</span>
-                                        </Link>
+                                        </a>
                                     </span>
                                     <br/>
                                     <span className="post-date">22 July 2017</span>
@@ -49,7 +46,7 @@ export default class PostItemLarge extends Component {
                                     <span className="post-read">6 min read</span>
                                 </span>
                                 <span className="post-read-more">
-                                    <Link to={'/post/1'}>
+                                    <a href={'/post?id=' + data.id}>
                                         <span title="Read Story">
                                             <svg className="svgIcon-use" width="25" height="25"
                                                  viewBox="0 0 25 25">
@@ -58,7 +55,7 @@ export default class PostItemLarge extends Component {
                                                     fillRule="evenodd"/>
                                             </svg>
                                         </span>
-                                    </Link>
+                                    </a>
                                 </span>
                             </div>
                         </div>

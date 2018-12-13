@@ -25,36 +25,36 @@ export default class StoryItem extends Component {
 
         return (
             <div className="card">
-                <Link to={'/Post/' + data.post_id}>
+                <a href={'/post?id=' + data.post_id}>
                     <img className="img-fluid" src={Images.demopic.img10} alt=""/>
-                </Link>
+                </a>
                 <div className="card-block">
                     <h2 className="card-title">
-                        <Link to={'/Post/' + data.post_id}>
+                        <a href={'/post?id=' + data.post_id}>
                             <span>{data.title}</span>
-                        </Link>
+                        </a>
                     </h2>
                     <h4 className="card-text">{data.content}</h4>
                     <div className="metafooter">
                         <div className="wrapfooter">
 						<span className="meta-footer-thumb">
-                            <Link to={'author/' + data.author_id}>
+                            <a href={'author?id=' + data.author_id}>
                                 <img className="author-thumb"
                                      src={Images.demopic.img7}
                                      alt="Sal"/>
-                            </Link>
+                            </a>
 						</span>
                             <span className="author-meta">
 						        <span className="post-name">
-                                    <Link to={'/Author/' + data.author_id}>
+                                    <a href={'/author?id=' + data.author_id}>
                                         <span>{data.author_name}</span>
-                                    </Link>
+                                    </a>
                                 </span>
                                 <br/>
 						        <span className="post-date">{dateStr}</span>
 						    </span>
                             <span className="post-read-more">
-                                <Link to={'/Post/' + data.post_id}>
+                                <a href={'/post?id=' + data.post_id}>
                                 <span title="Read Story">
                                     <svg className="svgIcon-use" width="25" height="25" viewBox="0 0 25 25">
                                         <path
@@ -63,7 +63,7 @@ export default class StoryItem extends Component {
                                         </path>
                                     </svg>
                                 </span>
-                                </Link>
+                                </a>
                             </span>
                         </div>
                     </div>
