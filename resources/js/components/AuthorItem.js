@@ -33,7 +33,7 @@ const styles = {
         flexDirection: 'row'
     },
     avatar: {
-        width: 100,
+        width: 75,
         height: 50,
         borderRadius: '50%',
         marginRight: 15

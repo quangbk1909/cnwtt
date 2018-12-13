@@ -12,7 +12,11 @@ const Images = {
         img10: require('../assets/demopic/10.jpg'),
     },
     logo: require('../assets/logo.png'),
-    image: (path, name) => require(`../assets/${path}/${name}${name.endsWith('.jpg') || name.endsWith('.png') ? '' : '.jpg'}`)
+    imagePost: (name) => {
+        return require(`../assets/img_post/${name}`)
+        // return require('../assets/img_post/5841bf6aa33713a80c91162a5468aaef948f64f7.jpg')
+        // return this.demopic.img7
+    }
 };
 
 export default Images;

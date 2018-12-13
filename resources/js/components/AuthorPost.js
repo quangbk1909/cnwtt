@@ -21,7 +21,7 @@ export default class AuthorPost extends Component {
                                 <span>{this.props.data.title}</span>
                             </a>
                         </h2>
-                        <div dangerouslySetInnerHTML={{__html: this.props.data.content}}/>
+                        <div className="author-post-content" dangerouslySetInnerHTML={{__html: `<span>${this.props.data.content}</span>`}}/>
                         <div className="metafooter">
                             <div className="wrapfooter">
                                 <span className="meta-footer-thumb">

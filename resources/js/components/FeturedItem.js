@@ -27,7 +27,7 @@ export default class FeturedItem extends Component {
                     <div className="col-md-5 wrapthumbnail">
                         <a href={'/post?id=' + data.post_id}>
                             <img className="thumbnail"
-                                 src={Images.image('img/img_post', data.image_post)}
+                                 src={Images.imagePost(data.image_post)}
                                  // src={Images.demopic.img7}
                                  style={{width: '100%', height: '100%'}}/>
                         </a>
@@ -36,11 +36,12 @@ export default class FeturedItem extends Component {
                         <div className="card-block">
                             <h2 className="card-title">
                                 <a href={'/post?id=' + data.post_id}
-                                   style={{marginRight: 20, textDecorationColor: 'transparent'}}>
-                                    <span>{data.title}</span>
+                                   style={{marginRight: 0, textDecorationColor: 'transparent'}}>
+                                    <span className="title-post-feature">{data.title}</span>
                                 </a>
                             </h2>
-                            <h4 className="card-text">{content}</h4>
+                            {/*<h4 className="card-text">{content}</h4>*/}
+                            <div className="content-post-feature" dangerouslySetInnerHTML={{__html: `<span>${data.content}</span>`}}/>
                             <div className="metafooter">
                                 <div className="wrapfooter">
 								<span className="meta-footer-thumb">

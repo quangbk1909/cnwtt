@@ -6,6 +6,7 @@ import '../CSS/bootstrap.min.css'
 import ProgressBar from "react-progress-bar-plus";
 import API from "../Services/API";
 import moment from "moment";
+import Images from "../Themes/Images";
 
 export default class TopicPage extends Component {
 
@@ -102,7 +103,7 @@ export default class TopicPage extends Component {
                     <div>
                         <div style={{display: 'flex', flexDirection: 'column'}}>
                             <a href={'/post?id=' + firstItem.id}>
-                                <img src={'https://miro.medium.com/max/1360/1*lwA85Zar22pq4lHmjgS9iw.jpeg'}
+                                <img src={Images.imagePost(firstItem.image_post)}
                                      style={{width: '100%', height: 400}}/>
                             </a>
 
@@ -113,12 +114,13 @@ export default class TopicPage extends Component {
                                     <span>{firstItem.title}</span>
                                 </a>
                             </h2>
-                            <p>{firstItemContent}</p>
+                            {/*<p>{firstItemContent}</p>*/}
+                            <div className="topic-post-content" dangerouslySetInnerHTML={{__html: `<span>${firstItem.content}</span>`}}/>
                             <div style={{display: 'flex', alignItems: 'center'}}>
                                 <span className="meta-footer-thumb">
                                     <a href={'/author?id=' + firstItem.user_id}>
                                         <img className="author-thumb"
-                                             src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
+                                             src={Images.imagePost(firstItem.image_post)}
                                              alt="Sal"/>
                                     </a>
                                 </span>
@@ -131,7 +133,7 @@ export default class TopicPage extends Component {
                                         <span style={{display: 'flex', flexDirection: 'column'}}>
 								            <span className="post-name">
                                                 <a href={'/author?id=' + firstItem.user_id}>
-                                                    <h6 style={{marginBottom: 0}}>Than Thai</h6>
+                                                    <h6 style={{marginBottom: 0}}>{firstItem.author_name}</h6>
                                                 </a>
                                             </span>
                                             <div>
@@ -164,7 +166,7 @@ export default class TopicPage extends Component {
                                                style={{color: 'black', textDecorationColor: 'transparent'}}>
                                                 <h6 style={{marginBottom: 0}}>{item.title}</h6>
                                             </a>
-                                            <p style={{color: 'rgba(0,0,0,0.54)', marginBottom: 0}}>{itemContent}</p>
+                                            <div className="topic-post-content-small" dangerouslySetInnerHTML={{__html: `<span>${firstItem.content}</span>`}}/>
                                             <div style={{display: 'flex', alignItems: 'center'}}>
                                                 <a href={'/author?id=' + item.user_id}
                                                    style={{color: 'black', textDecorationColor: 'transparent'}}>
@@ -172,7 +174,7 @@ export default class TopicPage extends Component {
                                                             color: 'rgba(0,0,0,0.54)',
                                                             fontSize: 12,
                                                             marginTop: 0
-                                                        }}>New York Times Magazine</span>
+                                                        }}>{item.author_name}</span>
                                                 </a>
                                                 {/*<span className="dot"/>*/}
                                                 {/*<span*/}
@@ -186,7 +188,7 @@ export default class TopicPage extends Component {
                                             <a href={'/post?id=' + item.id}
                                                style={{color: 'black', textDecorationColor: 'transparent'}}>
                                                 <img
-                                                    src={'https://miro.medium.com/max/320/1*R_148RUf_824I3KD58sZDw.jpeg'}
+                                                    src={Images.imagePost(item.image_post)}
                                                     style={{width: '100%', height: 100}}/>
                                             </a>
                                         </div>
@@ -200,9 +202,7 @@ export default class TopicPage extends Component {
                     section
                     style={styles.rightContent
                     }>
-                    <
-                        h3> {this.state.description ? this.state.description.name : ''
-                    }</h3>
+                    <h3> {this.state.description ? this.state.description.name : ''}</h3>
                     High, low, and
                     sideways.
                     <div className="section-title" style={{marginTop: 50}}>
@@ -213,12 +213,12 @@ export default class TopicPage extends Component {
                     {
                         this.state.relatedCategories.map((item, index) => {
                             return (
-                                <Link to={'/'} style={{
+                                <a href={'/topic?id=' + item.id} style={{
                                     textDecorationColor: 'transparent',
                                     color: 'rgba(0,0,0,0.54)',
                                     fontSize: 14,
                                     marginBottom: 5
-                                }}><span key={index}>{item.name.toUpperCase()}</span></Link>
+                                }}><span key={index}>{item.name.toUpperCase()}</span></a>
                             )
                         })
                     }
@@ -236,17 +236,18 @@ export default class TopicPage extends Component {
                                       style={{color: 'black', textDecorationColor: 'transparent'}} key={index}>
                                     <div style={{marginBottom: 10, display: 'flex', flexDirection: 'row'}}>
                                         <div style={{display: 'flex', flexDirection: 'column', flex: 4}}>
-                                            <span style={{fontWeight: '600'}}>{item.title}</span>
-                                            <span
-                                                style={{
-                                                    fontSize: 13,
-                                                    color: 'rgba(0,0,0,0.84)'
-                                                }}>{item.content.length < 30 ? item.content : item.content.slice(0, 30) + '...'}</span>
+                                            <span className="topic-post-title-popular" style={{fontWeight: '600'}}>{item.title}</span>
+                                            {/*<span*/}
+                                                {/*style={{*/}
+                                                    {/*fontSize: 13,*/}
+                                                    {/*color: 'rgba(0,0,0,0.84)'*/}
+                                                {/*}}>{item.content.length < 30 ? item.content : item.content.slice(0, 30) + '...'}</span>*/}
+                                            <div className="topic-post-content-popular" dangerouslySetInnerHTML={{__html: `<span>${firstItem.content}</span>`}}/>
                                         </div>
                                         <div style={{flex: 1}}>
                                             <a>
                                                 <img
-                                                    src={'https://miro.medium.com/max/110/1*QjBLlFPJ4vZAlWfa0G_eng.jpeg'}
+                                                    src={Images.imagePost(item.image_post)}
                                                     style={{width: 50, height: 50}}/>
                                             </a>
                                         </div>

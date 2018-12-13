@@ -16,7 +16,7 @@ export default class PostItemLarge extends Component {
             <div className="authorpostbox" style={styles.authorPostBox}>
                 <div className="card">
                     <a href={'/post?id=' + data.id}>
-                        <img className="img-fluid img-thumb" src={Images.demopic.img8} alt=""/>
+                        <img className="img-fluid img-thumb" src={Images.imagePost(data.image_name)} alt=""/>
                     </a>
                     <div className="card-block">
                         <h4 className="card-title">
@@ -24,13 +24,14 @@ export default class PostItemLarge extends Component {
                                 <span>{data.title}</span>
                             </a>
                         </h4>
-                        <h6 className="card-text">{data.content}</h6>
+                        {/*<h6 className="card-text">{data.content}</h6>*/}
+                        <div className="topic-post-content" dangerouslySetInnerHTML={{__html: `<span>${data.content}</span>`}}/>
                         <div className="metafooter">
                             <div className="wrapfooter">
                                 <span className="meta-footer-thumb">
                                     <span>
                                         <img className="author-thumb"
-                                             src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
+                                             src={Images.imagePost(data.image_name)}
                                              alt="Sal"/>
                                     </span>
                                 </span>

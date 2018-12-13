@@ -282,26 +282,6 @@ export default class PostPage extends Component {
                         </div>
                     </div>
                 </div>
-
-                <div className="alertbar">
-                    <div className="container text-center">
-                        <img src={Images.logo} alt=""/> &nbsp; Never miss a <b>story</b> from us, get weekly
-                        updates in
-                        your inbox. <a href="#" className="btn subscribe">Get Updates</a>
-                    </div>
-                </div>
-                <div className="container">
-                    <div className="footer">
-                        <p className="pull-left">
-                            Copyright &copy; 2017 Your Website Name
-                        </p>
-                        <p className="pull-right">
-                            Mediumish Theme by <a target="_blank" href="https://www.wowthemes.net">WowThemes.net</a>
-                        </p>
-                        <div className="clearfix">
-                        </div>
-                    </div>
-                </div>
             </div>
         );
     }

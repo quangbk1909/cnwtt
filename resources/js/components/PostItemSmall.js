@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from "prop-types";
+import Images from "../Themes/Images";
 
 export default class PostItemSmall extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ export default class PostItemSmall extends Component {
                           style={{color: 'black', textDecorationColor: 'transparent'}}>
                         <h6 style={{marginBottom: 0}}>{data.title}</h6>
                     </a>
-                    <p style={{color: 'rgba(0,0,0,0.54)', marginBottom: 0}}>{content}</p>
+                    <div className="topic-post-content-small" dangerouslySetInnerHTML={{__html: `<span>${data.content}</span>`}}/>
                     <div style={{display: 'flex', alignItems: 'center'}}>
                         <a href={'/author?id=' + data.user_id}
                               style={{color: 'black', textDecorationColor: 'transparent'}}>
@@ -38,7 +39,7 @@ export default class PostItemSmall extends Component {
                     <a href={'/post?id=' + data.id}
                           style={{color: 'black', textDecorationColor: 'transparent'}}>
                         <img
-                            src={'https://miro.medium.com/max/320/1*R_148RUf_824I3KD58sZDw.jpeg'}
+                            src={Images.imagePost(data.image_name)}
                             style={{width: '100%', height: 100}}/>
                     </a>
                 </div>
