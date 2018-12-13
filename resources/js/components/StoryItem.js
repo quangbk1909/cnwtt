@@ -42,7 +42,7 @@ export default class StoryItem extends Component {
 						<span className="meta-footer-thumb">
                             <a href={'author?id=' + data.author_id}>
                                 <img className="author-thumb"
-                                     src={Images.imagePost(data.image_post)}
+                                     src={Images.avatar(data.avatar)}
                                      alt="Sal"/>
                             </a>
 						</span>

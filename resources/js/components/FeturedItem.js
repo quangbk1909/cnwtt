@@ -47,7 +47,7 @@ export default class FeturedItem extends Component {
 								<span className="meta-footer-thumb">
                                     <a href={'/author?id=' + data.author_id}>
                                         <img className="author-thumb"
-                                             src={Images.demopic.img7}
+                                             src={Images.avatar(data.avatar)}
                                              alt="Sal"/>
                                     </a>
 								</span>
