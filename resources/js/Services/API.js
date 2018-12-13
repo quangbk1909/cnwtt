@@ -48,7 +48,7 @@ const getAuthorById = (id, onSuccess, onError) => {
 
 const getCmt = async (postId) => {
     axios.defaults.baseURL = 'http://localhost:8000';
-    let results = await axios.get('/api/blog/post/postComment/' + postId);
+    let results = await axios.get('api/blog/post/getComment/' + postId);
     console.log('comments', results);
     let comments = results.data;
     for (let i = 0; i < comments.length; i++) {

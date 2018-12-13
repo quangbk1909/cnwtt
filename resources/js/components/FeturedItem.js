@@ -6,6 +6,8 @@ import PropTypes from 'prop-types'
 
 import moment from 'moment'
 import Images from "../Themes/Images";
+import '../CSS/mediumish.css'
+import '../App.css'
 
 export default class FeturedItem extends Component {
     render() {
@@ -24,7 +26,10 @@ export default class FeturedItem extends Component {
                 <div className="row" style={{flexWrap: 'wrap'}}>
                     <div className="col-md-5 wrapthumbnail">
                         <a href={'/post?id=' + data.post_id}>
-                            <img className="thumbnail" src={Images.demopic.img10} style={{width: 200, height: '100%'}}/>
+                            <img className="thumbnail"
+                                 src={Images.image('img/img_post', data.image_post)}
+                                 // src={Images.demopic.img7}
+                                 style={{width: '100%', height: '100%'}}/>
                         </a>
                     </div>
                     <div className="col-md-7">

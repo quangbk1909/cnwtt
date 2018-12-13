@@ -110,7 +110,8 @@ const styles = {
         backgroundColor: 'white',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 50
     },
     contentWrapper: {
         width: '50%',

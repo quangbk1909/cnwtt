@@ -47,8 +47,10 @@ export default class PostPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: props.location.search.substring(1, props.location.search.length),
-            comments: []
+            id: props.location.search.substring(4, props.location.search.length),
+            comments: [],
+            post: {},
+            author: {}
         };
         console.log('props', props);
     }
@@ -58,6 +60,13 @@ export default class PostPage extends Component {
     }
 
     fetchComment() {
+        API.get('/api/blog/post/getSinglePost/' + this.state.id, {}, (result) => {
+            console.log('result post', result);
+            this.setState({author: result.author, post: result.post})
+        }, (error) => {
+
+        });
+
         API.getCmt(20).then((comments) => {
             // console.log('post', comments)
             this.setState({comments})
@@ -85,19 +94,19 @@ export default class PostPage extends Component {
             return (
                 <div className="col-md-4" key={index}>
                     <div className="card">
-                        <Link to={'/Post/1'}>
+                        <a href={'/post?id=' + this.state.post.id}>
                             <img className="img-fluid img-thumb" src={item.imageSource} alt=""/>
-                        </Link>
+                        </a>
                         <div className="card-block">
                             <h2 className="card-title">
-                                <a href={'/post?id=' + 2} style={{textDecorationColor: 'transparent'}}>
+                                <a href={'/post?id=' + this.state.post.id} style={{textDecorationColor: 'transparent'}}>
                                     <span>{item.title}</span>
                                 </a>
                             </h2>
                             <div className="metafooter">
                                 <div className="wrapfooter">
                                     <span className="meta-footer-thumb">
-                                        <Link to={'/Author/1'}>
+                                        <Link to={'/author?id=' + this.state.author.user_id}>
                                             <img className="author-thumb"
                                                  src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
                                                  alt="Sal"/>
@@ -197,62 +206,64 @@ export default class PostPage extends Component {
                                         </Link>
                                     </div>
                                     <div className="col-md-10">
-                                        <Link to={'/Author/1'}>
-                                            <a className="link-dark">Sal</a>
-                                        </Link>
+                                        <a href={'/author?id=' + this.state.author.id}>
+                                            <span className="link-dark">{this.state.author.name}</span>
+                                        </a>
                                         <a className="btn follow">Follow</a>
                                         <span
                                             className="author-description">Founder of WowThemes.net and creator of <b>"Mediumish"</b> theme that you're currently previewing. Developing professional premium themes, templates, plugins, scripts since 2012.</span>
-                                        <span className="post-date">22 July 2017</span>
-                                        <span className="dot"/>
-                                        <span className="post-read">6 min read</span>
+                                        <span className="post-date">{moment(this.state.post.created_at).format('MMM, DD YYYY')}</span>
                                     </div>
                                 </div>
 
-                                <h1 className="posttitle">18 Things You Should Learn Before Moving Into a New Home</h1>
+                                <h1 className="posttitle">{this.state.post.title}</h1>
 
                             </div>
 
                             <img className="featured-image img-fluid" src={Images.demopic.img10} alt=""/>
 
-                            <div className="article-post">
-                                <p>
-                                    Holy grail funding non-disclosure agreement advisor ramen bootstrapping ecosystem.
-                                    Beta crowdfunding iteration assets business plan paradigm shift stealth mass market
-                                    seed money rockstar niche market marketing buzz market.
-                                </p>
-                                <p>
-                                    Burn rate release facebook termsheet equity technology. Interaction design rockstar
-                                    network effects handshake creative startup direct mailing. Technology influencer
-                                    direct mailing deployment return on investment seed round.
-                                </p>
-                                <p>
-                                    Termsheet business model canvas user experience churn rate low hanging fruit backing
-                                    iteration buyer seed money. Virality release launch party channels validation
-                                    learning curve paradigm shift hypotheses conversion. Stealth leverage freemium
-                                    venture startup business-to-business accelerator market.
-                                </p>
-                                <blockquote>
-                                    Gen-z strategy long tail churn rate seed money channels user experience incubator
-                                    startup partner network low hanging fruit direct mailing. Client backing success
-                                    startup assets responsive web design burn rate A/B testing metrics first mover
-                                    advantage conversion.
-                                </blockquote>
-                                <p>
-                                    Freemium non-disclosure agreement lean startup bootstrapping holy grail ramen MVP
-                                    iteration accelerator. Strategy market ramen leverage paradigm shift seed round
-                                    entrepreneur crowdfunding social proof angel investor partner network virality.
-                                </p>
-                            </div>
+                            {/*<div className="article-post">*/}
+                                {/*<p>*/}
+                                    {/*Holy grail funding non-disclosure agreement advisor ramen bootstrapping ecosystem.*/}
+                                    {/*Beta crowdfunding iteration assets business plan paradigm shift stealth mass market*/}
+                                    {/*seed money rockstar niche market marketing buzz market.*/}
+                                {/*</p>*/}
+                                {/*<p>*/}
+                                    {/*Burn rate release facebook termsheet equity technology. Interaction design rockstar*/}
+                                    {/*network effects handshake creative startup direct mailing. Technology influencer*/}
+                                    {/*direct mailing deployment return on investment seed round.*/}
+                                {/*</p>*/}
+                                {/*<p>*/}
+                                    {/*Termsheet business model canvas user experience churn rate low hanging fruit backing*/}
+                                    {/*iteration buyer seed money. Virality release launch party channels validation*/}
+                                    {/*learning curve paradigm shift hypotheses conversion. Stealth leverage freemium*/}
+                                    {/*venture startup business-to-business accelerator market.*/}
+                                {/*</p>*/}
+                                {/*<blockquote>*/}
+                                    {/*Gen-z strategy long tail churn rate seed money channels user experience incubator*/}
+                                    {/*startup partner network low hanging fruit direct mailing. Client backing success*/}
+                                    {/*startup assets responsive web design burn rate A/B testing metrics first mover*/}
+                                    {/*advantage conversion.*/}
+                                {/*</blockquote>*/}
+                                {/*<p>*/}
+                                    {/*Freemium non-disclosure agreement lean startup bootstrapping holy grail ramen MVP*/}
+                                    {/*iteration accelerator. Strategy market ramen leverage paradigm shift seed round*/}
+                                    {/*entrepreneur crowdfunding social proof angel investor partner network virality.*/}
+                                {/*</p>*/}
+                            {/*</div>*/}
 
-                            <div className="after-post-tags">
-                                <ul className="tags">
-                                    <li><a href="#">Design</a></li>
-                                    <li><a href="#">Growth Mindset</a></li>
-                                    <li><a href="#">Productivity</a></li>
-                                    <li><a href="#">Personal Growth</a></li>
-                                </ul>
-                            </div>
+                            {
+                                this.state.post.content
+                            }
+
+                            {/*<div className="after-post-tags">*/}
+                                {/*<ul className="tags">*/}
+                                    {/*<li><a href="#">Design</a></li>*/}
+                                    {/*<li><a href="#">Growth Mindset</a></li>*/}
+                                    {/*<li><a href="#">Productivity</a></li>*/}
+                                    {/*<li><a href="#">Personal Growth</a></li>*/}
+                                {/*</ul>*/}
+                            {/*</div>*/}
 
                         </div>
 

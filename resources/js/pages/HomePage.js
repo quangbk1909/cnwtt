@@ -121,6 +121,8 @@ export default class HomePage extends Component {
     }
 
     render() {
+        let featuresItems = this.state.featuredItems.length % 2 === 0 ? this.state.featuredItems : this.state.featuredItems.slice(0, this.state.featuredItems.length - 1);
+        let stories = this.state.storiesItems.length < 6 ? this.state.storiesItems : this.state.storiesItems.slice(0, 6);
         return (
             <div style={styles.container}>
                 <ProgressBar
@@ -172,7 +174,7 @@ export default class HomePage extends Component {
 
                         <div className="card-columns listrecent">
                             {
-                                this.state.storiesItems.map((item, index) => {
+                                stories.map((item, index) => {
                                     return <StoryItem data={item} key={index}/>
                                 })
                             }

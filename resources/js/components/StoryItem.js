@@ -20,13 +20,14 @@ export default class StoryItem extends Component {
 
         const data = this.props.data;
         const createDate = data.createdDate;
-        // let dateStr = moment(createDate).format('DD MMM YYYY');
+        console.log('storeis items', data)
         let dateStr = moment(data.date_created.date).format('DD MMM YYYY');
+        let content = data.content.length > 150 ? (data.content.substr(0, 147) + '...') : data.content;
 
         return (
             <div className="card">
                 <a href={'/post?id=' + data.post_id}>
-                    <img className="img-fluid" src={Images.demopic.img10} alt=""/>
+                    <img className="img-fluid" src={Images.image('img/img_post', data.image_post)} alt=""/>
                 </a>
                 <div className="card-block">
                     <h2 className="card-title">
@@ -34,13 +35,13 @@ export default class StoryItem extends Component {
                             <span>{data.title}</span>
                         </a>
                     </h2>
-                    <h4 className="card-text">{data.content}</h4>
+                    <h4 className="card-text">{content}</h4>
                     <div className="metafooter">
                         <div className="wrapfooter">
 						<span className="meta-footer-thumb">
                             <a href={'author?id=' + data.author_id}>
                                 <img className="author-thumb"
-                                     src={Images.demopic.img7}
+                                     src={Images.image('img/img_post', data.image_post)}
                                      alt="Sal"/>
                             </a>
 						</span>
