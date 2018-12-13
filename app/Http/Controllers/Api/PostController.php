@@ -74,7 +74,23 @@ class PostController extends Controller
 
     public function getCommentByPostID($postID){
         $allComment = Comment::where('post_id',$postID)->get();
-        return response() -> json($allComment);
+        $responseArray = array();
+        foreach ($allComment as $comment){
+            $user = User::find($comment->user_id);
+
+            $arrayPost = array();
+            $arrayPost['id'] = $comment->id;
+            $arrayPost['post_id'] = $comment->post_id;
+            $arrayPost['user_id'] = $comment->user_id;
+            $arrayPost['parent_id'] = $comment->parent_id;
+            $arrayPost['content'] = $comment->content;
+            $arrayPost['author'] = $user->name;
+            $arrayPost['avatar'] = $user->image_link;
+
+            array_push($responseArray,$arrayPost);
+        }
+        // json_encode($responseArray);
+        return response() -> json($responseArray);
     }
 
     public function saveComment($postID){
