@@ -36,8 +36,8 @@ Route::group(['prefix' => 'blog'], function(){
     });
     Route::group(['prefix' => 'category'], function(){
         Route::get('allCate','Api\CategoryController@getMainCategory');
-        Route::get('categoryPostFromNewest','Api\CategoryController@getCategoryPostFromNewest');
-        Route::get('categoryPostPopular','Api\CategoryController@getCategoryPostPopular');
+        Route::get('categoryPostFromNewest/{category_id}','Api\CategoryController@getCategoryPostFromNewest');
+        Route::get('categoryPostPopular/{category_id}','Api\CategoryController@getCategoryPostPopular');
         Route::get('description/{category_id}','Api\CategoryController@getDescription');
     });
     Route::group(['prefix' => 'author'], function(){
