@@ -24,21 +24,26 @@ Route::get('/', function(){
 });
 
 Route::group(['prefix' => 'blog'], function(){
+    Auth::login(User::find(31));
     Route::group(['prefix' => 'post'], function(){
-        Auth::login(User::find(31));
-        Route::get('allPost', 'Api\PostController@getAllPost');
-        Route::get('postComment/{post_id}', 'Api\PostController@getCommentByPostID');
+        Route::get('allPostByVote', 'Api\PostController@getAllPostByVote');
+        Route::get('allPostByRandom', 'Api\PostController@getAllPostByRandom');
+        Route::get('getComment/{post_id}', 'Api\PostController@getCommentByPostID');
         Route::get('saveComment/{post_id}', 'Api\PostController@saveComment');
         Route::get('getSinglePost/{post_id}', 'Api\PostController@getSinglePost');
+        Route::post('vote/{post_id}', 'Api\PostController@vote');
+        Route::get('recommendItem', 'Api\PostController@getRecommendItems');
     });
     Route::group(['prefix' => 'category'], function(){
         Route::get('allCate','Api\CategoryController@getMainCategory');
-        Route::get('categoryPost','Api\CategoryController@getCategoryPost');
+        Route::get('categoryPostFromNewest','Api\CategoryController@getCategoryPostFromNewest');
+        Route::get('categoryPostPopular','Api\CategoryController@getCategoryPostPopular');
+        Route::get('description/{category_id}','Api\CategoryController@getDescription');
     });
     Route::group(['prefix' => 'author'], function(){
-        Auth::login(User::find(31));
         Route::get('getCurrentAuthor','Api\AuthorController@getCurrentAuthor');
         Route::get('getAuthorByID/{user_id}','Api\AuthorController@getAuthorByID');
+        Route::get('checkUser','Api\AuthorController@checkUserExist');
     });
     Route::get('searchList','Api\PostController@search');
 });
