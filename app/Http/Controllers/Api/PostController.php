@@ -32,7 +32,6 @@ class PostController extends Controller
 
             array_push($responseArray,$arrayPost);
         }
-        // json_encode($responseArray);
         return response() -> json($responseArray);
     }
 
@@ -55,7 +54,6 @@ class PostController extends Controller
 
             array_push($responseArray,$arrayPost);
         }
-        // json_encode($responseArray);
         return response() -> json($responseArray);
     }
 
@@ -63,13 +61,47 @@ class PostController extends Controller
         $textSearch = Input::get('textSearch');
         $posts = Post::search($textSearch)->get();
         $authors = User::search($textSearch)->get();
+        $responsePost = array();
+
+        // duyet tung thang post cho author vao
+        foreach ($posts as $post){
+            $userOfPost = User::where('id',$post->user_id)->first();
+
+            $arrayPost = array();
+            $arrayPost["post_id"] = $post->id;
+            $arrayPost["title"] = $post->title;
+            $arrayPost["content"] = $post->content;
+            $arrayPost["date_created"] = $post->created_at;
+            $arrayPost["vote"] =$post->vote_numbers;
+            $arrayPost["image_post"] = $post->image_name;
+            $arrayPost["author_id"] = $userOfPost->id;
+            $arrayPost["author_name"] = $userOfPost->name;
+            $arrayPost["avatar"] = $userOfPost->image_link;
+
+            array_push($responsePost,$arrayPost);
+        }
+
+        // duyet het tac gia cung voi nhung bai post
+        $responseAuthor = array();
+        foreach ($authors as $author){
+            $allPostOfUser = Post::where('user_id',$author->id)->get();
+            $userWithAllPost = array();
+            $userWithAllPost["user_id"] = $author->id;
+            $userWithAllPost["author_name"] = $author->name;
+            $userWithAllPost["avatar"] = $author->image_link;
+            $userWithAllPost["description"] = $author->description;
+            $userWithAllPost["posts"] = $allPostOfUser;
+
+            array_push($responseAuthor, $userWithAllPost);
+        }
+        
         return response() -> json(
             array(
-                'posts'=>$posts,
-                'authors'=>$authors
+                'posts'=>$responsePost,
+                'authors'=>$responseAuthor
             )
         );
-        return response() -> json($posts);
+
     }
 
     public function getCommentByPostID($postID){
@@ -89,7 +121,6 @@ class PostController extends Controller
 
             array_push($responseArray,$arrayPost);
         }
-        // json_encode($responseArray);
         return response() -> json($responseArray);
     }
 
@@ -105,7 +136,7 @@ class PostController extends Controller
         $comment->post_id = $postID;
         $comment->parent_id= $parentID;
         if ($comment->save()){
-            return json(
+            return response() -> json(
                 array(
                     'success' => true
                 )
@@ -122,20 +153,32 @@ class PostController extends Controller
 
     public function getSinglePost($postID){
         $post = Post::find($postID);
-        $post->view = $post->view + 1;
+        $post->views = $post->views + 1;
         $post->save();
         $author = User::find($post->user_id);
+
+        $recommendCategory = $post->categories()->get();
+        
         return response() -> json(
             array(
                 'post' => $post,
-                'author' => $author
+                'author' => $author,
+                'recommendCategory' => $recommendCategory
             )
         );
     }
 
-    public function vote($postID){
+    public function upVote($postID){
         $post = Post::find($postID);
         $post->vote_numbers = $post->vote_numbers + 1;
+        if ($post->save()){
+            return response() -> json($post);
+        }     
+    }
+
+    public function downVote($postID){
+        $post = Post::find($postID);
+        $post->vote_numbers = $post->vote_numbers -1;
         if ($post->save()){
             return response() -> json($post);
         }     
@@ -160,7 +203,6 @@ class PostController extends Controller
 
             array_push($responseArray,$arrayPost);
         }
-        // json_encode($responseArray);
         return response() -> json($responseArray);
     }
 
