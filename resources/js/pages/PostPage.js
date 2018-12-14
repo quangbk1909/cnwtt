@@ -68,8 +68,8 @@ export default class PostPage extends Component {
 
         });
 
-        API.getCmt(20).then((comments) => {
-            // console.log('post', comments)
+        API.getCmt(this.state.id).then((comments) => {
+            console.log('post', comments)
             this.setState({comments})
         });
 
@@ -82,7 +82,7 @@ export default class PostPage extends Component {
 
     saveComment(comment) {
         if (comment.content && comment.content !== '') {
-            API.saveComment(20, comment, (result) => {
+            API.saveComment(this.state.id, comment, (result) => {
                 this.fetchComment();
                 console.log('save success', result)
             }, (error) => {
@@ -91,18 +91,30 @@ export default class PostPage extends Component {
         }
     }
 
+    vote() {
+        API.get(`/api/blog/post/vote/${this.state.id}`, {}, (result) => {
+            let post = this.state.post;
+            post.vote_numbers += 1;
+            this.setState({post});
+            console.log('vote', result)
+        }, (error) => {
+
+        })
+    }
+
     renderRecommendedItem() {
         return this.state.recommendedItems.map((item, index) => {
 
             const createDate = item.createdDate;
-            let dateStr = moment(createDate).format('DD MMM YYYY');
+            let dateStr = moment(createDate).format('MMM, DD YYYY');
 
 
             return (
                 <div className="col-md-4" key={index}>
                     <div className="card">
                         <a href={'/post?id=' + this.state.post.id}>
-                            <img className="img-fluid img-thumb" src={Images.imagePost(item.image_post)} alt="" style={{height: 180, width: '100%'}}/>
+                            <img className="img-fluid img-thumb" src={Images.imagePost(item.image_post)} alt=""
+                                 style={{height: 180, width: '100%'}}/>
                         </a>
                         <div className="card-block">
                             <h2 className="card-title">
@@ -115,7 +127,7 @@ export default class PostPage extends Component {
                                     <span className="meta-footer-thumb">
                                         <a href={'/author?id=' + item.author_id}>
                                             <img className="author-thumb"
-                                                 src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
+                                                 src={Images.avatar(item.avatar)}
                                                  alt="Sal"/>
                                         </a>
                                     </span>
@@ -187,9 +199,7 @@ export default class PostPage extends Component {
                                         <a>
                                             {this.state.post.vote_numbers ? this.state.post.vote_numbers : 0}
                                             <br/>
-                                            <div onClick={() => {
-
-                                            }}>
+                                            <div onClick={() => this.vote()}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                      viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -198,8 +208,8 @@ export default class PostPage extends Component {
                                                         d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
                                                 </svg>
                                                 {/*<svg className="svgIcon-use" width="29" height="29" viewBox="0 0 29 29">*/}
-                                                    {/*<path*/}
-                                                        {/*d="M21.27 20.058c1.89-1.826 2.754-4.17 2.754-6.674C24.024 8.21 19.67 4 14.1 4 8.53 4 4 8.21 4 13.384c0 5.175 4.53 9.385 10.1 9.385 1.007 0 2-.14 2.95-.41.285.25.592.49.918.7 1.306.87 2.716 1.31 4.19 1.31.276-.01.494-.14.6-.36a.625.625 0 0 0-.052-.65c-.61-.84-1.042-1.71-1.282-2.58a5.417 5.417 0 0 1-.154-.75zm-3.85 1.324l-.083-.28-.388.12a9.72 9.72 0 0 1-2.85.424c-4.96 0-8.99-3.706-8.99-8.262 0-4.556 4.03-8.263 8.99-8.263 4.95 0 8.77 3.71 8.77 8.27 0 2.25-.75 4.35-2.5 5.92l-.24.21v.32c0 .07 0 .19.02.37.03.29.1.6.19.92.19.7.49 1.4.89 2.08-.93-.14-1.83-.49-2.67-1.06-.34-.22-.88-.48-1.16-.74z"/>*/}
+                                                {/*<path*/}
+                                                {/*d="M21.27 20.058c1.89-1.826 2.754-4.17 2.754-6.674C24.024 8.21 19.67 4 14.1 4 8.53 4 4 8.21 4 13.384c0 5.175 4.53 9.385 10.1 9.385 1.007 0 2-.14 2.95-.41.285.25.592.49.918.7 1.306.87 2.716 1.31 4.19 1.31.276-.01.494-.14.6-.36a.625.625 0 0 0-.052-.65c-.61-.84-1.042-1.71-1.282-2.58a5.417 5.417 0 0 1-.154-.75zm-3.85 1.324l-.083-.28-.388.12a9.72 9.72 0 0 1-2.85.424c-4.96 0-8.99-3.706-8.99-8.262 0-4.556 4.03-8.263 8.99-8.263 4.95 0 8.77 3.71 8.77 8.27 0 2.25-.75 4.35-2.5 5.92l-.24.21v.32c0 .07 0 .19.02.37.03.29.1.6.19.92.19.7.49 1.4.89 2.08-.93-.14-1.83-.49-2.67-1.06-.34-.22-.88-.48-1.16-.74z"/>*/}
                                                 {/*</svg>*/}
                                             </div>
                                         </a>
@@ -213,13 +223,11 @@ export default class PostPage extends Component {
 
                                 <div className="row post-top-meta">
                                     <div className="col-md-2">
-                                        <Link to={'/Author/1'}>
-                                            <a>
-                                                <img className="author-thumb"
-                                                     src={this.state.author.image_link ? Images.avatar(this.state.author.image_link) : "https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"}
-                                                     alt="Sal"/>
-                                            </a>
-                                        </Link>
+                                        <a href={'/author?id=' + this.state.author.id}>
+                                            <img className="author-thumb"
+                                                 src={this.state.author.image_link ? Images.avatar(this.state.author.image_link) : "https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"}
+                                                 alt="Sal"/>
+                                        </a>
                                     </div>
                                     <div className="col-md-10">
                                         <a href={'/author?id=' + this.state.author.id}>
@@ -227,9 +235,11 @@ export default class PostPage extends Component {
                                         </a>
                                         <a className="btn follow">Follow</a>
                                         <br/>
-                                        <span className="author-description">{this.state.author.description || ''}</span>
+                                        <span
+                                            className="author-description">{this.state.author.description || ''}</span>
                                         <br/>
-                                        <span className="post-date">{moment(this.state.post.created_at).format('MMM, DD YYYY')}</span>
+                                        <span
+                                            className="post-date">{moment(this.state.post.created_at).format('MMM, DD YYYY')}</span>
                                     </div>
                                 </div>
 
@@ -237,48 +247,50 @@ export default class PostPage extends Component {
 
                             </div>
 
-                            <img className="featured-image img-fluid" src={this.state.post.image_name ? Images.imagePost(this.state.post.image_name) : Images.demopic.img10} alt=""/>
+                            <img className="featured-image img-fluid"
+                                 src={this.state.post.image_name ? Images.imagePost(this.state.post.image_name) : Images.demopic.img10}
+                                 alt=""/>
 
                             {/*<div className="article-post">*/}
-                                {/*<p>*/}
-                                    {/*Holy grail funding non-disclosure agreement advisor ramen bootstrapping ecosystem.*/}
-                                    {/*Beta crowdfunding iteration assets business plan paradigm shift stealth mass market*/}
-                                    {/*seed money rockstar niche market marketing buzz market.*/}
-                                {/*</p>*/}
-                                {/*<p>*/}
-                                    {/*Burn rate release facebook termsheet equity technology. Interaction design rockstar*/}
-                                    {/*network effects handshake creative startup direct mailing. Technology influencer*/}
-                                    {/*direct mailing deployment return on investment seed round.*/}
-                                {/*</p>*/}
-                                {/*<p>*/}
-                                    {/*Termsheet business model canvas user experience churn rate low hanging fruit backing*/}
-                                    {/*iteration buyer seed money. Virality release launch party channels validation*/}
-                                    {/*learning curve paradigm shift hypotheses conversion. Stealth leverage freemium*/}
-                                    {/*venture startup business-to-business accelerator market.*/}
-                                {/*</p>*/}
-                                {/*<blockquote>*/}
-                                    {/*Gen-z strategy long tail churn rate seed money channels user experience incubator*/}
-                                    {/*startup partner network low hanging fruit direct mailing. Client backing success*/}
-                                    {/*startup assets responsive web design burn rate A/B testing metrics first mover*/}
-                                    {/*advantage conversion.*/}
-                                {/*</blockquote>*/}
-                                {/*<p>*/}
-                                    {/*Freemium non-disclosure agreement lean startup bootstrapping holy grail ramen MVP*/}
-                                    {/*iteration accelerator. Strategy market ramen leverage paradigm shift seed round*/}
-                                    {/*entrepreneur crowdfunding social proof angel investor partner network virality.*/}
-                                {/*</p>*/}
+                            {/*<p>*/}
+                            {/*Holy grail funding non-disclosure agreement advisor ramen bootstrapping ecosystem.*/}
+                            {/*Beta crowdfunding iteration assets business plan paradigm shift stealth mass market*/}
+                            {/*seed money rockstar niche market marketing buzz market.*/}
+                            {/*</p>*/}
+                            {/*<p>*/}
+                            {/*Burn rate release facebook termsheet equity technology. Interaction design rockstar*/}
+                            {/*network effects handshake creative startup direct mailing. Technology influencer*/}
+                            {/*direct mailing deployment return on investment seed round.*/}
+                            {/*</p>*/}
+                            {/*<p>*/}
+                            {/*Termsheet business model canvas user experience churn rate low hanging fruit backing*/}
+                            {/*iteration buyer seed money. Virality release launch party channels validation*/}
+                            {/*learning curve paradigm shift hypotheses conversion. Stealth leverage freemium*/}
+                            {/*venture startup business-to-business accelerator market.*/}
+                            {/*</p>*/}
+                            {/*<blockquote>*/}
+                            {/*Gen-z strategy long tail churn rate seed money channels user experience incubator*/}
+                            {/*startup partner network low hanging fruit direct mailing. Client backing success*/}
+                            {/*startup assets responsive web design burn rate A/B testing metrics first mover*/}
+                            {/*advantage conversion.*/}
+                            {/*</blockquote>*/}
+                            {/*<p>*/}
+                            {/*Freemium non-disclosure agreement lean startup bootstrapping holy grail ramen MVP*/}
+                            {/*iteration accelerator. Strategy market ramen leverage paradigm shift seed round*/}
+                            {/*entrepreneur crowdfunding social proof angel investor partner network virality.*/}
+                            {/*</p>*/}
                             {/*</div>*/}
 
                             <div dangerouslySetInnerHTML={{__html: `<span>${this.state.post.content || ''}</span>`}}/>
 
 
                             {/*<div className="after-post-tags">*/}
-                                {/*<ul className="tags">*/}
-                                    {/*<li><a href="#">Design</a></li>*/}
-                                    {/*<li><a href="#">Growth Mindset</a></li>*/}
-                                    {/*<li><a href="#">Productivity</a></li>*/}
-                                    {/*<li><a href="#">Personal Growth</a></li>*/}
-                                {/*</ul>*/}
+                            {/*<ul className="tags">*/}
+                            {/*<li><a href="#">Design</a></li>*/}
+                            {/*<li><a href="#">Growth Mindset</a></li>*/}
+                            {/*<li><a href="#">Productivity</a></li>*/}
+                            {/*<li><a href="#">Personal Growth</a></li>*/}
+                            {/*</ul>*/}
                             {/*</div>*/}
 
                         </div>

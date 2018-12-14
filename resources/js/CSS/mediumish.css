@@ -498,7 +498,7 @@ ul.tags li a:hover {
     text-overflow: ellipsis;
     word-wrap: break-word;
     overflow: hidden;
-    max-height: 13em;
+    max-height: 7.5em;
     line-height: 1.3em;
 }
 
