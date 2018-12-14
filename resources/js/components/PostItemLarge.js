@@ -1,9 +1,6 @@
 import React, {Component} from 'react'
 import Images from "../Themes/Images";
 import PropTypes from 'prop-types';
-import {
-    Link
-} from 'react-router-dom'
 
 import '../CSS/mediumish.css'
 import '../CSS/bootstrap.min.css'
@@ -18,30 +15,31 @@ export default class PostItemLarge extends Component {
         return (
             <div className="authorpostbox" style={styles.authorPostBox}>
                 <div className="card">
-                    <Link to={'/post/1'}>
-                        <img className="img-fluid img-thumb" src={Images.demopic.img8} alt=""/>
-                    </Link>
+                    <a href={'/post?id=' + data.id}>
+                        <img className="img-fluid img-thumb" src={Images.imagePost(data.image_name)} alt=""/>
+                    </a>
                     <div className="card-block">
                         <h4 className="card-title">
-                            <Link to={'/post/1'} style={styles.cardTitle}>
+                            <a href={'/post?id=' + data.id} style={styles.cardTitle}>
                                 <span>{data.title}</span>
-                            </Link>
+                            </a>
                         </h4>
-                        <h6 className="card-text">{data.content}</h6>
+                        {/*<h6 className="card-text">{data.content}</h6>*/}
+                        <div className="topic-post-content" dangerouslySetInnerHTML={{__html: `<span>${data.content}</span>`}}/>
                         <div className="metafooter">
                             <div className="wrapfooter">
                                 <span className="meta-footer-thumb">
                                     <span>
                                         <img className="author-thumb"
-                                             src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
+                                             src={Images.imagePost(data.image_name)}
                                              alt="Sal"/>
                                     </span>
                                 </span>
                                 <span className="author-meta">
                                     <span className="post-name">
-                                        <Link to={'/author/1'}>
+                                        <a href={'/author?id=' + data.user_id}>
                                             <span>Sal</span>
-                                        </Link>
+                                        </a>
                                     </span>
                                     <br/>
                                     <span className="post-date">22 July 2017</span>
@@ -49,7 +47,7 @@ export default class PostItemLarge extends Component {
                                     <span className="post-read">6 min read</span>
                                 </span>
                                 <span className="post-read-more">
-                                    <Link to={'/post/1'}>
+                                    <a href={'/post?id=' + data.id}>
                                         <span title="Read Story">
                                             <svg className="svgIcon-use" width="25" height="25"
                                                  viewBox="0 0 25 25">
@@ -58,7 +56,7 @@ export default class PostItemLarge extends Component {
                                                     fillRule="evenodd"/>
                                             </svg>
                                         </span>
-                                    </Link>
+                                    </a>
                                 </span>
                             </div>
                         </div>

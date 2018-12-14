@@ -55,8 +55,7 @@ export default class AuthorPage extends Component {
                                         <div className="row post-top-meta authorpage">
                                             <div className="col-md-10 col-xs-12">
                                                 <h1>{author.author_name}</h1>
-                                                <span className="author-description">Founder of <a target="_blank"
-                                                                                                   href="https://www.wowthemes.net">WowThemes.net</a> and creator of <strong>"Mediumish"</strong> theme that you're currently previewing. I professionally develop premium themes, templates & scripts since the Apocalypse (2012). You can reach me out on the social links below.</span>
+                                                <span className="author-description">{author.description}</span>
                                                 <div className="sociallinks">
                                                     <a target="_blank" href="https://www.facebook.com/wowthemesnet/">
                                                         <i className="fa fa-facebook"/>

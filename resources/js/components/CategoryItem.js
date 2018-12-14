@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
-import {Link} from "react-router-dom";
 
 import PropTypes from 'prop-types'
-import {AxiosInstance as axios} from "axios";
 
 export default class CategoryItem extends Component {
 
@@ -35,12 +33,12 @@ export default class CategoryItem extends Component {
         }
         return (
             <div>
-                <Link to={'topic/' + item.id} style={styles.category}>
+                <a href={`/topic?id=${item.id}`} style={styles.category}>
                     <span
                         style={linkStyle}
                         onMouseOver={this.toggleHover}
                         onMouseOut={this.toggleHover}>{item.name.toUpperCase()}</span>
-                </Link>
+                </a>
                 <table>
                     {
                         this.state.categoryPost.map(post=>{

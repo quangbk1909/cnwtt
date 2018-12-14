@@ -471,3 +471,140 @@ ul.tags li a:hover {
     padding-left: 5px;
     background-color: transparent;
 }
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    /*margin: -75px 0 0 -100px;*/
+}
+
+.story-item {
+    display: block; /* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    height: 3.6em;
+    max-height: 3.6em;
+    line-height: 1.8em;
+}
+
+.content-post {
+    /*max-height: 100px;*/
+}
+
+.content-post span {
+    color: gray;
+    display: block; /* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 13em;
+    line-height: 1.3em;
+}
+
+.content-post-feature {
+}
+
+.content-post-feature span {
+    color: gray;
+    display: block; /* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 6.5em;
+    line-height: 1.3em;
+}
+
+.content-post-feature span p {
+    color: gray;
+    font-size: 15px;
+}
+
+.title-post-feature {
+    display: block;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 2.6em;
+    line-height: 1.3em;
+    margin: 0;
+}
+
+.author-post-content {
+
+}
+
+.author-post-content span{
+    color: gray;
+    display: block; /* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 19.5em;
+    line-height: 1.3em;
+}
+
+.topic-post-content {
+
+}
+
+.topic-post-content span {
+    color: gray;
+    display: block; /* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 5.2em;
+    line-height: 1.3em;
+    margin-bottom: 10px;
+}
+
+.topic-post-content-small {
+
+}
+
+.topic-post-content-small span {
+    color: gray;
+    display: block; /* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 2.6em;
+    line-height: 1.3em;
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+
+.topic-post-content-popular {
+
+}
+
+.topic-post-content-popular span {
+    color: gray;
+    display: block; /* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 1.3em;
+    line-height: 1.3em;
+    /*margin-bottom: 10px;*/
+    margin-right: 5px;
+}
+
+.topic-post-title-popular {
+    display: block; /* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 1.3em;
+    line-height: 1.3em;
+    /*margin-bottom: 10px;*/
+    margin-right: 5px;
+}
+
+
+
+
+
+
+
