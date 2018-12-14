@@ -24,7 +24,7 @@ Route::get('/', function(){
 });
 
 Route::group(['prefix' => 'blog'], function(){
-    Auth::login(User::find(31));
+    //Auth::login(User::find(31));
     Route::group(['prefix' => 'post'], function(){
 
         Route::get('allPostByVote', 'Api\PostController@getAllPostByVote');
