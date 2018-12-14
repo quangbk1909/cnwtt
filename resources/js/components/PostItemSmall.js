@@ -1,10 +1,6 @@
 import React, {Component} from 'react'
-
-import {
-    Link
-} from 'react-router-dom'
 import PropTypes from "prop-types";
-import PostItemLarge from "./PostItemLarge";
+import Images from "../Themes/Images";
 
 export default class PostItemSmall extends Component {
     constructor(props) {
@@ -23,29 +19,29 @@ export default class PostItemSmall extends Component {
                     flex: 3,
                     marginBottom: 20
                 }}>
-                    <Link to={'/post/1'}
+                    <a href={'/post?id=' + data.id}
                           style={{color: 'black', textDecorationColor: 'transparent'}}>
                         <h6 style={{marginBottom: 0}}>{data.title}</h6>
-                    </Link>
-                    <p style={{color: 'rgba(0,0,0,0.54)', marginBottom: 0}}>{content}</p>
+                    </a>
+                    <div className="topic-post-content-small" dangerouslySetInnerHTML={{__html: `<span>${data.content}</span>`}}/>
                     <div style={{display: 'flex', alignItems: 'center'}}>
-                        <Link to={'/author/1'}
+                        <a href={'/author?id=' + data.user_id}
                               style={{color: 'black', textDecorationColor: 'transparent'}}>
                             <span style={{
                                 color: 'rgba(0,0,0,0.54)',
                                 fontSize: 12,
                                 marginTop: 0
                             }}>New York Times Magazine</span>
-                        </Link>
+                        </a>
                     </div>
                 </div>
                 <div style={{flex: 1}}>
-                    <Link to={'/post/1'}
+                    <a href={'/post?id=' + data.id}
                           style={{color: 'black', textDecorationColor: 'transparent'}}>
                         <img
-                            src={'https://miro.medium.com/max/320/1*R_148RUf_824I3KD58sZDw.jpeg'}
+                            src={Images.imagePost(data.image_name)}
                             style={{width: '100%', height: 100}}/>
-                    </Link>
+                    </a>
                 </div>
             </div>
         );
