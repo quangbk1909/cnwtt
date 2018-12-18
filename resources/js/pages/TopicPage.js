@@ -95,32 +95,30 @@ export default class TopicPage extends Component {
             created_at: '2018-07-18 17:05:28',
             updated_at: '2018-07-18 17:06:02'
         };
-        let firstItemContent = firstItem.content.length > 200 ? firstItem.content.substr(0, 250) + '...' : firstItem.content;
         return (
             <div style={styles.contentWrapper}>
                 <section style={styles.mainContent}>
                     <p style={{color: 'black', fontWeight: '600'}}>FEATURED</p>
                     <div>
                         <div style={{display: 'flex', flexDirection: 'column'}}>
-                            <a href={'/post?id=' + firstItem.id}>
+                            <a href={'/post?id=' + firstItem.post_id}>
                                 <img src={Images.imagePost(firstItem.image_post)}
                                      style={{width: '100%', height: 400}}/>
                             </a>
 
 
                             <h2>
-                                <a href={'/post?id=' + firstItem.id}
+                                <a href={'/post?id=' + firstItem.post_id}
                                    style={{color: 'black', textDecorationColor: 'transparent'}}>
                                     <span>{firstItem.title}</span>
                                 </a>
                             </h2>
-                            {/*<p>{firstItemContent}</p>*/}
                             <div className="topic-post-content" dangerouslySetInnerHTML={{__html: `<span>${firstItem.content}</span>`}}/>
                             <div style={{display: 'flex', alignItems: 'center'}}>
                                 <span className="meta-footer-thumb">
-                                    <a href={'/author?id=' + firstItem.user_id}>
+                                    <a href={'/author?id=' + firstItem.author_id}>
                                         <img className="author-thumb"
-                                             src={Images.imagePost(firstItem.image_post)}
+                                             src={Images.avatar(firstItem.avatar)}
                                              alt="Sal"/>
                                     </a>
                                 </span>
@@ -132,7 +130,7 @@ export default class TopicPage extends Component {
                                 }}>
                                         <span style={{display: 'flex', flexDirection: 'column'}}>
 								            <span className="post-name">
-                                                <a href={'/author?id=' + firstItem.user_id}>
+                                                <a href={'/author?id=' + firstItem.author_id}>
                                                     <h6 style={{marginBottom: 0}}>{firstItem.author_name}</h6>
                                                 </a>
                                             </span>
@@ -153,7 +151,6 @@ export default class TopicPage extends Component {
                     <div style={{width: '100%'}}>
                         {
                             this.state.data.slice(1, this.state.data.length).map((item, index) => {
-                                let itemContent = item.content.length > 100 ? item.content.substr(0, 100) + '...' : item.content;
                                 return (
                                     <div style={{display: 'flex', width: '100%', justifyContent: 'space-between'}}>
                                         <div style={{
@@ -162,13 +159,13 @@ export default class TopicPage extends Component {
                                             flex: 3,
                                             marginBottom: 20
                                         }} key={index}>
-                                            <a href={'/post?id=' + item.id}
+                                            <a href={'/post?id=' + item.post_id}
                                                style={{color: 'black', textDecorationColor: 'transparent'}}>
                                                 <h6 style={{marginBottom: 0}}>{item.title}</h6>
                                             </a>
                                             <div className="topic-post-content-small" dangerouslySetInnerHTML={{__html: `<span>${firstItem.content}</span>`}}/>
                                             <div style={{display: 'flex', alignItems: 'center'}}>
-                                                <a href={'/author?id=' + item.user_id}
+                                                <a href={'/author?id=' + item.author_id}
                                                    style={{color: 'black', textDecorationColor: 'transparent'}}>
                                                         <span style={{
                                                             color: 'rgba(0,0,0,0.54)',
@@ -176,16 +173,10 @@ export default class TopicPage extends Component {
                                                             marginTop: 0
                                                         }}>{item.author_name}</span>
                                                 </a>
-                                                {/*<span className="dot"/>*/}
-                                                {/*<span*/}
-                                                {/*style={{*/}
-                                                {/*color: 'rgba(0,0,0,0.54)',*/}
-                                                {/*fontSize: 12*/}
-                                                {/*}}>4 min read</span>*/}
                                             </div>
                                         </div>
                                         <div style={{flex: 1}}>
-                                            <a href={'/post?id=' + item.id}
+                                            <a href={'/post?id=' + item.post_id}
                                                style={{color: 'black', textDecorationColor: 'transparent'}}>
                                                 <img
                                                     src={Images.imagePost(item.image_post)}
