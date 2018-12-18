@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="assets/img/logo.png">
     <title>CMS</title>
 
@@ -32,7 +33,7 @@
         <!-- Sidebar  -->
         @include('admin.layout.sidebar')
 
-        <!-- Page Content  -->
+        <!-- Page Content -->
         <div id="content">
             <!-- header -->
             @include('admin.layout.header')
@@ -41,6 +42,7 @@
            
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
@@ -55,7 +57,7 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
     
-
+    
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -81,7 +83,13 @@
                     $(this).addClass('active');       
                 });
             }
+            //console.log(window.Echo);
+            Echo.private('App.User.' + userId)
+            .notification((notification) => {
+                console.log(notification.type);
+            });
         });
+
     </script>
     @yield('script')
 

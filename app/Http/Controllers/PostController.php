@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Category;
+use App\Notifications\PostNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -66,6 +67,8 @@ class PostController extends Controller
     	foreach ($categories as $category) {
     		$post->categories()->save($category);
     	}
+
+        Auth::user()->notify(new PostNotification($post));
     	return redirect()->back()->with('success', 'Create post successfully');
     }
 
