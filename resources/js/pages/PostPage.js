@@ -8,39 +8,7 @@ import {
 import moment from "moment";
 import CommentItem from "../components/CommentItem";
 import CommentView from "../components/CommentView";
-
-const recomendedItems = [
-    {
-        imageSource: Images.demopic.img7,
-        title: 'The beauty of this world is in your heart',
-        shortDescription: 'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
-        author: {
-            avatar: '',
-            name: 'Than Thai'
-        },
-        createdDate: new Date()
-    },
-    {
-        imageSource: Images.demopic.img7,
-        title: 'The beauty of this world is in your heart',
-        shortDescription: 'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
-        author: {
-            avatar: '',
-            name: 'Than Thai'
-        },
-        createdDate: new Date()
-    },
-    {
-        imageSource: Images.demopic.img7,
-        title: 'The beauty of this world is in your heart',
-        shortDescription: 'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
-        author: {
-            avatar: '',
-            name: 'Than Thai'
-        },
-        createdDate: new Date()
-    }
-];
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 export default class PostPage extends Component {
 
@@ -218,6 +186,21 @@ export default class PostPage extends Component {
                             </div>
                         </div>
 
+                        <div className="vote">
+                            <ReactCSSTransitionGroup transitionName="votesample"
+
+                                                     transitionAppear={true} transitionAppearTimeout={5000}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                                     className="feather feather-thumbs-up">
+                                    <path
+                                        d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+                                </svg>
+
+                            </ReactCSSTransitionGroup>
+                        </div>
+
                         <div className="col-md-8 col-md-offset-2 col-xs-12">
                             <div className="mainheading">
 
@@ -251,47 +234,7 @@ export default class PostPage extends Component {
                                  src={this.state.post.image_name ? Images.imagePost(this.state.post.image_name) : Images.demopic.img10}
                                  alt=""/>
 
-                            {/*<div className="article-post">*/}
-                            {/*<p>*/}
-                            {/*Holy grail funding non-disclosure agreement advisor ramen bootstrapping ecosystem.*/}
-                            {/*Beta crowdfunding iteration assets business plan paradigm shift stealth mass market*/}
-                            {/*seed money rockstar niche market marketing buzz market.*/}
-                            {/*</p>*/}
-                            {/*<p>*/}
-                            {/*Burn rate release facebook termsheet equity technology. Interaction design rockstar*/}
-                            {/*network effects handshake creative startup direct mailing. Technology influencer*/}
-                            {/*direct mailing deployment return on investment seed round.*/}
-                            {/*</p>*/}
-                            {/*<p>*/}
-                            {/*Termsheet business model canvas user experience churn rate low hanging fruit backing*/}
-                            {/*iteration buyer seed money. Virality release launch party channels validation*/}
-                            {/*learning curve paradigm shift hypotheses conversion. Stealth leverage freemium*/}
-                            {/*venture startup business-to-business accelerator market.*/}
-                            {/*</p>*/}
-                            {/*<blockquote>*/}
-                            {/*Gen-z strategy long tail churn rate seed money channels user experience incubator*/}
-                            {/*startup partner network low hanging fruit direct mailing. Client backing success*/}
-                            {/*startup assets responsive web design burn rate A/B testing metrics first mover*/}
-                            {/*advantage conversion.*/}
-                            {/*</blockquote>*/}
-                            {/*<p>*/}
-                            {/*Freemium non-disclosure agreement lean startup bootstrapping holy grail ramen MVP*/}
-                            {/*iteration accelerator. Strategy market ramen leverage paradigm shift seed round*/}
-                            {/*entrepreneur crowdfunding social proof angel investor partner network virality.*/}
-                            {/*</p>*/}
-                            {/*</div>*/}
-
                             <div dangerouslySetInnerHTML={{__html: `<span>${this.state.post.content || ''}</span>`}}/>
-
-
-                            {/*<div className="after-post-tags">*/}
-                            {/*<ul className="tags">*/}
-                            {/*<li><a href="#">Design</a></li>*/}
-                            {/*<li><a href="#">Growth Mindset</a></li>*/}
-                            {/*<li><a href="#">Productivity</a></li>*/}
-                            {/*<li><a href="#">Personal Growth</a></li>*/}
-                            {/*</ul>*/}
-                            {/*</div>*/}
 
                         </div>
 
