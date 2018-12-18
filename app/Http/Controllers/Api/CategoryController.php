@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Input;
 class CategoryController extends Controller
 {
     public function getMainCategory(){
-        $mainCate = Category::where('level',1)->get();
+        $mainCate = Category::where('level', 0)->get();
         return response() -> json($mainCate);
     }
 
@@ -35,7 +35,6 @@ class CategoryController extends Controller
 
             array_push($responseArray,$arrayPost);
         }
-        // json_encode($responseArray);
         return response() -> json($responseArray);
     }
 
@@ -59,7 +58,6 @@ class CategoryController extends Controller
 
             array_push($responseArray,$arrayPost);
         }
-        // json_encode($responseArray);
         return response() -> json($responseArray);
     }
 

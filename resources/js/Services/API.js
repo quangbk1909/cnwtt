@@ -50,16 +50,15 @@ const getCmt = async (postId) => {
     axios.defaults.baseURL = 'http://localhost:8000';
     let results = await axios.get('api/blog/post/getComment/' + postId);
     console.log('comments', results);
-    let comments = results.data;
-    for (let i = 0; i < comments.length; i++) {
-        let comment = comments[i];
-        let userId = comment.user_id;
-        let result = await axios.get('/api/blog/author/getAuthorByID/' + userId);
-        let user = result.data;
-        comments[i].author_name = result.data.author_name;
-        comments[i].avatar = result.data.avatar;
-    }
-    return comments;
+    // for (let i = 0; i < comments.length; i++) {
+    //     let comment = comments[i];
+    //     let userId = comment.user_id;
+    //     let result = await axios.get('/api/blog/author/getAuthorByID/' + userId);
+    //     let user = result.data;
+    //     comments[i].author_name = result.data.author_name;
+    //     comments[i].avatar = result.data.avatar;
+    // }
+    return results.data;
 };
 
 const saveComment = (postId, comment, onSuccess, onError) => {
