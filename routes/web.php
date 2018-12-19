@@ -1,5 +1,5 @@
 <?php
-
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,14 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('/post/{post_id}', function () {
-    return view('welcome');
-});
-
-
-
-Route::get('test', 'Controller@test');
 
 Route::get('register', 'Auth\RegisterController@getRegistration');
 Route::post('register', 'Auth\RegisterController@register');
@@ -95,7 +87,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
 		Route::get('create', 'RoleController@getCreate')->middleware('can:role.create');
 		Route::post('create', 'RoleController@postCreate');
 		Route::get('edit/{id}', 'RoleController@getEdit')->middleware('can:role.update');
-		Route::post('edit/{id}', 'RoleController@postEdit');
+		Route::post('edit/{id}', 'RoleController@postEdit');	
 		Route::get('delete/{id}', 'RoleController@getDelete')->middleware('can:role.delete');
 
 
@@ -106,9 +98,37 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
     
 });
 
+Route::group(['prefix' => 'api'], function() {
+    Route::group(['prefix' => 'blog'], function(){
+	    Route::group(['prefix' => 'post'], function(){
+
+	        Route::get('allPostByVote', 'Api\PostController@getAllPostByVote');
+	        Route::get('allPostByRandom', 'Api\PostController@getAllPostByRandom');
+	        Route::get('getComment/{post_id}', 'Api\PostController@getCommentByPostID');
+	        Route::get('saveComment/{post_id}', 'Api\PostController@saveComment');
+	        Route::get('getSinglePost/{post_id}', 'Api\PostController@getSinglePost');
+	        Route::post('vote/{post_id}', 'Api\PostController@upVote');
+	        Route::post('downVote/{post_id}', 'Api\PostController@downVote');
+	        Route::get('recommendItem', 'Api\PostController@getRecommendItems');
+	    });
+	    Route::group(['prefix' => 'category'], function(){
+	        Route::get('allCate','Api\CategoryController@getMainCategory');
+	        Route::get('categoryPostFromNewest/{category_id}','Api\CategoryController@getCategoryPostFromNewest');
+	        Route::get('categoryPostPopular/{category_id}','Api\CategoryController@getCategoryPostPopular');
+	        Route::get('description/{category_id}','Api\CategoryController@getDescription');
+	    });
+	    Route::group(['prefix' => 'author'], function(){
+	        Route::get('getCurrentAuthor','Api\AuthorController@getCurrentAuthor');
+	        Route::get('getAuthorByID/{user_id}','Api\AuthorController@getAuthorByID');
+	        Route::get('checkUser','Api\AuthorController@checkUserExist');
+	        Route::get('follow/{id}', 'Api\AuthorController@follow');
+	        Route::get('unfollow/{id}', 'Api\AuthorController@unfollow');
+	        Route::get('checkRelationship/{id}', 'Api\AuthorController@checkFollowedAuthor');
+	    });
+	    Route::get('searchList','Api\PostController@search');
+	});
+
+});
 
 
-Route::view('{path?}', 'welcome')
-     ->where('path', '.*')
-     ->name('react');
 

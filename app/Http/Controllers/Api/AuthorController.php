@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 
 class AuthorController extends Controller
 {
@@ -47,4 +48,28 @@ class AuthorController extends Controller
 
         return response() -> json($userWithAllPost);
     }
+
+    public function follow($userId){
+        Auth::user()->authors()->attach($userId);
+        return response() -> json(['status_follow' => true]);
+    }
+
+    public function unfollow($userId){
+        Auth::user()->authors()->detach($userId);
+        return response() -> json(['status_unfollow' => true]);
+    }
+
+    public function checkFollowedAuthor($userId){
+        $rela = DB::table('author_follower')->where([
+            ['author_id','=',$userId],
+            ['follower_id','=',Auth::user()->id]
+        ])->first();
+        if(isset($rela->author_id)){
+            return response() -> json(['check_relationship'=>true]);
+        }else {
+            return response() -> json(['check_relationship'=>false]);
+        }
+    }
+
+
 }

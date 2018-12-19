@@ -46,6 +46,14 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Permission','permission_user','user_id','permission_id');
     }
 
+    public function authors(){
+        return $this->belongsToMany('App\User','author_follower','follower_id','author_id');
+    }
+
+    public function followers(){
+        return $this->belongsToMany('App\User','author_follower','author_id','follower_id');
+    }
+
     public function hasPermission(string $permission) :bool {
 
         if ($this->role) {

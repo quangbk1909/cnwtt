@@ -19,11 +19,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', function(){
+/*Route::get('/', function(){
     return view("Welcome");
 });
 
-Route::group(['prefix' => 'blog'], function(){
+Route::get('test', function() {
+    return Auth::user();
+});*/
+
+/*Route::group(['prefix' => 'blog'], function(){
     //Auth::login(User::find(31));
     Route::group(['prefix' => 'post'], function(){
 
@@ -46,8 +50,11 @@ Route::group(['prefix' => 'blog'], function(){
         Route::get('getCurrentAuthor','Api\AuthorController@getCurrentAuthor');
         Route::get('getAuthorByID/{user_id}','Api\AuthorController@getAuthorByID');
         Route::get('checkUser','Api\AuthorController@checkUserExist');
+        Route::get('follow/{id}', 'Api\AuthorController@follow');
+        Route::get('unfollow/{id}', 'Api\AuthorController@unfollow');
+        Route::get('checkRelationship/{id}', 'Api\AuthorController@checkFollowedAuthor');
     });
     Route::get('searchList','Api\PostController@search');
-});
+});*/
 
 

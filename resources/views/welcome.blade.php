@@ -22,6 +22,19 @@
 
 
 
+
         <script src="js/app.js"></script>
+        <script>
+            $(document).ready(function() {
+                var user;
+                $.get('api/blog/author/getCurrentAuthor',function(data){
+                    Echo.private('App.User.' + data.user_id)
+                    .notification((notification) => {
+                        console.log(notification);
+                });
+                });
+                
+            }); 
+        </script>
     </body>
 </html>

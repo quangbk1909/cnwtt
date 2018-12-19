@@ -7,6 +7,7 @@ use App\Post;
 use App\Category;
 use App\Notifications\PostNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Collection;
@@ -68,7 +69,7 @@ class PostController extends Controller
     		$post->categories()->save($category);
     	}
 
-        Auth::user()->notify(new PostNotification($post));
+        Notification::send(Auth::user()->followers,new PostNotification($post));
     	return redirect()->back()->with('success', 'Create post successfully');
     }
 

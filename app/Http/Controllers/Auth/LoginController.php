@@ -46,7 +46,7 @@ class LoginController extends Controller
     public function postLogin(Request $request){
         if(Auth::attempt(['username' => $request->username, 'password' => $request->password], $request->has('remember'))){
             if(Auth::user()->verified){
-                return redirect('admin');
+                return redirect('/');
             }else{
                 Auth::logout();
                 return redirect('login')->with('warning', 'You need to confirm your account. We have sent you an activation code, please check your email.');
