@@ -110,8 +110,8 @@ Route::group(['prefix' => 'api'], function() {
 	        Route::get('getComment/{post_id}', 'Api\PostController@getCommentByPostID');
 	        Route::get('saveComment/{post_id}', 'Api\PostController@saveComment');
 	        Route::get('getSinglePost/{post_id}', 'Api\PostController@getSinglePost');
-	        Route::post('vote/{post_id}', 'Api\PostController@upVote');
-	        Route::post('downVote/{post_id}', 'Api\PostController@downVote');
+	        Route::get('vote/{post_id}', 'Api\PostController@upVote');
+	        Route::get('downVote/{post_id}', 'Api\PostController@downVote');
 	        Route::get('recommendItem', 'Api\PostController@getRecommendItems');
 	    });
 	    Route::group(['prefix' => 'category'], function(){

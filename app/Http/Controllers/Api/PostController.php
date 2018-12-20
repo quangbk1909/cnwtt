@@ -171,9 +171,10 @@ class PostController extends Controller
     public function upVote($postID){
         $post = Post::find($postID);
         $post->vote_numbers = $post->vote_numbers + 1;
+        
         if ($post->save()){
             return response() -> json($post);
-        }     
+        }
     }
 
     public function downVote($postID){

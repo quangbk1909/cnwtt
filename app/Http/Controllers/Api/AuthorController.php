@@ -15,7 +15,7 @@ class AuthorController extends Controller
     public function getCurrentAuthor(){
         if (Auth::check()){
             $user = Auth::user();
-            $allPostOfUser = Post::where('user_id',$user->id)->get();
+            $allPostOfUser = Post::where('user_id',$user->id)->orderBy('created_at','desc')->get();
 
             $userWithAllPost = array();
             $userWithAllPost["user_id"] = $user->id;
@@ -41,7 +41,7 @@ class AuthorController extends Controller
     }
 
     public function getAuthorByID($userID){
-        $allPostOfUser = Post::where('user_id',$userID)->get();
+        $allPostOfUser = Post::where('user_id',$userID)->orderBy('created_at','desc')->get();
         $user = User::where('id',$userID)->first();
 
         $userWithAllPost = array();
