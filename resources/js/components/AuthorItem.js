@@ -30,7 +30,8 @@ export default class AuthorItem extends Component{
 const styles = {
     container: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginBottom: 10
     },
     avatar: {
         width: 50,
