@@ -1,7 +1,9 @@
 import axios from 'axios'
+import Config from "../config/Config";
 
 const get = (url, params, onSuccess, onError) => {
-    axios.defaults.baseURL = 'http://localhost:8000';
+    axios.defaults.baseURL = Config.env.dev;
+    console.log('url', process.env);
     axios.get(url, params).then((result) => {
         onSuccess(result.data);
         console.log('api', result)
@@ -94,10 +96,6 @@ const getPopularPost = (id, onSuccess, onError) => {
 
 const getNewestPost = (id, onSuccess, onError) => {
     get('/api/blog/category/categoryPostFromNewest/' + id, {}, onSuccess, onError)
-};
-
-const vote = (postId, onSuccess, onError) => {
-
 };
 
 const api = {

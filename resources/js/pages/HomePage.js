@@ -200,7 +200,7 @@ const styles = {
         flexDirection: 'column',
         height: '100%',
         width: '100%',
-        paddingTop: 0,
+        paddingTop: 10,
         marginTop: 0,
     },
     extremeHeroContainer: {

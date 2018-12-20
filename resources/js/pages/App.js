@@ -23,7 +23,7 @@ export default class App extends Component {
             <Router>
                 <div style={{display: 'flex', flexDirection: 'column', width: '100%', height: '100%'}}>
                     <NavigationBar/>
-                    <div style={{marginTop: 0, width: '100%'}}>
+                    <div style={{marginTop: 70, width: '100%'}}>
                         <Route exact path="/" component={HomePage}/>
                         <Route exact path="/home" component={HomePage}/>
                         <Route exact path="/post" component={PostPage}/>

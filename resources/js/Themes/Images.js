@@ -13,7 +13,10 @@ const Images = {
     },
     logo: require('../assets/logo.png'),
     imagePost: (name) => {
-        return require(`../assets/img_post/${name}`)
+        if (name) {
+            return require(`../assets/img_post/${name}`)
+        }
+        return require(`../assets/demopic/2.jpg`)
         // return require('../assets/img_post/5841bf6aa33713a80c91162a5468aaef948f64f7.jpg')
         // return this.demopic.img7
     },

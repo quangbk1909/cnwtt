@@ -685,4 +685,11 @@ ul.tags li a:hover {
 	to { background-position:right;}
 }
 
+.noti-pan {
+	border: 1px solid gray;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 
