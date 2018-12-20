@@ -71,5 +71,21 @@ class AuthorController extends Controller
         }
     }
 
+    public function getNotifications(){
+        if(Auth::check()){
+            $notifications = Auth::user()->notifications;
+            return response()->json($notifications);
+        }
+    }
+
+    public function markAsRead(){
+        if(Auth::check()){
+            Auth::user()->notifications->markAsRead();
+            return response()->json(['mark_as_read'=>true]);
+        }else{
+            return response()->json(['mark_as_read'=>flase]);
+        }
+    }
+
 
 }

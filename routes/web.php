@@ -124,6 +124,8 @@ Route::group(['prefix' => 'api'], function() {
 	        Route::get('follow/{id}', 'Api\AuthorController@follow');
 	        Route::get('unfollow/{id}', 'Api\AuthorController@unfollow');
 	        Route::get('checkRelationship/{id}', 'Api\AuthorController@checkFollowedAuthor');
+	        Route::get('notifications','Api\AuthorController@getNotifications');
+	        Route::get('markAsRead','Api\AuthorController@markAsRead');
 	    });
 	    Route::get('searchList','Api\PostController@search');
 	});
