@@ -3,7 +3,6 @@ import Config from "../config/Config";
 
 const get = (url, params, onSuccess, onError) => {
     axios.defaults.baseURL = Config.env.dev;
-    console.log('url', process.env);
     axios.get(url, params).then((result) => {
         onSuccess(result.data);
         console.log('api', result)
