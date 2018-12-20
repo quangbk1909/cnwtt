@@ -13,17 +13,22 @@ use Illuminate\Support\Facades\DB;
 class AuthorController extends Controller
 {
     public function getCurrentAuthor(){
-        $user = Auth::user();
-        $allPostOfUser = Post::where('user_id',$user->id)->get();
+        if (Auth::check()){
+            $user = Auth::user();
+            $allPostOfUser = Post::where('user_id',$user->id)->get();
 
-        $userWithAllPost = array();
-        $userWithAllPost["user_id"] = $user->id;
-        $userWithAllPost["author_name"] = $user->name;
-        $userWithAllPost["avatar"] = $user->image_link;
-        $userWithAllPost["description"] = $user->description;
-        $userWithAllPost["posts"] = $allPostOfUser;
+            $userWithAllPost = array();
+            $userWithAllPost["user_id"] = $user->id;
+            $userWithAllPost["author_name"] = $user->name;
+            $userWithAllPost["avatar"] = $user->image_link;
+            $userWithAllPost["description"] = $user->description;
+            $userWithAllPost["posts"] = $allPostOfUser;
 
-        return response() -> json($userWithAllPost);
+            return response() -> json($userWithAllPost);
+        }
+        else {
+            return response() -> json(['status_logged_in'=>false]);
+        }
     }
     
     public function checkUserExist(){
