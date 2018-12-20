@@ -45,7 +45,7 @@ const getPostByCategory = (name, onSuccess, onError) => {
 };
 
 const getAuthorById = (id, onSuccess, onError) => {
-    get('api/blog/author/getAuthorByID/31', {}, onSuccess, onError)
+    get('api/blog/author/getAuthorByID/' + id, {}, onSuccess, onError)
 };
 
 const getCmt = async (postId) => {
