@@ -10,6 +10,8 @@ import '../CSS/bootstrap.min.css'
 import '../CSS/mediumish.css'
 import '../App.css'
 
+import pushNotification from '../redux/PusherActions'
+
 import {
     Nav,
     NavItem
@@ -19,6 +21,7 @@ import API from '../Services/API'
 import ValueHolder from "../Services/ValueHolder";
 import Images from "../Themes/Images";
 import moment from 'moment'
+import Echo from "laravel-echo";
 
 const dIconSearch = 'M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z';
 
@@ -47,6 +50,18 @@ class NavigationBar extends Component {
             this.setState({userId: result.user_id});
             ValueHolder.userId = result.user_id;
             this.getNotifications();
+            let echo = new Echo({
+                broadcaster: 'pusher',
+                key: 'b8416bb5c1e33d4d2a9f',
+                cluster: 'ap1',
+                encrypted: true,
+            });
+
+            echo.private('App.User.' + result.user_id)
+                .notification((notification) => {
+                    // console.log('noti', notification);
+                    this.getNotifications();
+                });
         }, (error) => {
 
         })
@@ -79,6 +94,19 @@ class NavigationBar extends Component {
             });
             this.setState({keyword: ''})
         }
+    }
+
+    markAsRead() {
+        API.get('/api/blog/author/markAsRead', {}, (result) => {
+            let notifications = this.state.notifications.map(noti => {
+                noti.read_at = new Date().getMilliseconds();
+                return noti;
+            });
+            console.log('new notis', notifications);
+            this.setState({notifications});
+        }, (error) => {
+
+        })
     }
 
     render() {
@@ -143,7 +171,13 @@ class NavigationBar extends Component {
                         {
                             this.state.statusLoggedIn &&
                             <div>
-                                <a onClick={() => this.setState({showNotification: !this.state.showNotification})}>
+                                <a onClick={() => {
+                                    let currentState = this.state.showNotification;
+                                    this.setState({showNotification: !this.state.showNotification});
+                                    if (!currentState) {
+                                        this.markAsRead()
+                                    }
+                                }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_1" x="0px" y="0px"
                                          width="24px" height="24px"
                                          viewBox="0 0 510 510">
@@ -151,43 +185,55 @@ class NavigationBar extends Component {
                                             d="M255,510c28.05,0,51-22.95,51-51H204C204,487.05,226.95,510,255,510z M420.75,357V216.75    c0-79.05-53.55-142.8-127.5-160.65V38.25C293.25,17.85,275.4,0,255,0c-20.4,0-38.25,17.85-38.25,38.25V56.1    c-73.95,17.85-127.5,81.6-127.5,160.65V357l-51,51v25.5h433.5V408L420.75,357z"
                                             fill={this.state.showNotification ? '#02B875' : '#aaaaaa'}/>
                                     </svg>
-                                </a>
-                                {
-                                    this.state.showNotification &&
+                                    {
+                                        this.state.notifications.filter(noti => noti.read_at === null).length > 0 &&
+                                        <a onClick={() => {
+                                            let currentState = this.state.showNotification;
+                                            this.setState({showNotification: !this.state.showNotification});
+                                            if (!currentState) {
+                                                this.markAsRead()
+                                            }
+                                        }}
+                                           style={{color: 'white'}}
+                                           className={"noti-badge"}>{this.state.notifications.filter(noti => noti.read_at === null).length}</a>
+                                    }
+                            </a>
+                            {
+                                this.state.showNotification &&
+                                <div style={{
+                                    width: 400,
+                                    backgroundColor: '#02B875',
+                                    position: 'absolute',
+                                    marginLeft: -300,
+                                    marginTop: 10,
+                                    zIndex: 100
+                                }}>
+                                    <div style={{marginTop: -15, marginLeft: 300}}>
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                             x="0px" y="0px"
+                                             width="24px" height="24px"
+                                             viewBox="0 0 490 490">
+                                            <path d="M490,474.459H0L245.009,15.541L490,474.459z" fill={'#02B875'}/>
+                                        </svg>
+                                    </div>
                                     <div style={{
                                         width: 400,
-                                        backgroundColor: '#02B875',
+                                        backgroundColor: 'white',
                                         position: 'absolute',
-                                        marginLeft: -300,
-                                        marginTop: 10,
-                                        zIndex: 100
-                                    }}>
-                                        <div style={{marginTop: -15, marginLeft: 300}}>
-                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                                 x="0px" y="0px"
-                                                 width="24px" height="24px"
-                                                 viewBox="0 0 490 490">
-                                                <path d="M490,474.459H0L245.009,15.541L490,474.459z" fill={'#02B875'}/>
-                                            </svg>
-                                        </div>
-                                        <div style={{
-                                            width: 400,
-                                            backgroundColor: 'white',
-                                            position: 'absolute',
-                                            zIndex: 2000,
-                                            marginTop: -10,
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            padding: 10,
-                                            minHeight: 300,
-                                            maxHeight: 600
-                                        }} className="noti-pan">
-                                            {
-                                                this.state.notifications.map((noti) => {
-                                                    return (
-                                                        <div style={{width: '100%', marginBottom: 10}}>
-                                                            <div className="metafooter">
-                                                                <div className="wrapfooter">
+                                        zIndex: 2000,
+                                        marginTop: -10,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        padding: 10,
+                                        minHeight: 300,
+                                        maxHeight: 600
+                                    }} className="noti-pan">
+                                        {
+                                            this.state.notifications.map((noti, index) => {
+                                                return (
+                                                    <div style={{width: '100%', marginBottom: 10}} key={index}>
+                                                        <div className="metafooter">
+                                                            <div className="wrapfooter">
 								                                    <span className="meta-footer-thumb">
                                                                         <a style={{color: 13}}>
                                                                             <img className="author-thumb"
@@ -195,24 +241,24 @@ class NavigationBar extends Component {
                                                                                  alt="Sal"/>
                                                                         </a>
                                                                     </span>
-                                                                </div>
                                                             </div>
-                                                            <span style={{fontSize: 13}}><b>{noti.data.user.name}</b> đã thêm bài viết mới: <b>{noti.data.post.title}</b>. <a
-                                                                style={{color: '#00ab6b'}}
-                                                                href={'/post?id=' + noti.data.post.id}>Xem thêm</a></span>
-                                                            <br/>
-                                                            <span style={{
-                                                                fontSize: 13,
-                                                                color: '#aaaaaa',
-                                                                marginLeft: 52
-                                                            }}>{moment(noti.data.post.created_at).fromNow()}</span>
                                                         </div>
-                                                    )
-                                                })
-                                            }
-                                        </div>
+                                                        <span style={{fontSize: 13}}><b>{noti.data.user.name}</b> đã thêm bài viết mới: <b>{noti.data.post.title}</b>. <a
+                                                            style={{color: '#00ab6b'}}
+                                                            href={'/post?id=' + noti.data.post.id}>Xem thêm</a></span>
+                                                        <br/>
+                                                        <span style={{
+                                                            fontSize: 13,
+                                                            color: '#aaaaaa',
+                                                            marginLeft: 52
+                                                        }}>{moment(noti.data.post.created_at).fromNow()}</span>
+                                                    </div>
+                                                )
+                                            })
+                                        }
                                     </div>
-                                }
+                                </div>
+                            }
                             </div>
                         }
                         {
@@ -258,6 +304,15 @@ class NavigationBar extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    pushNotification: state.noti
+})
+
+const mapDispatchToProps = dispatch => ({
+    // toggleTodo: id => dispatch(toggleTodo(id))
+})
+
 
 export default withRouter(NavigationBar)
 
