@@ -1,6 +1,6 @@
 <nav id="sidebar" class="border">
     <div class="sidebar-header text-center border-bottom">
-        <h3>HustBlog</h3>
+        <a href=""><h3>HustBlog</h3></a>
         <strong>VC</strong>
     </div>
 

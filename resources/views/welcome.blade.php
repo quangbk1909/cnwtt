@@ -32,8 +32,7 @@
                     .notification((notification) => {
                         console.log(notification);
                 });
-                });
-                
+                });     
             }); 
         </script>
     </body>
