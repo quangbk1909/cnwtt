@@ -17,6 +17,7 @@ body {
 }
 a {
 	color:#00ab6b;
+
 }
 a,a:hover {
 	transition:all 0.2s;
@@ -696,4 +697,27 @@ ul.tags li a:hover {
 	border-width: 0;
 	color: transparent;
 }
+
+.noti-badge {
+	position: absolute;
+	align-self: center;
+	margin-left: -15px;
+	margin-top: -4px;
+	border: 1px solid red;
+	background-color: red;
+	border-radius: 50%;
+	width: 18px;
+	height: 18px;
+	font-size: 9pt;
+	text-align: center;
+	color: white;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
 
