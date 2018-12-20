@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Images from "../Themes/Images";
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import '../CSS/mediumish.css'
 import '../CSS/bootstrap.min.css'
@@ -16,7 +17,7 @@ export default class PostItemLarge extends Component {
             <div className="authorpostbox" style={styles.authorPostBox}>
                 <div className="card">
                     <a href={'/post?id=' + data.id}>
-                        <img className="img-fluid img-thumb" src={Images.imagePost(data.image_name)} alt=""/>
+                        <img className="img-fluid img-thumb" src={Images.imagePost(data.image_post)} alt=""/>
                     </a>
                     <div className="card-block">
                         <h4 className="card-title">
@@ -31,7 +32,7 @@ export default class PostItemLarge extends Component {
                                 <span className="meta-footer-thumb">
                                     <span>
                                         <img className="author-thumb"
-                                             src={Images.imagePost(data.image_name)}
+                                             src={Images.avatar(data.avatar)}
                                              alt="Sal"/>
                                     </span>
                                 </span>
@@ -42,9 +43,7 @@ export default class PostItemLarge extends Component {
                                         </a>
                                     </span>
                                     <br/>
-                                    <span className="post-date">22 July 2017</span>
-                                    <span className="dot"/>
-                                    <span className="post-read">6 min read</span>
+                                    <span className="post-date">Post in {moment(data.date_created.date).format('MMM, DD YYYY')}</span>
                                 </span>
                                 <span className="post-read-more">
                                     <a href={'/post?id=' + data.id}>

@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Route::get('/post', function () {
+//    return view('welcome');
+//});
 
 Route::get('register', 'Auth\RegisterController@getRegistration');
 Route::post('register', 'Auth\RegisterController@register');
@@ -132,5 +135,7 @@ Route::group(['prefix' => 'api'], function() {
 
 });
 
-
+Route::view('{path?}', 'welcome')
+    ->where('path', '.*')
+    ->name('react');
 

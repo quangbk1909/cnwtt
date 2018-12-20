@@ -14,12 +14,12 @@ export default class AuthorItem extends Component{
     render() {
         return (
             <div style={styles.container}>
-                <img style={styles.avatar} src={Images.demopic.img10} alt=""/>
+                <img style={styles.avatar} src={Images.avatar(this.props.data.avatar)} alt=""/>
                 <div>
-                    <a href={'/author?id=1'} style={styles.authorNameWrapper}>
-                        <h3 style={styles.authorName}>{this.props.data.name}</h3>
+                    <a href={'/author?id=' + this.props.data.user_id} style={styles.authorNameWrapper}>
+                        <h3 style={styles.authorName}>{this.props.data.author_name}</h3>
                     </a>
-                    <span style={styles.authorDescription}>News and announcements for developers from the Android team.</span>
+                    <span style={styles.authorDescription}>{this.props.data.description}</span>
                 </div>
             </div>
         );
@@ -33,7 +33,7 @@ const styles = {
         flexDirection: 'row'
     },
     avatar: {
-        width: 75,
+        width: 50,
         height: 50,
         borderRadius: '50%',
         marginRight: 15
