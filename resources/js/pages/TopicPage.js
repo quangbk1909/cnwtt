@@ -223,7 +223,7 @@ export default class TopicPage extends Component {
                     {
                         this.state.popularTopics.map((item, index) => {
                             return (
-                                <Link to={'/post/' + item.post_id}
+                                <Link to={'/post?id=' + item.post_id}
                                       style={{color: 'black', textDecorationColor: 'transparent'}} key={index}>
                                     <div style={{marginBottom: 10, display: 'flex', flexDirection: 'row'}}>
                                         <div style={{display: 'flex', flexDirection: 'column', flex: 4}}>
