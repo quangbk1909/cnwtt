@@ -35,7 +35,7 @@
 
         <!-- Page Content -->
         <div id="content">
-            header
+            <!-- header -->
             @include('admin.layout.header')
             <hr>
             @yield('content')
