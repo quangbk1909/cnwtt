@@ -13,16 +13,19 @@ const Images = {
     },
     logo: require('../assets/logo.png'),
     imagePost: (name) => {
-        if (name) {
+        try {
             return require(`../assets/img_post/${name}`)
+        } catch (e) {
+            return require(`../assets/demopic/2.jpg`)
         }
-        return require(`../assets/demopic/2.jpg`)
-        // return require('../assets/img_post/5841bf6aa33713a80c91162a5468aaef948f64f7.jpg')
-        // return this.demopic.img7
     },
     avatar: (link) => {
         console.log('link', '../' + link);
-        return require('../' + link)
+        try {
+            return require('../' + link);
+        } catch (e) {
+            return require('../assets/demopic/10.jpg')
+        }
         // return require('../assets/img/31')
     }
 };

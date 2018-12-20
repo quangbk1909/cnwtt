@@ -18,20 +18,51 @@ export default class AuthorPage extends Component {
         super(props);
         this.state = {
             currentAuthor: null,
-            percent: 0
-        }
+            percent: 0,
+            followed: false,
+            followedError: false,
+            loading: true,
+            authorId: props.location.search.substring(4, props.location.search.length)
+        };
+        console.log('author page', props)
     }
 
     componentDidMount() {
-        console.log('user_id', this.props.match.params.authorId);
-        API.getAuthorById(this.props.match.params.authorId, (result) => {
-            this.setState({currentAuthor: result, percent: 100});
-            console.log('author', result)
+        console.log('user_id', this.state.authorId);
+        API.getAuthorById(this.state.authorId, (result) => {
+            this.setState({currentAuthor: result});
+            console.log('author', result);
+            this.checkFollow(result.user_id)
         }, (error) => {
 
         })
     }
 
+    checkFollow(authorId) {
+        API.get('/api/blog/author/checkRelationship/' + authorId, {}, (result) => {
+            this.setState({followed: result.check_relationship, percent: 100, loading: false})
+        }, (error) => {
+            this.setState({percent: 100, loading: false, followedError: true})
+        })
+    }
+
+    follow() {
+        let followed = !this.state.followed;
+        this.setState({followed});
+        if (followed) {
+            API.get('/api/blog/author/follow/' + this.state.currentAuthor.user_id, {}, (result) => {
+
+            }, (result) => {
+
+            })
+        } else {
+            API.get('/api/blog/author/unfollow/' + this.state.currentAuthor.user_id, {}, (result) => {
+
+            }, (result) => {
+
+            })
+        }
+    }
 
     render() {
 
@@ -57,21 +88,24 @@ export default class AuthorPage extends Component {
                                                 <h1>{author.author_name}</h1>
                                                 <span className="author-description">{author.description}</span>
                                                 <div className="sociallinks">
-                                                    <a target="_blank" href="https://www.facebook.com/wowthemesnet/">
-                                                        <i className="fa fa-facebook"/>
-                                                    </a>
-                                                    <span className="dot"/>
-                                                    <a target="_blank"
-                                                       href="https://plus.google.com/s/wowthemesnet/top">
-                                                        <i className="fa fa-google-plus"/>
-                                                    </a>
+                                                    {/*<a target="_blank" href="https://www.facebook.com/wowthemesnet/">*/}
+                                                        {/*<i className="fa fa-facebook"/>*/}
+                                                    {/*</a>*/}
+                                                    {/*<span className="dot"/>*/}
+                                                    {/*<a target="_blank"*/}
+                                                       {/*href="https://plus.google.com/s/wowthemesnet/top">*/}
+                                                        {/*<i className="fa fa-google-plus"/>*/}
+                                                    {/*</a>*/}
                                                 </div>
-                                                <a target="_blank" href="https://twitter.com/wowthemesnet"
-                                                   className="btn follow">Follow</a>
+                                                {
+                                                    (!this.state.followedError || this.state.loading) &&
+                                                    <a onClick={() => this.follow()}
+                                                       className="btn follow">{this.state.followed ? 'Followed' : 'Follow'}</a>
+                                                }
                                             </div>
                                             <div className="col-md-2 col-xs-12">
                                                 <img className="author-thumb"
-                                                     src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x"
+                                                     src={Images.avatar(author.avatar)}
                                                      alt="Sal"/>
                                             </div>
                                         </div>
