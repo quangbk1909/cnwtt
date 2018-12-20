@@ -10,6 +10,7 @@ import API from '../Services/API'
 import ProgressBar from 'react-progress-bar-plus'
 import 'react-progress-bar-plus/lib/progress-bar.css'
 import AuthorPost from "../components/AuthorPost";
+import ValueHolder from "../Services/ValueHolder";
 
 
 export default class AuthorPage extends Component {
@@ -22,9 +23,11 @@ export default class AuthorPage extends Component {
             followed: false,
             followedError: false,
             loading: true,
-            authorId: props.location.search.substring(4, props.location.search.length)
+            authorId: props.location.search.substring(4, props.location.search.length),
+            currentUserId: parseInt(props.location.search.substring(4, props.location.search.length))
         };
-        console.log('author page', props)
+        console.log('author page', props.location.search.substring(4, props.location.search.length));
+        this.count = 0;
     }
 
     componentDidMount() {
@@ -35,14 +38,25 @@ export default class AuthorPage extends Component {
             this.checkFollow(result.user_id)
         }, (error) => {
 
-        })
+        });
     }
 
     checkFollow(authorId) {
         API.get('/api/blog/author/checkRelationship/' + authorId, {}, (result) => {
-            this.setState({followed: result.check_relationship, percent: 100, loading: false})
+            this.setState({followed: result.check_relationship, percent: 100});
+            this.getCurrentUser();
         }, (error) => {
-            this.setState({percent: 100, loading: false, followedError: true})
+            this.setState({percent: 100, followedError: true});
+            this.getCurrentUser()
+        })
+    }
+
+    getCurrentUser() {
+        API.getCurrentAuthor((result) => {
+            console.log('current', result);
+            this.setState({currentUserId: result.user_id, loading: false});
+        }, (error) => {
+            this.setState({loading: false})
         })
     }
 
@@ -66,8 +80,10 @@ export default class AuthorPage extends Component {
 
     render() {
 
+
         let author = this.state.currentAuthor;
 
+        console.log('check', this.state.authorId !== this.state.currentUserId);
         return (
             <div>
                 {
@@ -88,19 +104,11 @@ export default class AuthorPage extends Component {
                                                 <h1>{author.author_name}</h1>
                                                 <span className="author-description">{author.description}</span>
                                                 <div className="sociallinks">
-                                                    {/*<a target="_blank" href="https://www.facebook.com/wowthemesnet/">*/}
-                                                        {/*<i className="fa fa-facebook"/>*/}
-                                                    {/*</a>*/}
-                                                    {/*<span className="dot"/>*/}
-                                                    {/*<a target="_blank"*/}
-                                                       {/*href="https://plus.google.com/s/wowthemesnet/top">*/}
-                                                        {/*<i className="fa fa-google-plus"/>*/}
-                                                    {/*</a>*/}
                                                 </div>
                                                 {
-                                                    (!this.state.followedError || this.state.loading) &&
+                                                    (!this.state.followedError || this.state.loading) && this.state.authorId != this.state.currentUserId &&
                                                     <a onClick={() => this.follow()}
-                                                       className="btn follow">{this.state.followed ? 'Followed' : 'Follow'}</a>
+                                                       className={"btn follow"}>{this.state.followed ? 'Followed' : 'Follow'}</a>
                                                 }
                                             </div>
                                             <div className="col-md-2 col-xs-12">
