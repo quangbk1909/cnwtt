@@ -83,6 +83,7 @@
                             @if($user->role){
                                 {{$user->role->name}}
                             }
+                            @endif
                         </td>
                         <td>{{$user->created_at}}</td>
                         <td>{{$user->updated_at}}</td>
