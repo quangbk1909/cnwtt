@@ -101,7 +101,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
     
 });
 
-Route::group(['prefix' => 'api' 'middleware' => 'cors'], function() {
+Route::group(['prefix' => 'api', 'middleware' => 'cors'], function() {
     Route::group(['prefix' => 'blog'], function(){
 	    Route::group(['prefix' => 'post'], function(){
 
