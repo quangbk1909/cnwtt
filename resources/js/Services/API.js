@@ -2,7 +2,7 @@ import axios from 'axios'
 import Config from "../config/Config";
 
 const get = (url, params, onSuccess, onError) => {
-    axios.defaults.baseURL = Config.env.dev;
+    axios.defaults.baseURL = Config.host;
     axios.get(url, params).then((result) => {
         onSuccess(result.data);
         console.log('api', result)
@@ -48,7 +48,7 @@ const getAuthorById = (id, onSuccess, onError) => {
 };
 
 const getCmt = async (postId) => {
-    axios.defaults.baseURL = 'http://localhost:8000';
+    axios.defaults.baseURL = Config.host;
     let results = await axios.get('api/blog/post/getComment/' + postId);
     console.log('comments', results);
     // for (let i = 0; i < comments.length; i++) {
@@ -71,7 +71,7 @@ const saveComment = (postId, comment, onSuccess, onError) => {
 
 const search = async (keyword) => {
     let url = '/api/blog/searchList?textSearch=' + keyword;
-    axios.defaults.baseURL = 'http://localhost:8000';
+    axios.defaults.baseURL = Config.host;
     let results = await axios.get(url);
     let posts = results.data;
     for (let i = 0; i < posts.length; i++) {
