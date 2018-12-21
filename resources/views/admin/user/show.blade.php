@@ -79,7 +79,11 @@
                             @endif
                         </td>
                         <td>{{$user->description}}</td>
-                        <td>{{$user->role->name}}</td>
+                        <td>
+                            @if($user->role){
+                                {{$user->role->name}}
+                            }
+                        </td>
                         <td>{{$user->created_at}}</td>
                         <td>{{$user->updated_at}}</td>
                         <td width="150"><a href="admin/user/permission/{{$user->id}}"><i class="fas fa-exclamation-triangle"></i> Authorize</a> | <a href="admin/user/update/{{$user->id}}"><i class="fas fa-pencil-alt"></i> Update</a> | <a href="admin/user/delete/{{$user->id}}" onclick="return confirm('Are you sure to delete user?');"><i class="fas fa-trash-alt"></i> Delete</a></td>
